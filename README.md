@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# multitenant-management-system-
-=======
+
 # Propizy: Property Management Made Easy
 
 Kenya-first multi-tenant property management platform with owner-staff governance, M-PESA rent collection, invite-only tenant onboarding, and mobile tenant services.
@@ -194,4 +192,4 @@ CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 Leave these unset for local development (files saved under `backend/media/`). Get credentials from the [Cloudinary console](https://console.cloudinary.com/).
->>>>>>> 44ebbcd (Initial commit: multitenant app (backend, frontend, mobile))
+
