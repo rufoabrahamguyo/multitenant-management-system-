@@ -176,6 +176,7 @@ REST_FRAMEWORK = {
         'user': '1000/hour',
         'auth': '10/minute',
         'phone_verify': '5/minute',
+        'payment_initiate': '10/minute',
     },
 }
 
