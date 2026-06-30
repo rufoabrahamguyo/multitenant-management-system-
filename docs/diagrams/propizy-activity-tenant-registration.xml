@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-17T16:00:00.000Z" agent="Propizy" version="22.1.0" type="device">
+  <diagram id="tenant-registration" name="Tenant Invitation and Registration">
+    <mxGraphModel dx="1500" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1160" pageHeight="1280" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Propizy — Activity Diagram: Tenant Invitation &amp;amp; Registration" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="180" y="12" width="800" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- Swimlanes -->
+        <mxCell id="lane_owner" value="Owner (Web)" style="swimlane;html=1;startSize=32;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="56" width="340" height="1160" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane_system" value="System (API / Database)" style="swimlane;html=1;startSize=32;fillColor=#D5E8D4;strokeColor=#82B366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="56" width="400" height="1160" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane_tenant" value="Tenant (Mobile)" style="swimlane;html=1;startSize=32;fillColor=#E1D5E7;strokeColor=#9673A6;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="780" y="56" width="340" height="1160" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PHASE 1 LABEL ========== -->
+        <mxCell id="lbl_p1" value="— Phase 1: Create Invite —" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="96" width="1080" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- OWNER: Phase 1 -->
+        <mxCell id="o_start" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane_owner">
+          <mxGeometry x="155" y="48" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="o1" value="Open Tenants page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="100" y="100" width="140" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="o2" value="Enter email, phone,&lt;br&gt;select vacant unit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="88" y="160" width="164" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="o3" value="POST /api/auth/tenant-invites/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="lane_owner">
+          <mxGeometry x="78" y="228" width="184" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="o4" value="Copy &amp;amp; share invite link&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;propizy://invite/{token}&lt;br&gt;(manual: SMS / WhatsApp)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="72" y="440" width="196" height="54" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM: Phase 1 -->
+        <mxCell id="s1" value="Validate unit&lt;br&gt;(org scope, status ≠ occupied)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="72" y="220" width="256" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1d" value="Unit&lt;br&gt;vacant?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="135" y="288" width="130" height="76" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1no" value="Reject 400&lt;br&gt;Unit occupied" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=10;" vertex="1" parent="lane_system">
+          <mxGeometry x="290" y="300" width="96" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2" value="Create TenantInvite&lt;br&gt;UUID token, expires_at + 7 days" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="72" y="388" width="256" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3" value="Log activity (tenant_invited)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="100" y="456" width="200" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4" value="Return invite link to owner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="100" y="516" width="200" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PHASE 2 LABEL ========== -->
+        <mxCell id="lbl_p2" value="— Phase 2: Tenant Registration —" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="1080" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- TENANT: Phase 2 -->
+        <mxCell id="t1" value="Open invite deep link&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;propizy://invite/{token}&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="78" y="600" width="184" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="t2" value="Enter username &amp;amp; password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="90" y="668" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="t3" value="POST /api/auth/register-tenant/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;fontStyle=1;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="74" y="728" width="192" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="t4" value="Receive JWT tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="96" y="1080" width="148" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="t5" value="View lease on My Unit screen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="78" y="1140" width="184" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_end" value="" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="155" y="1200" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_end_in" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="162" y="1207" width="16" height="16" as="geometry"/>
+        </mxCell>
+
+        <!-- SYSTEM: Phase 2 -->
+        <mxCell id="s5" value="Validate invite token&lt;br&gt;(exists, used_at null, not expired)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="68" y="716" width="264" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5d" value="Token&lt;br&gt;valid?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="135" y="784" width="130" height="76" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5no" value="Reject 400&lt;br&gt;Invalid / expired" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=10;" vertex="1" parent="lane_system">
+          <mxGeometry x="290" y="796" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s6" value="Create User (role=TENANT)&lt;br&gt;manager = org owner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="72" y="884" width="256" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="s7" value="Create TenantProfile" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="110" y="952" width="180" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s8" value="create_lease_for_tenant()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;fontStyle=1;" vertex="1" parent="lane_system">
+          <mxGeometry x="100" y="1012" width="200" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="s9b" value="• Create / activate Lease record&lt;br&gt;• unit.status = occupied&lt;br&gt;• tenant.current_unit = unit&lt;br&gt;• Generate lease PDF → media/leases/&lt;br&gt;• invite.used_at = now()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="lane_system">
+          <mxGeometry x="72" y="1068" width="256" height="88" as="geometry"/>
+        </mxCell>
+        <mxCell id="s10" value="Return JWT tokens (_auth_response)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_system">
+          <mxGeometry x="88" y="1176" width="224" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES: Owner Phase 1 ===== -->
+        <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_owner" source="o_start" target="o1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_owner" source="o1" target="o2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_owner" source="o2" target="o3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="endArrow=classic;html=1;strokeColor=#000000;dashed=1;" edge="1" parent="1" source="o4" target="t1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="540"/><mxPoint x="950" y="540"/></Array></mxGeometry></mxCell>
+
+        <!-- Owner to System -->
+        <mxCell id="e5" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="1" source="o3" target="s1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s1" target="s1d"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="No" style="endArrow=classic;html=1;strokeColor=#B85450;" edge="1" parent="lane_system" source="s1d" target="s1no"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="Yes" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s1d" target="s2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s2" target="s3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s3" target="s4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="1" source="s4" target="o4"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Tenant Phase 2 -->
+        <mxCell id="e12" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_tenant" source="t1" target="t2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_tenant" source="t2" target="t3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="1" source="t3" target="s5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s5" target="s5d"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" value="No" style="endArrow=classic;html=1;strokeColor=#B85450;" edge="1" parent="lane_system" source="s5d" target="s5no"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" value="Yes" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s5d" target="s6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e18" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s6" target="s7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e19" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s7" target="s8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e20" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s8" target="s9b"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e21" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_system" source="s9b" target="s10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e22" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="1" source="s10" target="t4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e23" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_tenant" source="t4" target="t5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e24" style="endArrow=classic;html=1;strokeColor=#000000;" edge="1" parent="lane_tenant" source="t5" target="t_end"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="legend" value="Source: users/views.py, users/serializers.py, properties/services.py · No auto SMS/email on invite · Vacancy validated at invite only · unit.status and invite.used_at" style="text;html=1;strokeColor=#666666;fillColor=#F2F2F2;align=left;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1240" width="1080" height="28" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

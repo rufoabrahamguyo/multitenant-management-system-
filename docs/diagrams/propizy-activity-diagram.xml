@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-17T12:00:00.000Z" agent="Propizy" version="22.1.0" type="device">
+  <diagram id="activity-lease" name="Activity: Tenant Registration &amp; Lease">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title1" value="Propizy — Activity Diagram: Tenant Registration &amp; Lease Generation" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Swimlanes -->
+        <mxCell id="lane_owner" value="Owner (Web)" style="swimlane;html=1;startSize=30;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="320" height="520" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane_tenant" value="Tenant (Mobile)" style="swimlane;html=1;startSize=30;fillColor=#E1D5E7;strokeColor=#9673A6;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="70" width="320" height="520" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane_sys" value="System (API / DB)" style="swimlane;html=1;startSize=30;fillColor=#D5E8D4;strokeColor=#82B366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="720" y="70" width="340" height="520" as="geometry"/>
+        </mxCell>
+
+        <!-- Owner flow -->
+        <mxCell id="start1" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane_owner">
+          <mxGeometry x="145" y="50" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="a1" value="Open Tenants page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="90" y="100" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" value="Enter email, phone,&lt;br&gt;select vacant unit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="80" y="180" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" value="POST /api/auth/tenant-invites/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="75" y="260" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a4" value="Share invite link&lt;br&gt;propizy://invite/{token}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_owner">
+          <mxGeometry x="75" y="340" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Tenant flow -->
+        <mxCell id="a5" value="Open invite deep link" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="80" y="100" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a6" value="Enter username &amp;amp; password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="80" y="180" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a7" value="POST /api/auth/register-tenant/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="70" y="260" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a8" value="View lease on&lt;br&gt;My Unit screen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="85" y="420" width="150" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- System flow -->
+        <mxCell id="a9" value="Create TenantInvite&lt;br&gt;(token, expiry)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="260" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="d1" value="Token valid&lt;br&gt;&amp;amp; not expired?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="95" y="100" width="150" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="a10" value="Create User (TENANT)&lt;br&gt;+ TenantProfile" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="210" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a11" value="create_lease_for_tenant()&lt;br&gt;active Lease record" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="290" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a12" value="Generate Kenya lease&lt;br&gt;agreement PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="370" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a13" value="Mark unit status = occupied&lt;br&gt;Mark invite used_at" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="450" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a14" value="Return JWT tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="90" y="520" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="err1" value="Reject: invalid token" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;" vertex="1" parent="lane_sys">
+          <mxGeometry x="70" y="30" width="200" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="end1" value="" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="145" y="490" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="end1inner" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane_tenant">
+          <mxGeometry x="152" y="497" width="16" height="16" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges owner -->
+        <mxCell id="e1" style="endArrow=classic;html=1;" edge="1" parent="lane_owner" source="start1" target="a1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="endArrow=classic;html=1;" edge="1" parent="lane_owner" source="a1" target="a2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="endArrow=classic;html=1;" edge="1" parent="lane_owner" source="a2" target="a3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="endArrow=classic;html=1;" edge="1" parent="lane_owner" source="a3" target="a4"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Cross-lane edges -->
+        <mxCell id="e5" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1" source="a4" target="a5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="endArrow=classic;html=1;" edge="1" parent="lane_tenant" source="a5" target="a6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="endArrow=classic;html=1;" edge="1" parent="lane_tenant" source="a6" target="a7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="endArrow=classic;html=1;" edge="1" parent="1" source="a3" target="a9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="endArrow=classic;html=1;" edge="1" parent="1" source="a7" target="d1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="No" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="d1" target="err1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="Yes" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="d1" target="a10"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="170" y="200"/></Array></mxGeometry></mxCell>
+        <mxCell id="e12" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="a10" target="a11"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="a11" target="a12"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="a12" target="a13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" style="endArrow=classic;html=1;" edge="1" parent="lane_sys" source="a13" target="a14"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1" source="a14" target="a8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" style="endArrow=classic;html=1;" edge="1" parent="lane_tenant" source="a8" target="end1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="note1" value="Invite fields: email, phone_number, unit_id only. Lease dates set automatically by create_lease_for_tenant()." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#FFF9E6;strokeColor=#D6B656;fontSize=10;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="610" width="1020" height="40" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="activity-payment" name="Activity: M-PESA Rent Payment">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title2" value="Propizy — Activity Diagram: M-PESA Rent Payment Processing" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lane2_tenant" value="Tenant (Mobile)" style="swimlane;html=1;startSize=30;fillColor=#E1D5E7;strokeColor=#9673A6;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="300" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane2_api" value="Propizy API" style="swimlane;html=1;startSize=30;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="70" width="320" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="lane2_mpesa" value="Safaricom M-PESA" style="swimlane;html=1;startSize=30;fillColor=#D5E8D4;strokeColor=#82B366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="700" y="70" width="300" height="700" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="start2" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="135" y="50" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="p1" value="Open Pay tab" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="90" y="100" width="120" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2" value="Confirm amount &amp;amp; phone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="75" y="170" width="150" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3" value="Tap Pay with M-PESA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="80" y="240" width="140" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4" value="Enter M-PESA PIN&lt;br&gt;on phone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="80" y="480" width="140" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5" value="View receipt &amp;amp;&lt;br&gt;payment history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="75" y="600" width="150" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6" value="POST /api/payments/initiate/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="60" y="240" width="200" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p7" value="resolve_month_paid()&lt;br&gt;Create Payment (pending)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="55" y="310" width="210" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="d2" value="Daraja&lt;br&gt;credentials&lt;br&gt;configured?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="95" y="390" width="130" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="p8" value="MpesaService.stk_push()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="70" y="510" width="180" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p9" value="Simulation mode:&lt;br&gt;auto-complete payment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="55" y="390" width="210" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p10" value="POST mpesa-callback&lt;br&gt;Update status=completed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="50" y="580" width="220" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="p11" value="Generate receipt PDF&lt;br&gt;store in media/receipts/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_api">
+          <mxGeometry x="55" y="660" width="210" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p12" value="STK Push prompt&lt;br&gt;to tenant phone" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_mpesa">
+          <mxGeometry x="70" y="510" width="160" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="p13" value="Send callback with&lt;br&gt;receipt number" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="lane2_mpesa">
+          <mxGeometry x="65" y="590" width="170" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="end2" value="" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="135" y="670" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="end2in" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="lane2_tenant">
+          <mxGeometry x="142" y="677" width="16" height="16" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pe1" style="endArrow=classic;html=1;" edge="1" parent="lane2_tenant" source="start2" target="p1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe2" style="endArrow=classic;html=1;" edge="1" parent="lane2_tenant" source="p1" target="p2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe3" style="endArrow=classic;html=1;" edge="1" parent="lane2_tenant" source="p2" target="p3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe4" style="endArrow=classic;html=1;" edge="1" parent="1" source="p3" target="p6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe5" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="p6" target="p7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe6" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="p7" target="d2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe7" value="Yes" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="d2" target="p8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe8" value="No" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="d2" target="p9"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="50" y="435"/><mxPoint x="50" y="412"/></Array></mxGeometry></mxCell>
+        <mxCell id="pe9" style="endArrow=classic;html=1;" edge="1" parent="1" source="p8" target="p12"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe10" style="endArrow=classic;html=1;" edge="1" parent="1" source="p12" target="p4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe11" style="endArrow=classic;html=1;" edge="1" parent="1" source="p4" target="p13"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="850" y="550"/><mxPoint x="850" y="612"/></Array></mxGeometry></mxCell>
+        <mxCell id="pe12" style="endArrow=classic;html=1;" edge="1" parent="1" source="p13" target="p10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe13" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="p9" target="p10"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="160" y="560"/></Array></mxGeometry></mxCell>
+        <mxCell id="pe14" style="endArrow=classic;html=1;" edge="1" parent="lane2_api" source="p10" target="p11"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe15" style="endArrow=classic;html=1;dashed=1;" edge="1" parent="1" source="p11" target="p5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="pe16" style="endArrow=classic;html=1;" edge="1" parent="lane2_tenant" source="p5" target="end2"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="note2" value="Unique constraint: one pending/completed payment per lease per month. Mobile polls GET /api/payments/payment-status/{id}/ every 3s." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FFF9E6;strokeColor=#D6B656;fontSize=10;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="790" width="960" height="40" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="activity-cash" name="Activity: Cash Collection Approval">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title3" value="Propizy — Activity Diagram: Cash Collection Approval" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="500" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="start3" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="1">
+          <mxGeometry x="485" y="70" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="Staff records cash&lt;br&gt;+ receipt photo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="120" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="Create CashCollection&lt;br&gt;status = pending" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="415" y="200" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="Create OwnerAlert&lt;br&gt;(cash_pending)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="415" y="280" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="Owner reviews&lt;br&gt;Governance tab" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="360" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="d3" value="Owner&lt;br&gt;decision?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="445" y="440" width="110" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="c5" value="POST approve/&lt;br&gt;Create Payment (cash)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="280" y="560" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c6" value="POST reject/&lt;br&gt;status = rejected" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="560" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c7" value="Generate receipt PDF&lt;br&gt;Update collection rate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="275" y="640" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="end3" value="" style="ellipse;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="485" y="730" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="end3in" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;html=1;" vertex="1" parent="1">
+          <mxGeometry x="492" y="737" width="16" height="16" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ce1" style="endArrow=classic;html=1;" edge="1" parent="1" source="start3" target="c1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce2" style="endArrow=classic;html=1;" edge="1" parent="1" source="c1" target="c2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce3" style="endArrow=classic;html=1;" edge="1" parent="1" source="c2" target="c3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce4" style="endArrow=classic;html=1;" edge="1" parent="1" source="c3" target="c4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce5" style="endArrow=classic;html=1;" edge="1" parent="1" source="c4" target="d3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce6" value="Approve" style="endArrow=classic;html=1;" edge="1" parent="1" source="d3" target="c5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce7" value="Reject" style="endArrow=classic;html=1;" edge="1" parent="1" source="d3" target="c6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce8" style="endArrow=classic;html=1;" edge="1" parent="1" source="c5" target="c7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ce9" style="endArrow=classic;html=1;" edge="1" parent="1" source="c7" target="end3"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="365" y="745"/></Array></mxGeometry></mxCell>
+        <mxCell id="ce10" style="endArrow=classic;html=1;" edge="1" parent="1" source="c6" target="end3"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="630" y="745"/></Array></mxGeometry></mxCell>
+
+        <mxCell id="note3" value="Pending cash does NOT affect collection rate until owner approves (NFR-14)." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#FFF9E6;strokeColor=#D6B656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="800" width="500" height="36" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

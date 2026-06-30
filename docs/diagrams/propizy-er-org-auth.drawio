@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Org Auth ER" id="org-er">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="Propizy — Organization &amp; Auth ER" style="text;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="350" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="user" value="User&#xa;─────&#xa;PK id&#xa;role (MANAGER/TENANT)&#xa;property_manager_id&#xa;FK manager_id" style="shape=table;startSize=30;fillColor=#dae8fc;" vertex="1" parent="1">
+          <mxGeometry x="280" y="70" width="150" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="org" value="Organization&#xa;─────&#xa;PK id&#xa;property_manager_id (UQ)&#xa;FK owner_id&#xa;slug" style="shape=table;startSize=30;fillColor=#dae8fc;" vertex="1" parent="1">
+          <mxGeometry x="80" y="70" width="160" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="member" value="OrganizationMember&#xa;─────&#xa;PK id&#xa;FK org_id&#xa;FK user_id&#xa;role (OWNER/STAFF)" style="shape=table;startSize=30;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="80" y="220" width="170" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="tinvite" value="TenantInvite&#xa;─────&#xa;PK id, token (UQ)&#xa;FK org_id&#xa;FK unit_id" style="shape=table;startSize=30;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="320" y="220" width="150" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="sinvite" value="StaffInvite&#xa;─────&#xa;PK id, token&#xa;FK org_id" style="shape=table;startSize=30;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="500" y="220" width="130" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="mpesa" value="OrganizationMpesaConfig&#xa;─────&#xa;PK id&#xa;FK org_id (1:1)&#xa;encrypted credentials" style="shape=table;startSize=30;fillColor=#f8cecc;" vertex="1" parent="1">
+          <mxGeometry x="80" y="370" width="180" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="profile" value="TenantProfile&#xa;─────&#xa;PK id&#xa;FK user_id&#xa;FK current_unit_id" style="shape=table;startSize=30;fillColor=#e1d5e7;" vertex="1" parent="1">
+          <mxGeometry x="320" y="370" width="150" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" style="endArrow=ERone;startArrow=ERone;" edge="1" parent="1" source="org" target="user">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="endArrow=ERmany;startArrow=ERone;" edge="1" parent="1" source="org" target="member">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="endArrow=ERmany;startArrow=ERone;" edge="1" parent="1" source="user" target="member">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="endArrow=ERone;startArrow=ERone;" edge="1" parent="1" source="org" target="mpesa">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="endArrow=ERone;startArrow=ERone;" edge="1" parent="1" source="user" target="profile">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

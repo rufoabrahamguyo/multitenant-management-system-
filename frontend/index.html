@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/propizy-logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Propizy is Kenya-first property management: M-PESA rent collection, invite-only tenant onboarding, owner and staff governance, and maintenance for landlords and managers." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>Propizy | Property Management Made Easy</title>
+    <style>
+      #initial-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at 50% 42%, #fff, #f8fafc 55%, #f1f5f9 100%);
+      }
+      #initial-splash img {
+        width: min(56vw, 14rem);
+        height: min(56vw, 14rem);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="initial-splash" aria-hidden="true">
+      <img src="/propizy-logo.png" alt="" width="176" height="176" />
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

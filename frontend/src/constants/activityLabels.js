@@ -1,0 +1,23 @@
+/** Shared activity log labels for dashboard and audit views. */
+export const ACTION_LABELS = {
+  property_created: 'Property created',
+  unit_created: 'Unit created',
+  tenant_invited: 'Tenant invited',
+  tenant_assigned: 'Tenant assigned',
+  tenant_id_card_uploaded: 'Tenant ID uploaded',
+  staff_invited: 'Staff invited',
+  staff_removed: 'Staff removed',
+  payment_completed: 'Payment completed',
+  reminder_sent: 'Reminder sent',
+  invoices_generated: 'Invoices generated',
+  owner_statement_generated: 'Owner statement generated',
+  dispute_pack_exported: 'Dispute pack exported',
+  maintenance_updated: 'Maintenance updated',
+  transfer_requested: 'Transfer requested',
+  unit_transfer_completed: 'Transfer completed',
+  unit_transfer_rejected: 'Transfer rejected',
+  unit_transfer_waitlisted: 'Transfer waitlisted',
+  cash_collection_recorded: 'Cash collection recorded',
+  cash_collection_approved: 'Cash collection approved',
+  cash_collection_rejected: 'Cash collection rejected',
+};

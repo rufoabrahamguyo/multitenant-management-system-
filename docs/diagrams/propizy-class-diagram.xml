@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-17T14:00:00.000Z" agent="Propizy" version="22.1.0" type="device">
+  <diagram id="class-diagram-full" name="UML Class Diagram">
+    <mxGraphModel dx="2200" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Propizy — UML Class Diagram (Attributes &amp;amp; Operations)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="16" width="560" height="32" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AUTH / ORG CLUSTER ========== -->
+        <mxCell id="cls_user" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- username: string&lt;br&gt;- email: string&lt;br&gt;- password: string&lt;br&gt;- role: MANAGER | TENANT&lt;br&gt;- property_manager_id: UUID&lt;br&gt;- phone_number: string&lt;br&gt;- phone_verified: boolean&lt;br&gt;- manager_id: FK User&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ save(): void&lt;br&gt;+ setPassword(raw: string): void&lt;br&gt;+ getOrgRole(): string&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="230" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_org" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Organization&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- name: string&lt;br&gt;- slug: string&lt;br&gt;- property_manager_id: UUID&lt;br&gt;- owner_id: FK User&lt;br&gt;- created_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="300" y="60" width="230" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_om" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;OrganizationMember&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- organization_id: FK Organization&lt;br&gt;- user_id: FK User&lt;br&gt;- role: OWNER | STAFF&lt;br&gt;- joined_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="560" y="60" width="250" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_tinv" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TenantInvite&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- token: UUID&lt;br&gt;- email: string&lt;br&gt;- phone_number: string&lt;br&gt;- organization_id: FK Organization&lt;br&gt;- unit_id: FK Unit&lt;br&gt;- invited_by_id: FK User&lt;br&gt;- expires_at: datetime&lt;br&gt;- used_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ isValid(): boolean&lt;br&gt;+ getInviteUrl(): string&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="840" y="60" width="250" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_sinv" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;StaffInvite&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- token: UUID&lt;br&gt;- email: string&lt;br&gt;- organization_id: FK Organization&lt;br&gt;- invited_by_id: FK User&lt;br&gt;- expires_at: datetime&lt;br&gt;- used_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ isValid(): boolean&lt;br&gt;+ getInviteUrl(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="60" width="240" height="170" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PROPERTY CLUSTER ========== -->
+        <mxCell id="cls_prop" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Property&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- manager_id: FK User&lt;br&gt;- name: string&lt;br&gt;- address: text&lt;br&gt;- total_units: int&lt;br&gt;- created_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="220" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_cat" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UnitCategory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- property_ref_id: FK Property&lt;br&gt;- name: string&lt;br&gt;- description: text&lt;br&gt;- sort_order: int&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ vacantCount(): int&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="290" y="320" width="230" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_unit" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Unit&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- property_id: FK Property&lt;br&gt;- category_id: FK UnitCategory&lt;br&gt;- unit_number: string&lt;br&gt;- rent_amount: decimal&lt;br&gt;- status: vacant | occupied&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ markOccupied(): void&lt;br&gt;+ markVacant(): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="550" y="320" width="230" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_tprof" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TenantProfile&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- user_id: FK User&lt;br&gt;- current_unit_id: FK Unit&lt;br&gt;- phone_number: string&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ assignUnit(unit: Unit): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="810" y="320" width="230" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_lease" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Lease&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- tenant_id: FK TenantProfile&lt;br&gt;- unit_id: FK Unit&lt;br&gt;- start_date: date&lt;br&gt;- end_date: date&lt;br&gt;- rent_amount: decimal&lt;br&gt;- is_active: boolean&lt;br&gt;- pdf_upload: file&lt;br&gt;- created_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ deactivate(endDate: date): void&lt;br&gt;+ attachPdf(path: string): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="300" width="250" height="210" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_xfer" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;UnitTransferRequest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- tenant_id: FK TenantProfile&lt;br&gt;- current_lease_id: FK Lease&lt;br&gt;- desired_category_id: FK UnitCategory&lt;br&gt;- preferred_unit_id: FK Unit&lt;br&gt;- assigned_unit_id: FK Unit&lt;br&gt;- status: enum&lt;br&gt;- tenant_note: text&lt;br&gt;- manager_note: text&lt;br&gt;- reviewed_by_id: FK User&lt;br&gt;- reviewed_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ cancel(): void&lt;br&gt;+ getWaitlistPosition(): int&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#E1D5E7;strokeColor=#9673A6;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="300" width="280" height="250" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PAYMENT CLUSTER ========== -->
+        <mxCell id="cls_pay" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Payment&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- tenant_id: FK TenantProfile&lt;br&gt;- lease_id: FK Lease&lt;br&gt;- amount: decimal&lt;br&gt;- month_paid: date&lt;br&gt;- status: pending|completed|failed&lt;br&gt;- payment_method: mpesa|cash|bank&lt;br&gt;- mpesa_receipt_number: string&lt;br&gt;- transaction_id: string&lt;br&gt;- checkout_request_id: string&lt;br&gt;- receipt_pdf: file&lt;br&gt;- payment_date: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ markCompleted(receipt: string): void&lt;br&gt;+ markFailed(): void&lt;br&gt;+ attachReceipt(path: string): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="260" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_cash" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CashCollection&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- lease_id: FK Lease&lt;br&gt;- recorded_by_id: FK User&lt;br&gt;- reviewed_by_id: FK User&lt;br&gt;- amount: decimal&lt;br&gt;- month_paid: date&lt;br&gt;- notes: text&lt;br&gt;- receipt_photo: file&lt;br&gt;- status: pending|approved|rejected&lt;br&gt;- linked_payment_id: FK Payment&lt;br&gt;- rejection_reason: text&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ approve(reviewer: User): Payment&lt;br&gt;+ reject(reviewer: User, reason: string): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="330" y="560" width="270" height="250" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_inv" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Invoice&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- lease_id: FK Lease&lt;br&gt;- month: date&lt;br&gt;- amount: decimal&lt;br&gt;- invoice_pdf: file&lt;br&gt;- created_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ generatePdf(): string&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="630" y="560" width="220" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_mpi" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MpesaStatementImport&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- organization_id: FK Organization&lt;br&gt;- uploaded_by_id: FK User&lt;br&gt;- filename: string&lt;br&gt;- matched_count: int&lt;br&gt;- orphan_count: int&lt;br&gt;- imported_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ getSummary(): object&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="880" y="560" width="260" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_mpl" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MpesaStatementLine&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- statement_import_id: FK&lt;br&gt;- matched_payment_id: FK Payment&lt;br&gt;- receipt_number: string&lt;br&gt;- phone_number: string&lt;br&gt;- amount: decimal&lt;br&gt;- match_status: enum&lt;br&gt;- transaction_date: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ matchToPayment(payment: Payment): void&lt;br&gt;+ markOrphan(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#D5E8D4;strokeColor=#82B366;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="560" width="270" height="190" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cls_mnt" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MaintenanceRequest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- id: int&lt;br&gt;- tenant_id: FK TenantProfile&lt;br&gt;- unit_id: FK Unit&lt;br&gt;- issue_title: string&lt;br&gt;- issue_description: text&lt;br&gt;- status: pending|in-progress|resolved&lt;br&gt;- created_at: datetime&lt;br&gt;- updated_at: datetime&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ updateStatus(status: string): void&lt;br&gt;+ __str__(): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="580" width="260" height="190" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== SERVICE CLASSES ========== -->
+        <mxCell id="svc_lease" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;LeaseService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ createLeaseForTenant(profile, unit, months): Lease&lt;br&gt;+ generateLeaseAgreementPdf(lease, orgName): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="300" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_pay" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;PaymentService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ resolveMonthPaid(lease, preferred): date&lt;br&gt;+ getLeaseArrears(lease, asOf): list&lt;br&gt;+ getOrgArrears(pmId): list&lt;br&gt;+ sendArrearsReminders(lease): void&lt;br&gt;+ generateReceiptPdf(payment): string&lt;br&gt;+ generateInvoicePdf(lease, month): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="370" y="860" width="310" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_mpesa" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;MpesaService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;- consumerKey: string&lt;br&gt;- consumerSecret: string&lt;br&gt;- shortcode: string&lt;br&gt;- passkey: string&lt;br&gt;- callbackUrl: string&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ getAccessToken(): string&lt;br&gt;+ stkPush(phone, amount, ref, desc): object&lt;br&gt;- formatPhone(phone): string&lt;br&gt;- generatePassword(): tuple&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="710" y="860" width="300" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_xfer" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;TransferService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ approveTransfer(request, unit, reviewer): Request&lt;br&gt;+ rejectTransfer(request, reviewer, reason): Request&lt;br&gt;+ moveToWaitlist(request): Request&lt;br&gt;+ getCategoryAvailability(pmId): list&lt;br&gt;+ determineInitialStatus(category): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="1040" y="860" width="340" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_recon" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;ReconciliationService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ parseMpesaCsv(content): list&lt;br&gt;+ importStatementCsv(org, user, file, pmId): Import&lt;br&gt;+ matchLinesToPayments(import): void&lt;br&gt;+ findSilentTenants(pmId): list&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="1410" y="860" width="320" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_gov" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;&lt;br&gt;GovernanceService&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;line-height:1.35;&quot;&gt;+ getPermissionMatrix(role): object&lt;br&gt;+ logOwnerAlert(org, type, message): void&lt;br&gt;+ createEvidenceSnapshot(tenant, user): Snapshot&lt;br&gt;+ generateOwnerStatement(org, month): string&lt;br&gt;+ generateWeeklyDigest(org): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=10;fontFamily=Helvetica;html=1;rounded=0;strokeWidth=1;fillColor=#F5F5F5;strokeColor=#666666;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="40" y="1040" width="330" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== RELATIONSHIPS ========== -->
+        <mxCell id="r1" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;startArrow=diamondThin;startFill=0;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" edge="1" parent="1" source="cls_user" target="cls_org"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r1m" value="0..1" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r1"><mxGeometry x="0.75" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r2" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="cls_org" target="cls_om"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r2m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r2"><mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r3" value="" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;dashed=1;exitX=1;exitY=0.7;entryX=0;entryY=0.3;" edge="1" parent="1" source="cls_user" target="cls_om"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="r4" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=0.3;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cls_user" target="cls_prop"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r4m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r4"><mxGeometry x="0.75" relative="1" as="geometry"><mxPoint x="-8" y="-8" as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r5" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.35;entryX=0;entryY=0.5;" edge="1" parent="1" source="cls_prop" target="cls_cat"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r5m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r5"><mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r6" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.65;entryX=0;entryY=0.5;" edge="1" parent="1" source="cls_prop" target="cls_unit"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="520" y="418"/><mxPoint x="520" y="405"/></Array></mxGeometry></mxCell>
+        <mxCell id="r6m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r6"><mxGeometry x="0.7" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r7" value="" style="endArrow=open;html=1;strokeColor=#666666;endFill=0;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;" edge="1" parent="1" source="cls_cat" target="cls_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="r8" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;startArrow=diamondThin;startFill=0;exitX=1;exitY=0.85;entryX=0;entryY=0.3;" edge="1" parent="1" source="cls_user" target="cls_tprof"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="780" y="247"/><mxPoint x="780" y="362"/></Array></mxGeometry></mxCell>
+        <mxCell id="r8m" value="0..1" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r8"><mxGeometry x="0.6" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r9" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.35;" edge="1" parent="1" source="cls_tprof" target="cls_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r9m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r9"><mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r10" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.65;" edge="1" parent="1" source="cls_unit" target="cls_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r10m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r10"><mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r11" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=0.25;exitY=1;entryX=0.75;entryY=0;" edge="1" parent="1" source="cls_lease" target="cls_pay"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1133" y="540"/><mxPoint x="235" y="540"/></Array></mxGeometry></mxCell>
+        <mxCell id="r11m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r11"><mxGeometry x="0.2" relative="1" as="geometry"><mxPoint x="15" y="-8" as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r12" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=0.1;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cls_lease" target="cls_cash"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1095" y="540"/><mxPoint x="465" y="540"/></Array></mxGeometry></mxCell>
+        <mxCell id="r12m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r12"><mxGeometry x="0.45" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r13" value="0..1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;startArrow=diamondThin;startFill=0;exitX=0;exitY=0.75;entryX=1;entryY=0.75;" edge="1" parent="1" source="cls_cash" target="cls_pay"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="r14" value="" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="cls_tprof" target="cls_xfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="r15" value="" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cls_tprof" target="cls_mnt"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="925" y="540"/><mxPoint x="1600" y="540"/></Array></mxGeometry></mxCell>
+
+        <mxCell id="r16" value="1" style="endArrow=open;html=1;strokeColor=#000000;endFill=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cls_mpi" target="cls_mpl"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r16m" value="0..*" style="edgeLabel;html=1;fontSize=9;" vertex="1" connectable="0" parent="r16"><mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry></mxCell>
+
+        <mxCell id="r17" value="" style="endArrow=open;html=1;strokeColor=#666666;endFill=0;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="cls_mpl" target="cls_pay"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Service dependencies (dashed) -->
+        <mxCell id="d_svc1" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;html=1;strokeColor=#666666;dashed=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="svc_lease" target="cls_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_svc2" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;html=1;strokeColor=#666666;dashed=1;exitX=0.5;exitY=0;entryX=0.25;entryY=1;" edge="1" parent="1" source="svc_pay" target="cls_pay"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_svc3" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;html=1;strokeColor=#666666;dashed=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="svc_mpesa" target="cls_pay"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="860" y="840"/><mxPoint x="170" y="840"/></Array></mxGeometry></mxCell>
+        <mxCell id="d_svc4" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;html=1;strokeColor=#666666;dashed=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="svc_xfer" target="cls_xfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_svc5" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;html=1;strokeColor=#666666;dashed=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="svc_recon" target="cls_mpi"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="legend" value="UML notation: - = private attribute, + = public operation  |  Blue = auth/org  |  Purple = property  |  Green = payments  |  Yellow = maintenance  |  Grey italic = &amp;lt;&amp;lt;service&amp;gt;&amp;gt; layer (properties/services.py, payments/*.py)" style="text;html=1;strokeColor=#666666;fillColor=#F2F2F2;align=left;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1220" width="1690" height="40" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

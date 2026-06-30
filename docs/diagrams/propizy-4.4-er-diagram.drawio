@@ -1,0 +1,334 @@
+<mxfile host="app.diagrams.net" modified="2026-06-15T20:00:00.000Z" agent="Propizy" version="22.1.0" type="device">
+  <diagram id="er-chen" name="4.4a Chen (Conceptual)">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Propizy — Entity-Relationship Diagram (Chen Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="15" width="550" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- ENTITIES -->
+        <mxCell id="ent_org" value="Organization" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="90" width="120" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_user" value="User" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="90" width="100" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_tenant" value="Tenant" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="100" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_property" value="Property" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="540" y="90" width="110" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_category" value="UnitCategory" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="760" y="90" width="120" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_unit" value="Unit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1000" y="200" width="100" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_lease" value="Lease" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="540" y="320" width="100" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_payment" value="Payment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="560" width="100" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_maintenance" value="Maintenance" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="560" width="120" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_transfer" value="TransferRequest" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="760" y="400" width="130" height="42" as="geometry"/>
+        </mxCell>
+        <mxCell id="ent_cash" value="CashCollection" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F4E79;fontColor=#FFFFFF;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="540" y="560" width="130" height="42" as="geometry"/>
+        </mxCell>
+
+        <!-- KEY ATTRIBUTES (sample per entity — PK underlined via fontStyle) -->
+        <mxCell id="att_o1" value="&lt;u&gt;org_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="20" y="40" width="65" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_o2" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="100" y="30" width="55" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_o3" value="pm_id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="170" y="50" width="55" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_u1" value="&lt;u&gt;user_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="280" y="30" width="65" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_u2" value="role" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="360" y="20" width="50" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_u3" value="username" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="420" y="50" width="70" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_t1" value="&lt;u&gt;tenant_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="20" y="280" width="70" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_t2" value="phone_no" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="100" y="270" width="70" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_p1" value="&lt;u&gt;property_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="520" y="30" width="80" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_p2" value="address" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="610" y="20" width="65" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_un1" value="&lt;u&gt;unit_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="140" width="65" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_un2" value="rent_amount" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="170" width="80" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_un3" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="260" width="60" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_l1" value="&lt;u&gt;lease_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="480" y="280" width="70" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_l2" value="start_date" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="560" y="270" width="75" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_l3" value="is_active" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="650" y="290" width="70" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_pay1" value="&lt;u&gt;payment_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="20" y="520" width="80" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_pay2" value="amount" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="110" y="510" width="60" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="att_pay3" value="month_paid" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="180" y="530" width="75" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Attribute lines -->
+        <mxCell id="la_o1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_o1" target="ent_org"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_o2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_o2" target="ent_org"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_o3" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_o3" target="ent_org"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_u1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_u1" target="ent_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_u2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_u2" target="ent_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_u3" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_u3" target="ent_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_t1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_t1" target="ent_tenant"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_t2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_t2" target="ent_tenant"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_p1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_p1" target="ent_property"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_p2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_p2" target="ent_property"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_un1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_un1" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_un2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_un2" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_un3" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_un3" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_l1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_l1" target="ent_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_l2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_l2" target="ent_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_l3" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_l3" target="ent_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_pay1" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_pay1" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_pay2" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_pay2" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="la_pay3" style="endArrow=none;html=1;strokeColor=#999999;" edge="1" parent="1" source="att_pay3" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- RELATIONSHIPS (diamonds) -->
+        <mxCell id="rel_owns" value="Owns" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="85" width="75" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_manages" value="Manages" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="420" y="85" width="80" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_contains" value="Contains" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="680" y="85" width="80" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_classifies" value="Classifies" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="900" y="85" width="80" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_profiles" value="Has Profile" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="310" width="90" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_leases" value="Leases" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="350" y="310" width="80" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_occupies" value="Occupies" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="820" y="310" width="80" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_pays" value="Pays" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="450" width="75" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_bills" value="Bills" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="420" y="450" width="75" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_requests" value="Requests" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="80" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_submits" value="Submits" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="210" y="555" width="80" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_approves" value="Approves" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="420" y="555" width="80" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel_oversees" value="Oversees" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#FFFFFF;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="350" y="200" width="80" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Relationship connectors with crow's foot -->
+        <!-- Org Owns User (1:1 owner) -->
+        <mxCell id="r_owns1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_org" target="rel_owns"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_owns2" value="" style="endArrow=ERone;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_owns" target="ent_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- User Manages Property (1:N) -->
+        <mxCell id="r_man1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_user" target="rel_manages"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_man2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_manages" target="ent_property"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Property Contains UnitCategory (1:N) -->
+        <mxCell id="r_con1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_property" target="rel_contains"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_con2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_contains" target="ent_category"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- UnitCategory Classifies Unit (1:N) -->
+        <mxCell id="r_cla1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_category" target="rel_classifies"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_cla2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_classifies" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Property also has Units directly -->
+        <mxCell id="r_prop_unit" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;dashed=1;" edge="1" parent="1" source="ent_property" target="ent_unit"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="595" y="221"/></Array></mxGeometry></mxCell>
+
+        <!-- User Has Profile Tenant (1:1) -->
+        <mxCell id="r_prof1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_user" target="rel_profiles"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="370" y="250"/></Array></mxGeometry></mxCell>
+        <mxCell id="r_prof2" value="" style="endArrow=ERone;startArrow=ERzeroToOne;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_profiles" target="ent_tenant"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- User Oversees Tenant (manager 1:N tenants) -->
+        <mxCell id="r_ov1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_user" target="rel_oversees"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_ov2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_oversees" target="ent_tenant"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Tenant Leases Unit via Lease (M:N resolved) -->
+        <mxCell id="r_lea1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_tenant" target="rel_leases"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_lea2" value="" style="endArrow=ERmany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_leases" target="ent_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_lea3" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_lease" target="rel_occupies"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_lea4" value="" style="endArrow=ERone;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_occupies" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Tenant Pays Payment (1:N) -->
+        <mxCell id="r_pay1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_tenant" target="rel_pays"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_pay2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_pays" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Lease Bills Payment (1:N) -->
+        <mxCell id="r_bil1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_lease" target="rel_bills"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_bil2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_bills" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Tenant Requests Transfer (M:N via TransferRequest) -->
+        <mxCell id="r_req1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_tenant" target="rel_requests"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="250" y="420"/></Array></mxGeometry></mxCell>
+        <mxCell id="r_req2" value="" style="endArrow=ERone;startArrow=ERmany;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_requests" target="ent_transfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_req3" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_transfer" target="ent_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Tenant Submits Maintenance (1:N) -->
+        <mxCell id="r_sub1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_tenant" target="rel_submits"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_sub2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_submits" target="ent_maintenance"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_sub3" value="" style="endArrow=ERone;startArrow=ERone;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_maintenance" target="ent_unit"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1050" y="580"/></Array></mxGeometry></mxCell>
+
+        <!-- User Approves CashCollection (1:N) -->
+        <mxCell id="r_app1" style="endArrow=none;html=1;strokeColor=#000000;" edge="1" parent="1" source="ent_lease" target="rel_approves"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="590" y="520"/></Array></mxGeometry></mxCell>
+        <mxCell id="r_app2" value="" style="endArrow=ERone;startArrow=ERmany;html=1;strokeColor=#000000;" edge="1" parent="1" source="rel_approves" target="ent_cash"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="r_app3" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;dashed=1;" edge="1" parent="1" source="ent_cash" target="ent_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="legend" value="&lt;b&gt;Chen notation&lt;/b&gt;: blue rectangle = entity | green oval = attribute (&lt;u&gt;underlined&lt;/u&gt; = PK) | black diamond = relationship | crow's foot = cardinality&lt;br&gt;Django mapping: Organization, User, TenantProfile, Property, UnitCategory, Unit, Lease, Payment, UnitTransferRequest, CashCollection, MaintenanceRequest" style="text;html=1;strokeColor=#666666;fillColor=#F5F5F5;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="900" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Figure 4.3 — Conceptual ER Diagram (Propizy multi-tenant property management system)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="740" width="600" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="er-crowsfoot" name="4.4b Crow's Foot (Logical)">
+    <mxGraphModel dx="1800" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title2" value="Propizy — Logical Entity-Relationship Diagram (Crow's Foot Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+          <mxGeometry x="40" y="15" width="650" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Table entity style -->
+        <mxCell id="tbl_org" value="&lt;b&gt;ORGANIZATION&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;org_id&lt;/u&gt; (PK)&lt;br&gt;name&lt;br&gt;slug&lt;br&gt;property_manager_id&lt;br&gt;plan&lt;br&gt;owner_id (FK → USER)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="70" width="170" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_user" value="&lt;b&gt;USER&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;user_id&lt;/u&gt; (PK)&lt;br&gt;username&lt;br&gt;role&lt;br&gt;property_manager_id&lt;br&gt;manager_id (FK → USER)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="70" width="170" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_orgmem" value="&lt;b&gt;ORGANIZATION_MEMBER&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;member_id&lt;/u&gt; (PK)&lt;br&gt;organization_id (FK)&lt;br&gt;user_id (FK)&lt;br&gt;role&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="70" width="190" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_property" value="&lt;b&gt;PROPERTY&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;property_id&lt;/u&gt; (PK)&lt;br&gt;name&lt;br&gt;address&lt;br&gt;total_units&lt;br&gt;manager_id (FK → USER)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="170" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_category" value="&lt;b&gt;UNIT_CATEGORY&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;category_id&lt;/u&gt; (PK)&lt;br&gt;property_id (FK)&lt;br&gt;name&lt;br&gt;description&lt;br&gt;sort_order&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="260" width="170" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_unit" value="&lt;b&gt;UNIT&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;unit_id&lt;/u&gt; (PK)&lt;br&gt;property_id (FK)&lt;br&gt;category_id (FK)&lt;br&gt;unit_number&lt;br&gt;rent_amount&lt;br&gt;status&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="260" width="170" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_tenant" value="&lt;b&gt;TENANT_PROFILE&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;tenant_id&lt;/u&gt; (PK)&lt;br&gt;user_id (FK → USER)&lt;br&gt;current_unit_id (FK)&lt;br&gt;phone_number&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="70" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_lease" value="&lt;b&gt;LEASE&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;lease_id&lt;/u&gt; (PK)&lt;br&gt;tenant_id (FK)&lt;br&gt;unit_id (FK)&lt;br&gt;start_date&lt;br&gt;end_date&lt;br&gt;rent_amount&lt;br&gt;is_active&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="260" width="170" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_payment" value="&lt;b&gt;PAYMENT&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;payment_id&lt;/u&gt; (PK)&lt;br&gt;tenant_id (FK)&lt;br&gt;lease_id (FK)&lt;br&gt;amount&lt;br&gt;month_paid&lt;br&gt;status&lt;br&gt;mpesa_receipt_number&lt;br&gt;payment_method&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="180" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_invoice" value="&lt;b&gt;INVOICE&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;invoice_id&lt;/u&gt; (PK)&lt;br&gt;lease_id (FK)&lt;br&gt;month&lt;br&gt;amount&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="460" width="150" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_cash" value="&lt;b&gt;CASH_COLLECTION&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;cash_id&lt;/u&gt; (PK)&lt;br&gt;lease_id (FK)&lt;br&gt;recorded_by (FK)&lt;br&gt;amount&lt;br&gt;month_paid&lt;br&gt;status&lt;br&gt;linked_payment_id (FK)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="460" width="190" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_transfer" value="&lt;b&gt;UNIT_TRANSFER_REQUEST&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;request_id&lt;/u&gt; (PK)&lt;br&gt;tenant_id (FK)&lt;br&gt;current_lease_id (FK)&lt;br&gt;desired_category_id (FK)&lt;br&gt;preferred_unit_id (FK)&lt;br&gt;assigned_unit_id (FK)&lt;br&gt;status&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="260" width="210" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_maint" value="&lt;b&gt;MAINTENANCE_REQUEST&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;request_id&lt;/u&gt; (PK)&lt;br&gt;tenant_id (FK)&lt;br&gt;unit_id (FK)&lt;br&gt;issue_title&lt;br&gt;issue_description&lt;br&gt;status&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="460" width="200" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_import" value="&lt;b&gt;MPESA_STATEMENT_IMPORT&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;import_id&lt;/u&gt; (PK)&lt;br&gt;organization_id (FK)&lt;br&gt;uploaded_by (FK)&lt;br&gt;filename&lt;br&gt;matched_count&lt;br&gt;orphan_count&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="70" width="210" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_line" value="&lt;b&gt;MPESA_STATEMENT_LINE&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;line_id&lt;/u&gt; (PK)&lt;br&gt;statement_import_id (FK)&lt;br&gt;receipt_number&lt;br&gt;amount&lt;br&gt;match_status&lt;br&gt;matched_payment_id (FK)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="460" width="210" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_evidence" value="&lt;b&gt;EVIDENCE_SNAPSHOT&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;snapshot_id&lt;/u&gt; (PK)&lt;br&gt;tenant_id (FK)&lt;br&gt;sha256_hash&lt;br&gt;json_bundle&lt;br&gt;created_by (FK)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="620" width="190" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tbl_utility" value="&lt;b&gt;UTILITY_CHARGE&lt;/b&gt;&lt;hr&gt;&lt;div align=&quot;left&quot; style=&quot;padding:2px 6px;&quot;&gt;&lt;u&gt;charge_id&lt;/u&gt; (PK)&lt;br&gt;lease_id (FK)&lt;br&gt;utility_type&lt;br&gt;month&lt;br&gt;amount&lt;br&gt;is_paid&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;align=center;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="660" width="170" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- Crow's Foot relationships -->
+        <mxCell id="cf1" value="" style="endArrow=ERone;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.25;entryX=0;entryY=0.25;" edge="1" parent="1" source="tbl_org" target="tbl_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf2" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_org" target="tbl_orgmem"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf3" value="" style="endArrow=ERone;startArrow=ERzeroToMany;html=1;strokeColor=#000000;exitX=1;exitY=0.75;entryX=0;entryY=0.75;" edge="1" parent="1" source="tbl_orgmem" target="tbl_user"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf4" value="" style="endArrow=ERzeroToOne;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_user" target="tbl_tenant"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf5" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_user" target="tbl_property"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="385" y="220"/><mxPoint x="145" y="220"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf6" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_property" target="tbl_category"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf7" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_category" target="tbl_unit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf8" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.75;entryX=0;entryY=0.75;" edge="1" parent="1" source="tbl_property" target="tbl_unit"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="230" y="350"/><mxPoint x="230" y="350"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf9" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_tenant" target="tbl_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf10" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="tbl_unit" target="tbl_lease"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf11" value="" style="endArrow=ERzeroToOne;startArrow=ERzeroToMany;html=1;strokeColor=#000000;exitX=0.5;exitY=0;entryX=0.75;entryY=1;" edge="1" parent="1" source="tbl_tenant" target="tbl_unit"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="870" y="220"/><mxPoint x="668" y="220"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf12" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.25;" edge="1" parent="1" source="tbl_tenant" target="tbl_payment"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="700" y="120"/><mxPoint x="700" y="495"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf13" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=1;entryX=1;entryY=0.5;" edge="1" parent="1" source="tbl_lease" target="tbl_payment"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="760" y="530"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf14" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=0.75;entryX=1;entryY=0.5;" edge="1" parent="1" source="tbl_lease" target="tbl_invoice"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf15" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=1;entryX=1;entryY=0.25;" edge="1" parent="1" source="tbl_lease" target="tbl_cash"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf16" value="" style="endArrow=ERzeroToOne;startArrow=ERzeroToMany;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.75;" edge="1" parent="1" source="tbl_cash" target="tbl_payment"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf17" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="tbl_tenant" target="tbl_transfer"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1000" y="120"/><mxPoint x="1000" y="330"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf18" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="tbl_unit" target="tbl_transfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf19" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_tenant" target="tbl_maint"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf20" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=1;entryY=0.25;" edge="1" parent="1" source="tbl_unit" target="tbl_maint"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf21" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_org" target="tbl_import"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="145" y="50"/><mxPoint x="1125" y="50"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf22" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_import" target="tbl_line"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="cf23" value="" style="endArrow=ERzeroToOne;startArrow=ERzeroToMany;html=1;strokeColor=#000000;exitX=0;exitY=0.5;entryX=1;entryY=0.75;" edge="1" parent="1" source="tbl_line" target="tbl_payment"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="980" y="520"/><mxPoint x="980" y="565"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf24" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0;exitY=1;entryX=1;entryY=0.25;" edge="1" parent="1" source="tbl_tenant" target="tbl_evidence"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="750" y="620"/></Array></mxGeometry></mxCell>
+        <mxCell id="cf25" value="" style="endArrow=ERzeroToMany;startArrow=ERone;html=1;strokeColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="tbl_lease" target="tbl_utility"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="865" y="620"/><mxPoint x="145" y="620"/></Array></mxGeometry></mxCell>
+
+        <mxCell id="legend2" value="&lt;b&gt;Crow's Foot notation&lt;/b&gt;: table box = entity/relation; &lt;u&gt;underlined&lt;/u&gt; = primary key; (FK) = foreign key; line endings = cardinality (one, many, optional)&lt;br&gt;Derived from Django models: users, properties, payments, maintenance apps. Multi-tenancy scoped via property_manager_id on Organization and User." style="text;html=1;strokeColor=#666666;fillColor=#F5F5F5;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="820" width="1100" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle2" value="Figure 4.3b — Logical ER Diagram showing relational schema for Propizy (PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="870" width="550" height="20" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
