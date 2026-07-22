@@ -46,23 +46,17 @@ def is_org_owner(user):
         return False
 
 
-def is_org_staff(user):
-    if not user or user.role != User.Role.MANAGER:
-        return False
-    try:
-        user.owned_organization
-        return False
-    except Exception:
-        pass
-    try:
-        return bool(user.org_membership)
-    except Exception:
-        return False
-
-
 def get_org_role(user):
     if is_org_owner(user):
         return 'OWNER'
-    if is_org_staff(user):
-        return 'STAFF'
-    return None
+    if not user or user.role != User.Role.MANAGER:
+        return None
+    try:
+        return user.org_membership.role
+    except Exception:
+        return None
+
+
+def is_org_staff(user):
+    role = get_org_role(user)
+    return role in ('STAFF', 'FRONT_DESK', 'MAINTENANCE')

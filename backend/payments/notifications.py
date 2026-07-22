@@ -6,10 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def send_sms(phone_number, message):
-    """
-    Send SMS via Africa's Talking when configured, otherwise simulate.
-    Set AFRICASTALKING_API_KEY and AFRICASTALKING_USERNAME in .env for live SMS.
-    """
+
     api_key = getattr(settings, 'AFRICASTALKING_API_KEY', '')
     username = getattr(settings, 'AFRICASTALKING_USERNAME', '')
 

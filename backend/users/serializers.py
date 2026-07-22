@@ -25,9 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name', 'role',
             'property_manager_id', 'org_role', 'organization_name',
-            'phone_number', 'phone_verified', 'phone_masked',
+            'phone_number', 'phone_verified', 'phone_masked', 'must_change_password',
         ]
-        read_only_fields = ['property_manager_id', 'phone_verified', 'phone_masked']
+        read_only_fields = ['property_manager_id', 'phone_verified', 'phone_masked', 'must_change_password']
 
     def get_phone_masked(self, obj):
         if not obj.phone_number:
@@ -180,7 +180,7 @@ class StaffRegisterSerializer(serializers.Serializer):
         OrganizationMember.objects.create(
             organization=invite.organization,
             user=user,
-            role=OrganizationMember.Role.STAFF,
+            role=invite.role or OrganizationMember.Role.STAFF,
         )
 
         invite.used_at = timezone.now()
@@ -240,26 +240,60 @@ class TenantInviteCreateSerializer(serializers.Serializer):
 class StaffInviteSerializer(serializers.ModelSerializer):
     invite_url = serializers.SerializerMethodField()
     is_valid = serializers.BooleanField(read_only=True)
+    role_label = serializers.SerializerMethodField()
 
     class Meta:
         model = StaffInvite
-        fields = ['id', 'token', 'email', 'expires_at', 'used_at', 'is_valid', 'invite_url', 'created_at']
+        fields = [
+            'id', 'token', 'email', 'role', 'role_label',
+            'expires_at', 'used_at', 'is_valid', 'invite_url', 'created_at',
+        ]
         read_only_fields = ['token', 'used_at', 'created_at']
 
     def get_invite_url(self, obj):
         from .emails import staff_invite_web_url
         return staff_invite_web_url(obj.token)
 
+    def get_role_label(self, obj):
+        return dict(OrganizationMember.Role.choices).get(obj.role, obj.role)
+
 
 class StaffInviteCreateSerializer(serializers.Serializer):
     email = serializers.EmailField()
+    role = serializers.ChoiceField(
+        choices=[
+            OrganizationMember.Role.FRONT_DESK,
+            OrganizationMember.Role.MAINTENANCE,
+            OrganizationMember.Role.STAFF,
+        ],
+        default=OrganizationMember.Role.STAFF,
+    )
 
 
 class OrganizationMemberSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.EmailField(source='user.email', read_only=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
+    is_active = serializers.BooleanField(source='user.is_active', read_only=True)
+    role_label = serializers.SerializerMethodField()
 
     class Meta:
         model = OrganizationMember
-        fields = ['id', 'username', 'email', 'first_name', 'role', 'joined_at']
+        fields = [
+            'id', 'username', 'email', 'first_name', 'role', 'role_label',
+            'is_active', 'joined_at',
+        ]
+        read_only_fields = ['joined_at']
+
+    def get_role_label(self, obj):
+        return dict(OrganizationMember.Role.choices).get(obj.role, obj.role)
+
+
+class OrganizationMemberRoleUpdateSerializer(serializers.Serializer):
+    role = serializers.ChoiceField(
+        choices=[
+            OrganizationMember.Role.FRONT_DESK,
+            OrganizationMember.Role.MAINTENANCE,
+            OrganizationMember.Role.STAFF,
+        ],
+    )

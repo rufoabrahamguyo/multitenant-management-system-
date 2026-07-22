@@ -81,7 +81,7 @@ def generate_invoice_pdf(lease, invoice_month, amount):
     )
 
     tenant = lease.tenant
-    due_date = date(invoice_month.year, invoice_month.month, 28)
+    due_date = date(invoice_month.year, invoice_month.month, 5)
     elements = [
         Paragraph('Propizy Rent Invoice', title_style),
         Spacer(1, 12),
@@ -94,7 +94,7 @@ def generate_invoice_pdf(lease, invoice_month, amount):
 
     data = [
         ['Description', 'Amount (KES)'],
-        [f'Monthly rent · {invoice_month.strftime("%B %Y")}', f'{amount:,.2f}'],
+        [f'Monthly rent - {invoice_month.strftime("%B %Y")}', f'{amount:,.2f}'],
         ['Total Due', f'{amount:,.2f}'],
     ]
     table = Table(data, colWidths=[4 * inch, 2 * inch])

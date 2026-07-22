@@ -50,7 +50,7 @@ class MpesaIntegrationRequestAdmin(admin.ModelAdmin):
                 'account_number', 'notes',
             ),
         }),
-        ('Propizy team — complete integration', {
+        ('Propizy team: complete integration', {
             'fields': ('consumer_key', 'consumer_secret', 'passkey', 'mpesa_env', 'admin_notes'),
             'description': (
                 'Enter Daraja credentials and set status to Completed to activate STK Push '

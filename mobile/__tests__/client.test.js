@@ -4,6 +4,12 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
+jest.mock('expo-constants', () => ({
+  expoConfig: { hostUri: null },
+  manifest: null,
+  manifest2: null,
+}));
+
 describe('API client', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -31,7 +37,7 @@ describe('API client', () => {
     const interceptorUse = api.interceptors.request.use;
     if (typeof interceptorUse === 'function') {
       // In the real module the interceptor is already wired; just verify the instance exists
-      expect(api.defaults.baseURL).toContain('localhost');
+      expect(api.defaults.baseURL).toContain('8002');
     }
   });
 });

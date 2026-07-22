@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" modified="2026-06-16T00:00:00.000Z" agent="Propizy" version="22.1.0" type="device">
-  <diagram id="dfd-l2-p3" name="Level 2 — Process 3">
+  <diagram id="dfd-l2-p3" name="Level 2, Process 3">
     <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="620" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="DFD Level 2 — Process 3: Lease &amp;amp; Tenant Onboarding" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="DFD Level 2, Process 3: Lease &amp;amp; Tenant Onboarding" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="12" width="700" height="28" as="geometry"/>
         </mxCell>
         <mxCell id="parent" value="&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width:100%;height:100%;border-collapse:collapse;&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#1F4E79;color:#FFF;text-align:center;padding:4px;font-weight:bold;font-size:11px;&quot;&gt;3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;background:#BDD7EE;text-align:center;padding:4px;font-size:9px;&quot;&gt;Lease &amp;amp; Tenant Onboarding&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#1F4E79;fillColor=none;dashed=1;dashPattern=8 4;arcSize=8;" vertex="1" parent="1">
@@ -104,12 +104,12 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="dfd-l2-p4" name="Level 2 — Process 4">
+  <diagram id="dfd-l2-p4" name="Level 2, Process 4">
     <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="680" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="DFD Level 2 — Process 4: Rent Collection (M-PESA &amp;amp; Cash)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="DFD Level 2, Process 4: Rent Collection (M-PESA &amp;amp; Cash)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="12" width="700" height="28" as="geometry"/>
         </mxCell>
         <mxCell id="parent" value="&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width:100%;height:100%;border-collapse:collapse;&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#1F4E79;color:#FFF;text-align:center;padding:4px;font-weight:bold;font-size:11px;&quot;&gt;4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;background:#BDD7EE;text-align:center;padding:4px;font-size:9px;&quot;&gt;Rent Collection (M-PESA &amp;amp; Cash)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#1F4E79;fillColor=none;dashed=1;dashPattern=8 4;arcSize=8;" vertex="1" parent="1">
@@ -262,12 +262,12 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="dfd-l2-p5" name="Level 2 — Process 5">
+  <diagram id="dfd-l2-p5" name="Level 2, Process 5">
     <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="620" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="DFD Level 2 — Process 5: Governance (Reconciliation, Evidence, Integrity)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="DFD Level 2, Process 5: Governance (Reconciliation, Evidence, Integrity)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="12" width="700" height="28" as="geometry"/>
         </mxCell>
         <mxCell id="parent" value="&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width:100%;height:100%;border-collapse:collapse;&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#1F4E79;color:#FFF;text-align:center;padding:4px;font-weight:bold;font-size:11px;&quot;&gt;5&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;background:#BDD7EE;text-align:center;padding:4px;font-size:9px;&quot;&gt;Governance&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#1F4E79;fillColor=none;dashed=1;dashPattern=8 4;arcSize=8;" vertex="1" parent="1">
@@ -396,12 +396,12 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="dfd-l2-p6" name="Level 2 — Process 6">
+  <diagram id="dfd-l2-p6" name="Level 2, Process 6">
     <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="620" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="title" value="DFD Level 2 — Process 6: Room Transfer &amp;amp; Waitlist" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="DFD Level 2, Process 6: Room Transfer &amp;amp; Waitlist" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="12" width="700" height="28" as="geometry"/>
         </mxCell>
         <mxCell id="parent" value="&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;width:100%;height:100%;border-collapse:collapse;&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#1F4E79;color:#FFF;text-align:center;padding:4px;font-weight:bold;font-size:11px;&quot;&gt;6&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;background:#BDD7EE;text-align:center;padding:4px;font-size:9px;&quot;&gt;Room Transfer &amp;amp; Waitlist&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#1F4E79;fillColor=none;dashed=1;dashPattern=8 4;arcSize=8;" vertex="1" parent="1">

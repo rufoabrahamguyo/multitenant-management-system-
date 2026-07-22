@@ -4,7 +4,12 @@ import {
   TextInput, Alert, ActivityIndicator, Linking, RefreshControl,
   Modal, TouchableWithoutFeedback,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import api from '../api/client';
+import AppShell from '../components/AppShell';
+import { colors, spacing, radius } from '../theme';
+
+const TABS = ['Invoices', 'Payments', 'Refunds'];
 
 export default function PaymentScreen() {
   const [payments, setPayments] = useState([]);
@@ -15,6 +20,8 @@ export default function PaymentScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [phoneLocal, setPhoneLocal] = useState('');
+  const [tab, setTab] = useState('Invoices');
+  const [query, setQuery] = useState('');
   const pollingRef = useRef(null);
 
   const fetchData = useCallback(async () => {
@@ -37,7 +44,7 @@ export default function PaymentScreen() {
   useEffect(() => {
     fetchData().catch(() => {});
     return () => clearInterval(pollingRef.current);
-  }, []);
+  }, [fetchData]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -99,66 +106,123 @@ export default function PaymentScreen() {
     }
   };
 
-  const statusColor = { completed: '#16a34a', pending: '#ca8a04', failed: '#dc2626' };
+  const q = query.trim().toLowerCase();
+
+  const invoiceRows = payments
+    .filter((p) => !q || String(p.month_paid || '').toLowerCase().includes(q) || String(p.amount).includes(q))
+    .map((p) => ({
+      id: `inv-${p.id}`,
+      title: p.month_paid ? `${p.month_paid} Rent` : 'Rent invoice',
+      amount: Number(p.amount),
+      status: p.status === 'completed' ? 'Paid' : p.status,
+      date: p.created_at ? p.created_at.slice(0, 10) : '',
+      receiptUrl: p.receipt_url,
+    }));
+
+  const paymentRows = payments
+    .filter((p) => !q || String(p.mpesa_receipt_number || '').toLowerCase().includes(q))
+    .map((p) => ({
+      id: `pay-${p.id}`,
+      title: p.mpesa_receipt_number || `Payment #${p.id}`,
+      amount: Number(p.amount),
+      status: p.status === 'completed' ? 'Paid' : p.status,
+      date: p.created_at ? p.created_at.slice(0, 10) : '',
+      receiptUrl: p.receipt_url,
+    }));
+
+  const refundRows = transactions
+    .filter((tx) => tx.transaction_type === 'debit' || /refund/i.test(tx.description || ''))
+    .filter((tx) => !q || String(tx.description || '').toLowerCase().includes(q))
+    .map((tx) => ({
+      id: `rf-${tx.id}`,
+      title: tx.description || 'Wallet debit',
+      amount: Number(tx.amount),
+      status: 'Processed',
+      date: tx.created_at ? String(tx.created_at).slice(0, 10) : '',
+    }));
+
+  const rows = tab === 'Invoices' ? invoiceRows : tab === 'Payments' ? paymentRows : refundRows;
 
   return (
-    <>
+    <AppShell activeKey="finance">
       <ScrollView
         style={styles.container}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        contentContainerStyle={styles.content}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
       >
-        <View style={styles.walletCard}>
-          <Text style={styles.walletLabel}>Wallet Balance</Text>
-          <Text style={styles.walletAmount}>KES {walletBalance.toLocaleString()}</Text>
-          <Text style={styles.walletHint}>
-            Extra payments are saved here and applied to upcoming rent automatically.
-          </Text>
+        <View style={styles.tools}>
+          <View style={styles.searchBox}>
+            <Ionicons name="search" size={18} color={colors.textMuted} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search by invoices"
+              placeholderTextColor={colors.textMuted}
+              value={query}
+              onChangeText={setQuery}
+            />
+          </View>
+          <TouchableOpacity style={styles.toolBtn} onPress={() => Alert.alert('Calendar', 'Date filter coming soon.')}>
+            <Ionicons name="calendar-outline" size={20} color={colors.textSecondary} />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.toolBtn, styles.toolBtnPrimary]} onPress={() => setModalVisible(true)}>
+            <Ionicons name="download-outline" size={20} color={colors.white} />
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.payRentBtn} onPress={() => setModalVisible(true)}>
-          <Text style={styles.payRentText}>Pay Rent</Text>
-        </TouchableOpacity>
-
-        {transactions.length > 0 && (
-          <>
-            <Text style={styles.sectionTitle}>Wallet Activity</Text>
-            {transactions.map((tx) => (
-              <View key={tx.id} style={styles.card}>
-                <View style={styles.row}>
-                  <Text style={[styles.txAmount, { color: tx.transaction_type === 'credit' ? '#16a34a' : '#1e293b' }]}>
-                    {tx.transaction_type === 'credit' ? '+' : '-'}KES {Number(tx.amount).toLocaleString()}
-                  </Text>
-                  <Text style={styles.meta}>Bal: {Number(tx.balance_after).toLocaleString()}</Text>
-                </View>
-                <Text style={styles.meta}>{tx.description}</Text>
-                {tx.rent_month && <Text style={styles.meta}>Rent month: {tx.rent_month}</Text>}
-              </View>
-            ))}
-          </>
-        )}
-
-        <Text style={styles.sectionTitle}>Payment History</Text>
-        {payments.length === 0 && (
-          <Text style={styles.empty}>No payments yet.</Text>
-        )}
-        {payments.map((p) => (
-          <View key={p.id} style={styles.card}>
-            <View style={styles.row}>
-              <Text style={styles.payAmount}>KES {Number(p.amount).toLocaleString()}</Text>
-              <Text style={[styles.status, { color: statusColor[p.status] }]}>{p.status}</Text>
-            </View>
-            <Text style={styles.meta}>
-              {p.month_paid}
-              {Number(p.wallet_applied) > 0 ? ` • Wallet: KES ${Number(p.wallet_applied).toLocaleString()}` : ''}
-              {p.mpesa_receipt_number ? ` • ${p.mpesa_receipt_number}` : ''}
-            </Text>
-            {p.receipt_url && (
-              <TouchableOpacity onPress={() => Linking.openURL(p.receipt_url)}>
-                <Text style={styles.receiptLink}>Download Receipt</Text>
+        <View style={styles.tabs}>
+          {TABS.map((t) => {
+            const active = tab === t;
+            return (
+              <TouchableOpacity key={t} onPress={() => setTab(t)} style={styles.tab}>
+                <Text style={[styles.tabText, active && styles.tabTextActive]}>{t}</Text>
+                {active ? <View style={styles.tabUnderline} /> : <View style={styles.tabUnderlineSpacer} />}
               </TouchableOpacity>
-            )}
-          </View>
-        ))}
+            );
+          })}
+        </View>
+
+        {tab === 'Invoices' && (
+          <TouchableOpacity style={styles.payBanner} onPress={() => setModalVisible(true)}>
+            <View>
+              <Text style={styles.payBannerLabel}>Amount due</Text>
+              <Text style={styles.payBannerAmount}>
+                {totalDue.toLocaleString('en-KE', { minimumFractionDigits: 2 })} KSh
+              </Text>
+            </View>
+            <Text style={styles.payBannerCta}>Pay · Wallet {walletBalance.toLocaleString()}</Text>
+          </TouchableOpacity>
+        )}
+
+        {rows.length === 0 ? (
+          <Text style={styles.empty}>
+            {tab === 'Refunds' ? 'No refunds yet.' : `No ${tab.toLowerCase()} found.`}
+          </Text>
+        ) : (
+          rows.map((row) => (
+            <View key={row.id} style={styles.row}>
+              <View style={styles.rowLeft}>
+                <View style={styles.rowTop}>
+                  <Text style={styles.rowTitle} numberOfLines={1}>{row.title}</Text>
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{row.status}</Text>
+                  </View>
+                  <TouchableOpacity hitSlop={8}>
+                    <Ionicons name="ellipsis-horizontal" size={18} color={colors.textMuted} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.rowBottom}>
+                  <Text style={styles.rowAmount}>{row.amount.toLocaleString()}</Text>
+                  <Text style={styles.rowDate}>{row.date}</Text>
+                </View>
+                {row.receiptUrl ? (
+                  <TouchableOpacity onPress={() => Linking.openURL(row.receiptUrl)}>
+                    <Text style={styles.receiptLink}>Download receipt</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            </View>
+          ))
+        )}
       </ScrollView>
 
       <Modal visible={modalVisible} transparent animationType="fade">
@@ -166,39 +230,34 @@ export default function PaymentScreen() {
           <View style={styles.overlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modal}>
-
-                {/* Header */}
                 <View style={styles.modalHeader}>
                   <Text style={styles.modalTitle}>Payment</Text>
                   <TouchableOpacity onPress={() => !loading && setModalVisible(false)}>
-                    <Text style={styles.closeBtn}>✕</Text>
+                    <Ionicons name="close" size={22} color={colors.textMuted} />
                   </TouchableOpacity>
                 </View>
 
-                {/* Payment For */}
                 <Text style={styles.fieldLabel}>Payment For</Text>
                 <View style={styles.pickerBox}>
                   <Text style={styles.pickerValue}>Total Due Amount</Text>
-                  <Text style={styles.chevron}>⌄</Text>
+                  <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
                 </View>
 
-                {/* Payment Using */}
                 <Text style={styles.fieldLabel}>Payment Using</Text>
                 <View style={styles.pickerBox}>
                   <Text style={styles.pickerValue}>M-Pesa</Text>
-                  <Text style={styles.chevron}>⌄</Text>
+                  <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
                 </View>
 
-                {/* Phone with 254 prefix */}
                 <View style={styles.phoneRow}>
                   <View style={styles.prefixBox}>
                     <Text style={styles.prefixText}>254</Text>
-                    <Text style={styles.prefixChevron}>▾</Text>
+                    <Ionicons name="chevron-down" size={14} color={colors.textSecondary} />
                   </View>
                   <TextInput
                     style={styles.phoneInput}
                     placeholder="Enter phone number"
-                    placeholderTextColor="#b0b8c1"
+                    placeholderTextColor={colors.textMuted}
                     value={phoneLocal}
                     onChangeText={setPhoneLocal}
                     keyboardType="phone-pad"
@@ -206,7 +265,6 @@ export default function PaymentScreen() {
                   />
                 </View>
 
-                {/* Summary */}
                 <View style={styles.summaryRow}>
                   <Text style={styles.summaryLabel}>Total Due</Text>
                   <Text style={styles.summaryValue}>{totalDue.toFixed(2)} KSh</Text>
@@ -216,7 +274,6 @@ export default function PaymentScreen() {
                   <Text style={styles.summaryValueBold}>{totalDue.toFixed(2)} KSh</Text>
                 </View>
 
-                {/* Actions */}
                 <View style={styles.actions}>
                   <TouchableOpacity
                     style={[styles.makePayBtn, loading && { opacity: 0.7 }]}
@@ -231,55 +288,93 @@ export default function PaymentScreen() {
                     <Text style={styles.cancelText}>Cancel</Text>
                   </TouchableOpacity>
                 </View>
-
               </View>
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </>
+    </AppShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f1f5f9', padding: 20 },
+  container: { flex: 1, backgroundColor: colors.white },
+  content: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxxl },
 
-  walletCard: { backgroundColor: '#0f172a', borderRadius: 16, padding: 20, marginBottom: 16 },
-  walletLabel: { fontSize: 13, color: '#94a3b8', fontWeight: '500' },
-  walletAmount: { fontSize: 32, fontWeight: '700', color: '#fff', marginTop: 4 },
-  walletHint: { fontSize: 12, color: '#94a3b8', marginTop: 8, lineHeight: 18 },
-
-  payRentBtn: {
-    backgroundColor: '#5bbfb5',
-    borderRadius: 12,
-    padding: 16,
+  tools: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: spacing.lg },
+  searchBox: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 24,
+    backgroundColor: colors.inputBg,
+    borderRadius: radius.md,
+    paddingHorizontal: 12,
+    height: 44,
+    gap: 8,
   },
-  payRentText: { color: '#fff', fontSize: 16, fontWeight: '700' },
+  searchInput: { flex: 1, fontSize: 14, color: colors.text, paddingVertical: 0 },
+  toolBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    backgroundColor: colors.inputBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toolBtnPrimary: { backgroundColor: colors.primary },
 
-  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#1e293b', marginBottom: 12 },
-  empty: { color: '#94a3b8', fontSize: 14, marginBottom: 16 },
+  tabs: { flexDirection: 'row', gap: 24, marginBottom: spacing.xl },
+  tab: { paddingBottom: 2 },
+  tabText: { fontSize: 15, color: colors.textMuted, fontWeight: '500' },
+  tabTextActive: { color: colors.accent, fontWeight: '600' },
+  tabUnderline: { height: 2, backgroundColor: colors.accent, marginTop: 6, borderRadius: 1 },
+  tabUnderlineSpacer: { height: 2, marginTop: 6 },
 
-  card: { backgroundColor: '#fff', borderRadius: 12, padding: 16, marginBottom: 10 },
-  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  txAmount: { fontSize: 16, fontWeight: '600' },
-  payAmount: { fontSize: 16, fontWeight: '600', color: '#1e293b' },
-  status: { fontSize: 12, fontWeight: '600', textTransform: 'capitalize' },
-  meta: { fontSize: 12, color: '#94a3b8', marginTop: 4 },
-  receiptLink: { color: '#2563eb', fontSize: 13, marginTop: 8, fontWeight: '500' },
+  payBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.accentSoft,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  payBannerLabel: { fontSize: 12, color: colors.textSecondary },
+  payBannerAmount: { fontSize: 18, fontWeight: '700', color: colors.text, marginTop: 2 },
+  payBannerCta: { fontSize: 13, fontWeight: '600', color: colors.accent },
 
-  // Modal
+  empty: { color: colors.textMuted, fontSize: 14, marginTop: 24, textAlign: 'center' },
+
+  row: { paddingVertical: 16 },
+  rowLeft: { flex: 1 },
+  rowTop: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  rowTitle: { flex: 1, fontSize: 15, fontWeight: '600', color: colors.text },
+  badge: {
+    backgroundColor: colors.accentSoft,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: radius.pill,
+  },
+  badgeText: { fontSize: 12, fontWeight: '600', color: colors.accent, textTransform: 'capitalize' },
+  rowBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  rowAmount: { fontSize: 14, color: colors.textSecondary },
+  rowDate: { fontSize: 13, color: colors.textMuted },
+  receiptLink: { color: colors.accent, fontSize: 13, marginTop: 8, fontWeight: '500' },
+
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.35)',
+    backgroundColor: colors.overlay,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   modal: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
+    backgroundColor: colors.white,
+    borderRadius: radius.xxl,
     padding: 24,
     width: '100%',
     maxWidth: 420,
@@ -290,29 +385,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  modalTitle: { fontSize: 22, fontWeight: '700', color: '#1a1a1a' },
-  closeBtn: { fontSize: 20, color: '#9ca3af', padding: 4 },
-
-  fieldLabel: { fontSize: 13, color: '#9ca3af', marginBottom: 8 },
+  modalTitle: { fontSize: 22, fontWeight: '700', color: colors.text },
+  fieldLabel: { fontSize: 13, color: colors.textMuted, marginBottom: 8 },
   pickerBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 10,
+    borderColor: colors.border,
+    borderRadius: radius.md,
     paddingHorizontal: 16,
     paddingVertical: 14,
     marginBottom: 20,
   },
-  pickerValue: { fontSize: 16, color: '#1a1a1a' },
-  chevron: { fontSize: 18, color: '#6b7280' },
-
+  pickerValue: { fontSize: 16, color: colors.text },
   phoneRow: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 10,
+    borderColor: colors.border,
+    borderRadius: radius.md,
     overflow: 'hidden',
     marginBottom: 24,
   },
@@ -322,31 +413,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 14,
     borderRightWidth: 1,
-    borderRightColor: '#e5e7eb',
+    borderRightColor: colors.border,
     backgroundColor: '#f9fafb',
     gap: 4,
   },
-  prefixText: { fontSize: 16, color: '#1a1a1a', fontWeight: '500' },
-  prefixChevron: { fontSize: 12, color: '#6b7280' },
+  prefixText: { fontSize: 16, color: colors.text, fontWeight: '500' },
   phoneInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1a1a1a',
+    color: colors.text,
     paddingHorizontal: 14,
     paddingVertical: 14,
   },
-
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 4,
   },
-  summaryLabel: { fontSize: 14, color: '#6b7280' },
-  summaryValue: { fontSize: 14, color: '#6b7280' },
-  summaryLabelBold: { fontSize: 18, fontWeight: '700', color: '#1a1a1a' },
-  summaryValueBold: { fontSize: 18, fontWeight: '700', color: '#1a1a1a' },
-
+  summaryLabel: { fontSize: 14, color: colors.textSecondary },
+  summaryValue: { fontSize: 14, color: colors.textSecondary },
+  summaryLabelBold: { fontSize: 18, fontWeight: '700', color: colors.text },
+  summaryValueBold: { fontSize: 18, fontWeight: '700', color: colors.text },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -354,13 +442,13 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   makePayBtn: {
-    backgroundColor: '#5bbfb5',
-    borderRadius: 10,
+    backgroundColor: colors.primary,
+    borderRadius: radius.md,
     paddingVertical: 14,
     paddingHorizontal: 24,
     minWidth: 150,
     alignItems: 'center',
   },
-  makePayText: { color: '#fff', fontSize: 15, fontWeight: '600' },
-  cancelText: { fontSize: 15, color: '#9ca3af', fontWeight: '500' },
+  makePayText: { color: colors.white, fontSize: 15, fontWeight: '600' },
+  cancelText: { fontSize: 15, color: colors.textMuted, fontWeight: '500' },
 });

@@ -80,7 +80,7 @@ export default function MyUnitScreen() {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Lease</Text>
-          <Text style={styles.value}>{lease.start_date} · {lease.end_date}</Text>
+          <Text style={styles.value}>{lease.start_date} to {lease.end_date}</Text>
         </View>
       </View>
 
@@ -156,27 +156,27 @@ export default function MyUnitScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8fafc', padding: 20 },
+  container: { flex: 1, backgroundColor: '#F8F9FA', padding: 20 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  empty: { color: '#94a3b8', fontSize: 16 },
+  empty: { color: '#9E9E9E', fontSize: 16 },
   card: { backgroundColor: '#fff', borderRadius: 16, padding: 20, marginBottom: 16 },
-  title: { fontSize: 22, fontWeight: 'bold', color: '#1e293b' },
+  title: { fontSize: 22, fontWeight: 'bold', color: '#1a1a1a' },
   unit: { fontSize: 16, color: '#64748b', marginTop: 4 },
   category: { fontSize: 14, color: '#2563eb', marginTop: 4, fontWeight: '600' },
-  divider: { height: 1, backgroundColor: '#e2e8f0', marginVertical: 16 },
+  divider: { height: 1, backgroundColor: '#E5E7EB', marginVertical: 16 },
   row: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   label: { color: '#64748b', fontSize: 14 },
-  value: { color: '#1e293b', fontSize: 14, fontWeight: '600' },
-  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#1e293b', marginBottom: 12 },
+  value: { color: '#1a1a1a', fontSize: 14, fontWeight: '600' },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#1a1a1a', marginBottom: 12 },
   catCard: { backgroundColor: '#fff', borderRadius: 12, padding: 16, marginBottom: 10, borderWidth: 2, borderColor: 'transparent' },
   catSelected: { borderColor: '#2563eb' },
-  catName: { fontSize: 16, fontWeight: '600', color: '#1e293b' },
+  catName: { fontSize: 16, fontWeight: '600', color: '#1a1a1a' },
   catMeta: { fontSize: 13, color: '#64748b', marginTop: 4 },
-  catDesc: { fontSize: 12, color: '#94a3b8', marginTop: 4 },
-  unitOption: { padding: 12, borderRadius: 8, backgroundColor: '#f1f5f9', marginBottom: 8 },
-  unitSelected: { backgroundColor: '#dbeafe', borderWidth: 1, borderColor: '#2563eb' },
-  input: { borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 10, padding: 12, marginTop: 12, marginBottom: 12 },
-  submitBtn: { backgroundColor: '#2563eb', borderRadius: 12, padding: 16, alignItems: 'center' },
+  catDesc: { fontSize: 12, color: '#9E9E9E', marginTop: 4 },
+  unitOption: { padding: 12, borderRadius: 8, backgroundColor: '#F5F5F5', marginBottom: 8 },
+  unitSelected: { backgroundColor: '#eff6ff', borderWidth: 1, borderColor: '#2563eb' },
+  input: { borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 10, padding: 12, marginTop: 12, marginBottom: 12 },
+  submitBtn: { backgroundColor: '#0f172a', borderRadius: 12, padding: 16, alignItems: 'center' },
   submitText: { color: '#fff', fontWeight: '700', fontSize: 16 },
   disabled: { opacity: 0.6 },
   waitlist: { color: '#d97706', marginTop: 8, fontWeight: '600' },

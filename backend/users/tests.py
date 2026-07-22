@@ -100,6 +100,56 @@ class InviteFlowTests(PropizyTestBase):
         self.assertEqual(member.organization, self.org1)
         self.assertEqual(member.role, OrganizationMember.Role.STAFF)
 
+    def test_staff_invite_with_front_desk_role(self):
+        self.auth(self.manager1)
+        resp = self.client.post('/api/auth/staff-invites/', {
+            'email': 'desk@test.com',
+            'role': 'FRONT_DESK',
+        })
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resp.data['role'], 'FRONT_DESK')
+        token = resp.data['token']
+
+        self.client.force_authenticate(user=None)
+        reg = self.client.post('/api/auth/register-staff/', {
+            'invite_token': token,
+            'username': 'frontdesk1',
+            'password': 'pass12345',
+        })
+        self.assertEqual(reg.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(reg.data['user']['org_role'], 'FRONT_DESK')
+
+    def test_owner_can_suspend_and_reactivate_staff(self):
+        staff = User.objects.create_user(
+            username='suspendstaff', email='ss@test.com', password='pass12345', role=User.Role.MANAGER,
+        )
+        member = OrganizationMember.objects.create(
+            organization=self.org1, user=staff, role=OrganizationMember.Role.MAINTENANCE,
+        )
+        self.auth(self.manager1)
+        resp = self.client.post(f'/api/auth/team/{member.id}/suspend/')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        staff.refresh_from_db()
+        self.assertFalse(staff.is_active)
+
+        resp = self.client.post(f'/api/auth/team/{member.id}/reactivate/')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        staff.refresh_from_db()
+        self.assertTrue(staff.is_active)
+
+    def test_owner_can_change_staff_role(self):
+        staff = User.objects.create_user(
+            username='rolestaff', email='role@test.com', password='pass12345', role=User.Role.MANAGER,
+        )
+        member = OrganizationMember.objects.create(
+            organization=self.org1, user=staff, role=OrganizationMember.Role.STAFF,
+        )
+        self.auth(self.manager1)
+        resp = self.client.patch(f'/api/auth/team/{member.id}/', {'role': 'FRONT_DESK'}, format='json')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        member.refresh_from_db()
+        self.assertEqual(member.role, OrganizationMember.Role.FRONT_DESK)
+
     def test_owner_can_remove_staff(self):
         staff = User.objects.create_user(
             username='removestaff', email='rs@test.com', password='pass12345', role=User.Role.MANAGER,
@@ -153,6 +203,66 @@ class InviteFlowTests(PropizyTestBase):
         self.assertTrue(lease.exists())
         self.unit1.refresh_from_db()
         self.assertEqual(self.unit1.status, Unit.Status.OCCUPIED)
+
+    def test_owner_can_suspend_and_reactivate_tenant(self):
+        tenant_user = User.objects.create_user(
+            username='suspendtenant', role=User.Role.TENANT, manager=self.manager1, password='pass12345',
+        )
+        profile = TenantProfile.objects.create(user=tenant_user, phone_number='254700000088')
+        self.auth(self.manager1)
+        resp = self.client.post(f'/api/tenants/{profile.id}/suspend/')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        tenant_user.refresh_from_db()
+        self.assertFalse(tenant_user.is_active)
+
+        resp = self.client.post(f'/api/tenants/{profile.id}/reactivate/')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        tenant_user.refresh_from_db()
+        self.assertTrue(tenant_user.is_active)
+
+    def test_staff_can_provision_tenant_and_reset_credentials(self):
+        staff = User.objects.create_user(
+            username='frontdesk1', email='fd@test.com', password='pass12345', role=User.Role.MANAGER,
+        )
+        OrganizationMember.objects.create(
+            organization=self.org1, user=staff, role=OrganizationMember.Role.FRONT_DESK,
+        )
+        self.auth(staff)
+        resp = self.client.post('/api/tenants/provision/', {
+            'email': 'desk.tenant@test.com',
+            'phone_number': '254711111111',
+            'unit_id': self.unit1.id,
+            'first_name': 'Desk',
+            'last_name': 'Tenant',
+            'nationality': 'Kenyan',
+            'next_of_kin_name': 'Kin Person',
+        })
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertIn('credentials', resp.data)
+        self.assertIn('temporary_password', resp.data['credentials'])
+        profile_id = resp.data['tenant']['id']
+        username = resp.data['credentials']['username']
+        user = User.objects.get(username=username)
+        self.assertTrue(user.must_change_password)
+        self.assertEqual(user.role, User.Role.TENANT)
+        self.unit1.refresh_from_db()
+        self.assertEqual(self.unit1.status, Unit.Status.OCCUPIED)
+
+        patch = self.client.patch(f'/api/tenants/{profile_id}/', {
+            'interests': 'Football',
+            'next_of_kin_phone': '254722222222',
+        })
+        self.assertEqual(patch.status_code, status.HTTP_200_OK)
+        self.assertEqual(patch.data['interests'], 'Football')
+
+        reset = self.client.post(f'/api/tenants/{profile_id}/reset-credentials/')
+        self.assertEqual(reset.status_code, status.HTTP_200_OK)
+        self.assertIn('temporary_password', reset.data['credentials'])
+
+        suspend = self.client.post(f'/api/tenants/{profile_id}/suspend/')
+        self.assertEqual(suspend.status_code, status.HTTP_200_OK)
+        user.refresh_from_db()
+        self.assertFalse(user.is_active)
 
     def test_expired_invite_rejected(self):
         invite = TenantInvite.objects.create(

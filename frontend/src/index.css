@@ -89,6 +89,174 @@ body {
     @apply text-emerald-600 font-medium hover:text-emerald-700 transition-colors;
   }
 
+  /* Split-screen auth (login / register / password flows) */
+  .auth-shell {
+    --auth-teal: #76d2c4;
+    --auth-teal-hover: #5fc4b4;
+    --auth-teal-ring: rgb(118 210 196 / 0.35);
+  }
+
+  .auth-hero {
+    border-bottom-right-radius: clamp(4rem, 12vw, 8rem);
+  }
+
+  .auth-hero-script {
+    font-family: 'Great Vibes', cursive;
+    line-height: 1;
+  }
+
+  .auth-title {
+    @apply text-[1.75rem] font-bold tracking-tight text-slate-900;
+  }
+
+  .auth-panel .label-field {
+    @apply text-[13px] font-normal text-slate-400 mb-1.5;
+  }
+
+  .auth-panel .input-field {
+    @apply rounded-lg border-slate-200 py-3 focus:border-[var(--auth-teal)] focus:ring-[var(--auth-teal-ring)];
+  }
+
+  .auth-panel .link-accent {
+    color: var(--auth-teal);
+  }
+
+  .auth-panel .link-accent:hover {
+    color: var(--auth-teal-hover);
+  }
+
+  .btn-auth {
+    @apply inline-flex items-center justify-center w-full font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:pointer-events-none px-5 py-3 text-sm text-white;
+    background-color: var(--auth-teal);
+  }
+
+  .btn-auth:hover:not(:disabled) {
+    background-color: var(--auth-teal-hover);
+  }
+
+  .auth-password-wrap {
+    @apply relative;
+  }
+
+  .auth-password-wrap .input-field {
+    @apply pr-11;
+  }
+
+  .auth-password-toggle {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 transition-colors rounded-md;
+  }
+
+  /* Staff tenant desk (Qcare-inspired) */
+  .desk-page {
+    --desk-teal: #76d2c4;
+    --desk-teal-soft: #e8f8f5;
+    --desk-teal-hover: #5fc4b4;
+  }
+
+  .desk-banner {
+    @apply relative overflow-hidden rounded-2xl mb-6 h-24 sm:h-28;
+    background:
+      linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 40%, #76d2c4 40%, #76d2c4 55%, #e8b84a 55%, #e8b84a 70%, #f5f5f5 70%);
+  }
+
+  .desk-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 12px,
+        rgb(255 255 255 / 0.06) 12px,
+        rgb(255 255 255 / 0.06) 24px
+      );
+  }
+
+  .desk-card {
+    @apply bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-6;
+  }
+
+  .desk-card-icon {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold;
+    background: var(--desk-teal-soft);
+    color: var(--desk-teal-hover);
+  }
+
+  .desk-link {
+    @apply text-sm font-semibold transition-colors;
+    color: var(--desk-teal-hover);
+  }
+
+  .desk-link:hover {
+    color: var(--desk-teal);
+  }
+
+  .desk-label {
+    @apply text-xs text-slate-400 mb-1;
+  }
+
+  .desk-value {
+    @apply text-sm font-semibold text-slate-800;
+  }
+
+  .desk-badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .desk-badge-success {
+    @apply bg-emerald-50 text-emerald-700;
+  }
+
+  .desk-badge-danger {
+    @apply bg-red-50 text-red-700;
+  }
+
+  .desk-badge-warn {
+    @apply bg-amber-50 text-amber-800;
+  }
+
+  .desk-badge-info {
+    background: var(--desk-teal);
+    @apply text-white;
+  }
+
+  .desk-modal-icon {
+    @apply w-9 h-9 rounded-full flex items-center justify-center text-base font-bold text-white;
+    background: var(--desk-teal, #76d2c4);
+  }
+
+  .desk-modal .label-field {
+    @apply text-[13px] font-normal text-slate-400 mb-1.5;
+  }
+
+  .desk-modal .input-field {
+    @apply rounded-md border-slate-200 py-2.5 focus:border-[#76d2c4] focus:ring-[rgb(118_210_196_/_0.35)];
+  }
+
+  .btn-desk {
+    @apply inline-flex items-center justify-center font-semibold rounded-md transition-colors disabled:opacity-50 disabled:pointer-events-none px-6 py-2.5 text-sm text-white;
+    background-color: var(--desk-teal, #76d2c4);
+  }
+
+  .btn-desk:hover:not(:disabled) {
+    background-color: var(--desk-teal-hover, #5fc4b4);
+  }
+
+  .btn-desk-ghost {
+    @apply text-sm font-medium text-slate-400 hover:text-slate-600 transition-colors px-2 py-2.5;
+  }
+
+  .desk-upload {
+    @apply flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition-colors cursor-pointer;
+    border-color: var(--desk-teal, #76d2c4);
+    background: rgb(118 210 196 / 0.06);
+  }
+
+  .desk-upload:hover {
+    background: rgb(118 210 196 / 0.12);
+  }
+
   .btn {
     @apply inline-flex items-center justify-center font-semibold rounded-xl transition-colors disabled:opacity-50 disabled:pointer-events-none;
   }

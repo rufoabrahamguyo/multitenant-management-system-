@@ -3,8 +3,11 @@ import { useFeedback } from '../context/FeedbackContext';
 import { useIsOwner } from '../hooks/useIsOwner';
 import api from '../api/client';
 import FormField from '../components/FormField';
+import SignalIcon, { StatusSignal } from '../components/SignalIcon';
 import { getApiErrorMessage } from '../utils/apiError';
 import { unwrapList } from '../utils/apiHelpers';
+
+const PAGE_SIZE = 25;
 
 export default function Units() {
   const { toast, confirm } = useFeedback();
@@ -21,6 +24,12 @@ export default function Units() {
   const [form, setForm] = useState({ property: '', category: '', unit_number: '', rent_amount: '' });
   const [catForm, setCatForm] = useState({ property_ref: '', name: '', description: '' });
 
+  const [selectedPropertyId, setSelectedPropertyId] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+
   const fetchAll = () => {
     api.get('/units/').then(({ data }) => setUnits(unwrapList(data)));
     api.get('/unit-categories/').then(({ data }) => setCategories(unwrapList(data)));
@@ -30,12 +39,43 @@ export default function Units() {
 
   useEffect(() => { fetchAll(); }, []);
 
+  const activePropertyId =
+    selectedPropertyId && properties.some((p) => p.id === selectedPropertyId)
+      ? selectedPropertyId
+      : (properties[0]?.id ?? null);
+
+  const selectProperty = (propertyId) => {
+    setSelectedPropertyId(propertyId);
+    setPage(1);
+    setCategoryFilter('all');
+    setQuery('');
+    setStatusFilter('all');
+    setEditingUnitId(null);
+    setEditForm({ unit_number: '', rent_amount: '', category: '' });
+  };
+
+  const setStatusAndReset = (value) => {
+    setStatusFilter(value);
+    setPage(1);
+  };
+
+  const setCategoryAndReset = (value) => {
+    setCategoryFilter(value);
+    setPage(1);
+  };
+
+  const setQueryAndReset = (value) => {
+    setQuery(value);
+    setPage(1);
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
+      const propertyId = parseInt(form.property, 10);
       await api.post('/units/', {
-        property: parseInt(form.property, 10),
+        property: propertyId,
         category: form.category ? parseInt(form.category, 10) : null,
         unit_number: form.unit_number,
         rent_amount: form.rent_amount,
@@ -43,6 +83,7 @@ export default function Units() {
       setShowForm(false);
       setForm({ property: '', category: '', unit_number: '', rent_amount: '' });
       toast(`Unit ${form.unit_number} created.`, 'success');
+      selectProperty(propertyId);
       fetchAll();
     } catch (err) {
       toast(getApiErrorMessage(err, 'Could not create unit.'), 'error');
@@ -56,14 +97,16 @@ export default function Units() {
     setSaving(true);
     const categoryName = catForm.name;
     try {
+      const propertyId = parseInt(catForm.property_ref, 10);
       await api.post('/unit-categories/', {
-        property_ref: parseInt(catForm.property_ref, 10),
+        property_ref: propertyId,
         name: catForm.name,
         description: catForm.description,
       });
       setShowCatForm(false);
       setCatForm({ property_ref: '', name: '', description: '' });
       toast(`Category "${categoryName}" created.`, 'success');
+      selectProperty(propertyId);
       fetchAll();
     } catch (err) {
       toast(getApiErrorMessage(err, 'Could not create category.'), 'error');
@@ -154,6 +197,40 @@ export default function Units() {
   const catsForProperty = (propertyId) =>
     categories.filter((c) => c.property_ref === propertyId);
 
+  const selectedProperty = properties.find((p) => p.id === activePropertyId) || null;
+  const propertyCategories = activePropertyId ? catsForProperty(activePropertyId) : [];
+  const propertyUnits = activePropertyId
+    ? units.filter((u) => u.property === activePropertyId)
+    : [];
+
+  const occupiedCount = propertyUnits.filter((u) => u.status === 'occupied').length;
+  const vacantCount = propertyUnits.filter((u) => u.status === 'vacant').length;
+
+  const q = query.trim().toLowerCase();
+  const filteredUnits = propertyUnits.filter((unit) => {
+    if (statusFilter !== 'all' && unit.status !== statusFilter) return false;
+    if (categoryFilter === 'none' && unit.category) return false;
+    if (categoryFilter !== 'all' && categoryFilter !== 'none' && String(unit.category) !== categoryFilter) {
+      return false;
+    }
+    if (!q) return true;
+    const haystack = [
+      unit.unit_number,
+      unit.category_name,
+      unit.tenant_name,
+      String(unit.rent_amount),
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    return haystack.includes(q);
+  });
+
+  const totalPages = Math.max(1, Math.ceil(filteredUnits.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const pagedUnits = filteredUnits.slice(pageStart, pageStart + PAGE_SIZE);
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -236,160 +313,293 @@ export default function Units() {
         </form>
       )}
 
-      {categories.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-          {categories.map((c) => (
-            <div key={c.id} className="bg-white border rounded-lg p-3 text-sm relative group">
-              <p className="font-medium">{c.name}</p>
-              <p className="text-xs text-slate-500">{c.property_name}</p>
-              <p className="text-xs text-green-600 mt-1">{c.vacant_count} vacant · {c.unit_count} total</p>
-              {isOwner && (
-                <div className="flex gap-2 mt-2">
-                  <button
-                    type="button"
-                    onClick={() => deleteCategory(c)}
-                    className="text-xs text-red-600 border border-red-200 px-2 py-1 rounded hover:bg-red-50"
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      {properties.length === 0 ? (
+        <p className="p-8 text-center text-sm text-slate-500 bg-white rounded-xl border">
+          No properties yet. {isOwner ? 'Add a property first, then create units here.' : 'Ask your organization owner to add properties.'}
+        </p>
+      ) : (
+        <>
+          <div className="flex flex-wrap gap-2 mb-4" role="tablist" aria-label="Properties">
+            {properties.map((prop) => {
+              const count = units.filter((u) => u.property === prop.id).length;
+              const active = prop.id === activePropertyId;
+              return (
+                <button
+                  key={prop.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => selectProperty(prop.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
+                    active
+                      ? 'bg-slate-900 text-white border-slate-900'
+                      : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  {prop.name}
+                  <span className={`ml-2 text-xs ${active ? 'text-slate-300' : 'text-slate-400'}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-      <div className="bg-white rounded-xl border overflow-hidden">
-        {units.length === 0 ? (
-          <p className="p-8 text-center text-sm text-slate-500">
-            No units yet. {isOwner ? 'Add a category or unit using the buttons above.' : 'Ask your organization owner to add units.'}
-          </p>
-        ) : (
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-slate-600">
-            <tr>
-              <th className="text-left p-4">Property</th>
-              <th className="text-left p-4">Category</th>
-              <th className="text-left p-4">Unit</th>
-              <th className="text-left p-4">Rent</th>
-              <th className="text-left p-4">Status</th>
-              <th className="text-left p-4">Tenant</th>
-              <th className="text-left p-4">Assign</th>
-              {isOwner && <th className="text-left p-4">Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {units.map((unit) => (
-              <tr key={unit.id} className="border-t">
-                <td className="p-4">{unit.property_name}</td>
-                <td className="p-4">
-                  {editingUnitId === unit.id ? (
-                    <select
-                      className="border rounded px-2 py-1 text-xs w-full"
-                      value={editForm.category}
-                      onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
-                    >
-                      <option value="">None</option>
-                      {catsForProperty(unit.property).map((c) => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    unit.category_name || '-'
-                  )}
-                </td>
-                <td className="p-4 font-medium">
-                  {editingUnitId === unit.id ? (
-                    <input
-                      className="border rounded px-2 py-1 text-xs w-full"
-                      value={editForm.unit_number}
-                      onChange={(e) => setEditForm({ ...editForm, unit_number: e.target.value })}
-                    />
-                  ) : (
-                    unit.unit_number
-                  )}
-                </td>
-                <td className="p-4">
-                  {editingUnitId === unit.id ? (
-                    <input
-                      type="number"
-                      min="0"
-                      className="border rounded px-2 py-1 text-xs w-full"
-                      value={editForm.rent_amount}
-                      onChange={(e) => setEditForm({ ...editForm, rent_amount: e.target.value })}
-                    />
-                  ) : (
-                    `KES ${Number(unit.rent_amount).toLocaleString()}`
-                  )}
-                </td>
-                <td className="p-4">
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    unit.status === 'occupied' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                  }`}>{unit.status}</span>
-                </td>
-                <td className="p-4">{unit.tenant_name || '-'}</td>
-                <td className="p-4">
-                  {isOwner && unit.status === 'vacant' && (
-                    <select
-                      className="border rounded px-2 py-1 text-xs"
-                      onChange={(e) => e.target.value && assignTenant(unit.id, e.target.value)}
-                      defaultValue=""
-                    >
-                      <option value="">Assign...</option>
-                      {tenants.map((t) => <option key={t.id} value={t.id}>{t.username}</option>)}
-                    </select>
-                  )}
-                </td>
-                {isOwner && (
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      {editingUnitId === unit.id ? (
-                        <>
-                          <button
-                            type="button"
-                            onClick={() => saveEditUnit(unit)}
-                            disabled={saving}
-                            className="text-xs text-emerald-700 hover:underline disabled:opacity-50"
-                          >
-                            Save
-                          </button>
-                          <button
-                            type="button"
-                            onClick={cancelEditUnit}
-                            className="text-xs text-slate-600 hover:underline"
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            type="button"
-                            onClick={() => startEditUnit(unit)}
-                            className="text-xs text-slate-700 hover:underline"
-                          >
-                            Edit
-                          </button>
-                          {unit.status === 'vacant' && (
-                            <button
-                              type="button"
-                              onClick={() => deleteUnit(unit)}
-                              className="text-xs text-red-600 hover:underline"
-                            >
-                              Delete
-                            </button>
-                          )}
-                        </>
-                      )}
+          {selectedProperty && (
+            <div className="flex flex-wrap gap-3 mb-6 text-sm">
+              <span className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700">
+                <SignalIcon name="home" tone="brand" size="sm" />
+                {propertyUnits.length} units
+              </span>
+              <span className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700">
+                <SignalIcon name="check" tone="success" size="sm" />
+                {occupiedCount} occupied
+              </span>
+              <span className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-slate-700">
+                <SignalIcon name="vacant" tone="warning" size="sm" />
+                {vacantCount} vacant
+              </span>
+            </div>
+          )}
+
+          {propertyCategories.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+              {propertyCategories.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setCategoryAndReset(categoryFilter === String(c.id) ? 'all' : String(c.id))}
+                  className={`bg-white border rounded-lg p-3 text-sm text-left transition-colors ${
+                    categoryFilter === String(c.id)
+                      ? 'border-slate-900 ring-1 ring-slate-900'
+                      : 'border-slate-200 hover:border-slate-300'
+                  }`}
+                >
+                  <p className="font-medium">{c.name}</p>
+                  <p className="text-xs text-green-600 mt-1">{c.vacant_count} vacant · {c.unit_count} total</p>
+                  {isOwner && (
+                    <div className="flex gap-2 mt-2" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        type="button"
+                        onClick={() => deleteCategory(c)}
+                        className="text-xs text-red-600 border border-red-200 px-2 py-1 rounded hover:bg-red-50"
+                      >
+                        Delete
+                      </button>
                     </div>
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        )}
-      </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
+            <label className="sr-only" htmlFor="unit-search">Search units</label>
+            <input
+              id="unit-search"
+              type="search"
+              value={query}
+              onChange={(e) => setQueryAndReset(e.target.value)}
+              placeholder="Search unit, tenant, or rent…"
+              className="input-field flex-1"
+            />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusAndReset(e.target.value)}
+              className="input-field sm:w-40"
+              aria-label="Filter by status"
+            >
+              <option value="all">All statuses</option>
+              <option value="vacant">Vacant</option>
+              <option value="occupied">Occupied</option>
+            </select>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryAndReset(e.target.value)}
+              className="input-field sm:w-44"
+              aria-label="Filter by category"
+            >
+              <option value="all">All categories</option>
+              <option value="none">Uncategorized</option>
+              {propertyCategories.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="bg-white rounded-xl border overflow-hidden">
+            {propertyUnits.length === 0 ? (
+              <p className="p-8 text-center text-sm text-slate-500">
+                No units for {selectedProperty?.name}. {isOwner ? 'Add a category or unit using the buttons above.' : 'Ask your organization owner to add units.'}
+              </p>
+            ) : filteredUnits.length === 0 ? (
+              <p className="p-8 text-center text-sm text-slate-500">
+                No units match your filters.
+                <button
+                  type="button"
+                  className="ml-2 text-slate-700 underline"
+                  onClick={() => {
+                    setQueryAndReset('');
+                    setStatusAndReset('all');
+                    setCategoryAndReset('all');
+                  }}
+                >
+                  Clear filters
+                </button>
+              </p>
+            ) : (
+              <>
+                <div className="flex items-center justify-between px-4 py-3 border-b bg-slate-50 text-xs text-slate-500">
+                  <span>
+                    Showing {pageStart + 1}–{Math.min(pageStart + PAGE_SIZE, filteredUnits.length)} of {filteredUnits.length}
+                    {filteredUnits.length !== propertyUnits.length && ` (filtered from ${propertyUnits.length})`}
+                  </span>
+                  {totalPages > 1 && (
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={currentPage <= 1}
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        className="px-2 py-1 rounded border bg-white disabled:opacity-40"
+                      >
+                        Prev
+                      </button>
+                      <span>Page {currentPage} of {totalPages}</span>
+                      <button
+                        type="button"
+                        disabled={currentPage >= totalPages}
+                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                        className="px-2 py-1 rounded border bg-white disabled:opacity-40"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50 text-slate-600">
+                    <tr>
+                      <th className="text-left p-4">Category</th>
+                      <th className="text-left p-4">Unit</th>
+                      <th className="text-left p-4">Rent</th>
+                      <th className="text-left p-4">Status</th>
+                      <th className="text-left p-4">Tenant</th>
+                      <th className="text-left p-4">Assign</th>
+                      {isOwner && <th className="text-left p-4">Actions</th>}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pagedUnits.map((unit) => (
+                      <tr key={unit.id} className="border-t">
+                        <td className="p-4">
+                          {editingUnitId === unit.id ? (
+                            <select
+                              className="border rounded px-2 py-1 text-xs w-full"
+                              value={editForm.category}
+                              onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+                            >
+                              <option value="">None</option>
+                              {catsForProperty(unit.property).map((c) => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            unit.category_name || '-'
+                          )}
+                        </td>
+                        <td className="p-4 font-medium">
+                          {editingUnitId === unit.id ? (
+                            <input
+                              className="border rounded px-2 py-1 text-xs w-full"
+                              value={editForm.unit_number}
+                              onChange={(e) => setEditForm({ ...editForm, unit_number: e.target.value })}
+                            />
+                          ) : (
+                            unit.unit_number
+                          )}
+                        </td>
+                        <td className="p-4">
+                          {editingUnitId === unit.id ? (
+                            <input
+                              type="number"
+                              min="0"
+                              className="border rounded px-2 py-1 text-xs w-full"
+                              value={editForm.rent_amount}
+                              onChange={(e) => setEditForm({ ...editForm, rent_amount: e.target.value })}
+                            />
+                          ) : (
+                            `KES ${Number(unit.rent_amount).toLocaleString()}`
+                          )}
+                        </td>
+                        <td className="p-4">
+                          <StatusSignal status={unit.status} />
+                        </td>
+                        <td className="p-4">{unit.tenant_name || '-'}</td>
+                        <td className="p-4">
+                          {isOwner && unit.status === 'vacant' && (
+                            <select
+                              className="border rounded px-2 py-1 text-xs"
+                              onChange={(e) => e.target.value && assignTenant(unit.id, e.target.value)}
+                              defaultValue=""
+                            >
+                              <option value="">Assign...</option>
+                              {tenants.map((t) => <option key={t.id} value={t.id}>{t.username}</option>)}
+                            </select>
+                          )}
+                        </td>
+                        {isOwner && (
+                          <td className="p-4">
+                            <div className="flex gap-2">
+                              {editingUnitId === unit.id ? (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => saveEditUnit(unit)}
+                                    disabled={saving}
+                                    className="text-xs text-emerald-700 hover:underline disabled:opacity-50"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={cancelEditUnit}
+                                    className="text-xs text-slate-600 hover:underline"
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => startEditUnit(unit)}
+                                    className="text-xs text-slate-700 hover:underline"
+                                  >
+                                    Edit
+                                  </button>
+                                  {unit.status === 'vacant' && (
+                                    <button
+                                      type="button"
+                                      onClick={() => deleteUnit(unit)}
+                                      className="text-xs text-red-600 hover:underline"
+                                    >
+                                      Delete
+                                    </button>
+                                  )}
+                                </>
+                              )}
+                            </div>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

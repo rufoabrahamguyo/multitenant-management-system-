@@ -8,7 +8,7 @@
 
 | Field | Detail |
 |-------|--------|
-| **Project Title** | Propizy — Property Management Made Easy |
+| **Project Title** | Propizy, Property Management Made Easy |
 | **Report Title** | UML, UI (Figma), Dataset, and Database Design |
 | **System Type** | Web dashboard, mobile app, REST API (production deployment) |
 | **Database** | PostgreSQL 16 |
@@ -74,11 +74,11 @@ This document fulfils the assignment deliverables:
 
 Design follows standard structured analysis:
 
-1. **Requirements** — functional and non-functional requirements documented in `docs/reports/FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md`
-2. **Process modelling** — Yourdon & Coad DFD (context, Level 1, Level 2) in `docs/diagrams/`
-3. **Object modelling** — UML class and sequence diagrams (§3)
-4. **Data modelling** — Chen conceptual ER and Crow's Foot logical ER (§6)
-5. **Interface modelling** — Figma-ready UI specifications (§4)
+1. **Requirements**, functional and non-functional requirements documented in `docs/reports/FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md`
+2. **Process modelling**, Yourdon & Coad DFD (context, Level 1, Level 2) in `docs/diagrams/`
+3. **Object modelling**, UML class and sequence diagrams (§3)
+4. **Data modelling**, Chen conceptual ER and Crow's Foot logical ER (§6)
+5. **Interface modelling**, Figma-ready UI specifications (§4)
 
 ---
 
@@ -133,9 +133,9 @@ The following diagram source files support this report and should be exported as
 
 | Figure | File | Description |
 |--------|------|-------------|
-| Context Diagram | `docs/diagrams/propizy-4.2-context-diagram.drawio` | Level 0 DFD — system boundary |
+| Context Diagram | `docs/diagrams/propizy-4.2-context-diagram.drawio` | Level 0 DFD, system boundary |
 | DFD Level 1 | `docs/diagrams/propizy-4.3-dfd-level1.xml` | Eight main processes |
-| DFD Level 2 | `docs/diagrams/propizy-4.3-dfd-level2.xml` | Decomposition of processes 3–6 |
+| DFD Level 2 | `docs/diagrams/propizy-4.3-dfd-level2.xml` | Decomposition of processes 3-6 |
 | Database ER | `docs/diagrams/propizy-database-er-diagram.xml` | Full logical schema (Crow's Foot) |
 | Conceptual ER | `docs/diagrams/propizy-4.4-er-diagram.drawio` | Chen notation subset |
 
@@ -147,7 +147,7 @@ UML complements the DFD process models by describing **object interactions**, **
 
 ### 3.1 Use Case Diagram
 
-**Figure 3.1** — Use Case Diagram for Propizy
+**Figure 3.1**, Use Case Diagram for Propizy
 
 ```mermaid
 flowchart TB
@@ -233,7 +233,7 @@ flowchart TB
 
 #### 3.2.1 Tenant Onboarding (Invite → Lease)
 
-**Figure 3.2** — Sequence: Tenant Onboarding
+**Figure 3.2**, Sequence: Tenant Onboarding
 
 ```mermaid
 sequenceDiagram
@@ -261,7 +261,7 @@ sequenceDiagram
 
 #### 3.2.2 M-PESA Rent Payment
 
-**Figure 3.3** — Sequence: M-PESA Payment
+**Figure 3.3**, Sequence: M-PESA Payment
 
 ```mermaid
 sequenceDiagram
@@ -286,7 +286,7 @@ sequenceDiagram
 
 #### 3.2.3 Cash Collection with Owner Approval
 
-**Figure 3.4** — Sequence: Cash Collection Approval
+**Figure 3.4**, Sequence: Cash Collection Approval
 
 ```mermaid
 sequenceDiagram
@@ -314,7 +314,7 @@ sequenceDiagram
 
 ### 3.3 Class Diagram
 
-**Figure 3.5** — Domain Class Diagram (core entities)
+**Figure 3.5**, Domain Class Diagram (core entities)
 
 ```mermaid
 classDiagram
@@ -417,7 +417,7 @@ classDiagram
 
 #### 3.4.1 Payment State Machine
 
-**Figure 3.6** — Payment States
+**Figure 3.6**, Payment States
 
 ```mermaid
 stateDiagram-v2
@@ -430,7 +430,7 @@ stateDiagram-v2
 
 #### 3.4.2 Unit Transfer Request State Machine
 
-**Figure 3.7** — Transfer Request States
+**Figure 3.7**, Transfer Request States
 
 ```mermaid
 stateDiagram-v2
@@ -448,7 +448,7 @@ stateDiagram-v2
 
 #### 3.4.3 Cash Collection State Machine
 
-**Figure 3.8** — Cash Collection States
+**Figure 3.8**, Cash Collection States
 
 ```mermaid
 stateDiagram-v2
@@ -599,7 +599,7 @@ Login / Register (invite token)
 | **Tabs** | Reconciliation, Integrity Alerts, M-PESA Config, Tax Export |
 | **Reconciliation** | CSV upload, matched/orphan counts, line table |
 | **Integrity** | Alert list (amount mismatch, duplicate month, unregistered phone) |
-| **Maps to** | FR-20–FR-26 |
+| **Maps to** | FR-20-FR-26 |
 
 #### Screen W-09: Reports
 
@@ -691,8 +691,8 @@ Login / Register (invite token)
 When building the Figma file for submission:
 
 1. Create **Design System** page with colours, typography, buttons, badges
-2. Create **Web — 9 frames** (W-01 through W-09) at 1440×900
-3. Create **Mobile — 5 frames** (M-01 through M-05) at 390×844 (iPhone 14)
+2. Create **Web, 9 frames** (W-01 through W-09) at 1440×900
+3. Create **Mobile, 5 frames** (M-01 through M-05) at 390×844 (iPhone 14)
 4. Add **prototype links**: Login → Dashboard → Tenants → Invite modal
 5. Add **prototype links**: Mobile Login → Home → Pay → Success
 6. Export each frame as PNG (2×) for Word/PDF insertion
@@ -701,7 +701,7 @@ When building the Figma file for submission:
 
 ## 5. Dataset Design
 
-Propizy is a **production system**. Data is created exclusively through real user actions and external integrations — no seed or demo data is loaded at deployment.
+Propizy is a **production system**. Data is created exclusively through real user actions and external integrations, no seed or demo data is loaded at deployment.
 
 ### 5.1 Data Philosophy
 
@@ -801,11 +801,11 @@ flowchart LR
 
 | Entity | Typical org (10 units) | Growth rate |
 |--------|------------------------|-------------|
-| Users | 1 owner + 1–2 staff + 10 tenants | Linear with units |
+| Users | 1 owner + 1-2 staff + 10 tenants | Linear with units |
 | Payments | 10/month | 120/year |
 | Invoices | 10/month | 120/year |
-| Maintenance requests | 2–5/month | Variable |
-| Activity logs | 50–200/month | Event-driven |
+| Maintenance requests | 2-5/month | Variable |
+| Activity logs | 50-200/month | Event-driven |
 
 ### 5.6 Data Integrity Rules
 
@@ -840,7 +840,7 @@ flowchart LR
 
 ### 6.2 Conceptual Model (Chen Notation)
 
-**Figure 6.1** — See `docs/diagrams/propizy-4.4-er-diagram.drawio` (page 4.4a).
+**Figure 6.1**, See `docs/diagrams/propizy-4.4-er-diagram.drawio` (page 4.4a).
 
 Core entities and relationships:
 
@@ -853,11 +853,11 @@ Core entities and relationships:
 | **LEASE** | start_date, end_date, is_active | Receives PAYMENT (1:N); receives INVOICE (1:N) |
 | **PAYMENT** | amount, month_paid, status | Matched by MPESA_LINE (1:N) |
 
-The lease entity resolves the many-to-many tenant–unit relationship.
+The lease entity resolves the many-to-many tenant-unit relationship.
 
 ### 6.3 Logical Model (Crow's Foot)
 
-**Figure 6.2** — See `docs/diagrams/propizy-database-er-diagram.xml`.
+**Figure 6.2**, See `docs/diagrams/propizy-database-er-diagram.xml`.
 
 The logical schema comprises **24 tables** mapped from Django models:
 
@@ -962,11 +962,11 @@ The logical schema comprises **24 tables** mapped from Django models:
 
 The schema is in **Third Normal Form (3NF)**:
 
-**1NF — Atomic values:** All columns hold single values. No repeating groups (e.g. units are separate rows, not comma-separated lists in `Property`).
+**1NF, Atomic values:** All columns hold single values. No repeating groups (e.g. units are separate rows, not comma-separated lists in `Property`).
 
-**2NF — Full functional dependency:** All non-key attributes depend on the entire primary key. Junction tables (`OrganizationMember`, `Lease`) eliminate partial dependencies.
+**2NF, Full functional dependency:** All non-key attributes depend on the entire primary key. Junction tables (`OrganizationMember`, `Lease`) eliminate partial dependencies.
 
-**3NF — No transitive dependencies:**
+**3NF, No transitive dependencies:**
 
 | Design decision | Normalization rationale |
 |-----------------|------------------------|
@@ -979,8 +979,8 @@ The schema is in **Third Normal Form (3NF)**:
 
 **Denormalization (intentional):**
 
-- `Property.total_units` — cached count for dashboard display; updated on unit CRUD.
-- `rent_amount` copied to `Lease` at creation — preserves historical rent if unit rent changes later.
+- `Property.total_units`, cached count for dashboard display; updated on unit CRUD.
+- `rent_amount` copied to `Lease` at creation, preserves historical rent if unit rent changes later.
 
 ### 6.6 Referential Integrity
 
@@ -1005,7 +1005,7 @@ The schema is in **Third Normal Form (3NF)**:
 
 ### 6.8 Mermaid ER Diagram (Core Subset)
 
-**Figure 6.3** — Core entity relationships
+**Figure 6.3**, Core entity relationships
 
 ```mermaid
 erDiagram
@@ -1042,8 +1042,8 @@ erDiagram
 | FR-28 Room transfer | UC-09, State 3.4.2 | M-03, W-07 | UnitTransferRequest | properties_unittransferrequest |
 | FR-33 Maintenance | UC-08 | M-05, W (Maintenance) | MaintenanceRequest | maintenance_maintenancerequest |
 | FR-35 Dashboard | UC-11 | W-03 | Aggregates | Multiple tables |
-| NFR-07 IDOR prevention | Class 3.3 | — | property_manager_id | users_user, users_organization |
-| NFR-13 DB constraints | State 3.4.1 | — | Payment rules | payments_payment constraint |
+| NFR-07 IDOR prevention | Class 3.3 |, | property_manager_id | users_user, users_organization |
+| NFR-13 DB constraints | State 3.4.1 |, | Payment rules | payments_payment constraint |
 
 ---
 
@@ -1059,7 +1059,7 @@ All design artefacts trace to functional requirements and align with the impleme
 
 - Bass, L., Clements, P., & Kazman, R. (2003). *Software architecture in practice* (2nd ed.). Addison-Wesley.
 - Connolly, T., & Begg, C. (2015). *Database systems: A practical approach to design, implementation, and management* (6th ed.). Pearson.
-- Django Software Foundation. (2024). *Django documentation* — Models and migrations. https://docs.djangoproject.com/
+- Django Software Foundation. (2024). *Django documentation*, Models and migrations. https://docs.djangoproject.com/
 - Gabry, J. (2017). Writing effective use case scenarios. In *Requirements engineering fundamentals*.
 - Object Management Group. (2017). *UML 2.5.1 specification*. https://www.omg.org/spec/UML/
 - Safaricom. (2024). *M-PESA Daraja API documentation*. https://developer.safaricom.co.ke/
@@ -1091,7 +1091,7 @@ All design artefacts trace to functional requirements and align with the impleme
 1. Create Figma file: **Propizy UI Design**
 2. Follow §4.1 design tokens and §4.6 checklist
 3. Export 14 frames as PNG
-4. Insert as Figures 4.1–4.14 in the Word report
+4. Insert as Figures 4.1-4.14 in the Word report
 
 ### Appendix C: Word Document Assembly
 

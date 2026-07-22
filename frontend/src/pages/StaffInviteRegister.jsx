@@ -125,7 +125,11 @@ export default function StaffInviteRegister() {
   return (
     <AuthLayout
       title="Join as Staff"
-      subtitle={`You've been invited to ${preview.organization}`}
+      subtitle={
+        preview.role_label
+          ? `You've been invited to ${preview.organization} as ${preview.role_label}`
+          : `You've been invited to ${preview.organization}`
+      }
     >
       <p className="text-center text-sm text-slate-500 -mt-4 mb-6">
         Account email: <span className="font-medium text-slate-700">{preview.email}</span>
@@ -204,7 +208,7 @@ export default function StaffInviteRegister() {
         <button
           type="submit"
           disabled={loading || !passwordsMatch}
-          className="btn-primary btn-md btn-block"
+          className="btn-auth"
           aria-busy={loading}
         >
           {loading ? 'Creating account…' : 'Create Staff Account'}

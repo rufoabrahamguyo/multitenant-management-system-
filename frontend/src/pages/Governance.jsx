@@ -347,7 +347,7 @@ export default function Governance() {
               <h3 className="font-semibold text-lg">M-PESA Payment Setup</h3>
               <p className="text-sm text-slate-500 mt-1">
                 Enable tenants to pay rent directly via M-PESA STK Push (the phone prompt).
-                You only need the details from your Safaricom email — our team handles the technical setup.
+                You only need the details from your Safaricom email. Our team handles the technical setup.
               </p>
             </div>
 
@@ -369,11 +369,11 @@ export default function Governance() {
 
             {openRequest && (
               <div className="text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 space-y-1">
-                <p className="font-semibold">Request received — we're working on it</p>
+                <p className="font-semibold">Request received. We're working on it</p>
                 <p>
                   We received your request for {integrationRequest.channel_display}{' '}
                   <strong>{integrationRequest.shortcode}</strong>.
-                  Our team will complete your M-PESA setup within 1–2 business days and notify you by email once it's live.
+                  Our team will complete your M-PESA setup within 1-2 business days and notify you by email once it's live.
                 </p>
                 <p className="text-xs text-blue-500 pt-1">Submitted on {integrationRequest.created_at?.slice(0, 10)}</p>
               </div>
@@ -446,7 +446,7 @@ export default function Governance() {
                           placeholder="Exactly as it appears in your Safaricom email"
                           required
                         />
-                        <p className="text-xs text-slate-400 mt-0.5">Copy it exactly from the Safaricom email — spelling and spacing matter</p>
+                        <p className="text-xs text-slate-400 mt-0.5">Copy it exactly from the Safaricom email. Spelling and spacing matter</p>
                       </>
                     )}
                   </FormField>
@@ -459,11 +459,11 @@ export default function Governance() {
                           value={mpesaForm.mpesa_username}
                           onChange={(e) => setMpesaForm({ ...mpesaForm, mpesa_username: e.target.value })}
                           className="input-field"
-                          placeholder="e.g. john.doe@mybusiness.co.ke"
+                          placeholder="e.g. sunrise.admin"
                           required
                         />
                         <p className="text-xs text-slate-400 mt-0.5">
-                          This is the login username Safaricom gave you for the M-PESA Business portal — it's in your onboarding email
+                          This is the login username Safaricom gave you for the M-PESA Business portal. It's in your onboarding email
                         </p>
                       </>
                     )}
@@ -513,7 +513,7 @@ export default function Governance() {
                           className="input-field"
                           placeholder="We'll send your confirmation here"
                         />
-                        <p className="text-xs text-slate-400 mt-0.5">Recommended — we'll email you when M-PESA is live</p>
+                        <p className="text-xs text-slate-400 mt-0.5">Recommended. We'll email you when M-PESA is live</p>
                       </>
                     )}
                   </FormField>
@@ -535,7 +535,7 @@ export default function Governance() {
                     {loading ? 'Submitting…' : 'Request M-PESA integration'}
                   </button>
                   <p className="text-xs text-center text-slate-400">
-                    Our team will review and activate within 1–2 business days.
+                    Our team will review and activate within 1-2 business days.
                     You will be notified by email.
                   </p>
                 </form>

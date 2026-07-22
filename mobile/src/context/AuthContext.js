@@ -9,17 +9,26 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       try {
         const stored = await AsyncStorage.getItem('user');
         const token = await AsyncStorage.getItem('access_token');
-        if (stored && token) setUser(JSON.parse(stored));
+        if (!cancelled && stored && token) setUser(JSON.parse(stored));
       } catch {
         await AsyncStorage.multiRemove(['access_token', 'refresh_token', 'user']);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     })();
+    // Fail open if storage never resolves (seen on some Expo Go / Android builds).
+    const timeout = setTimeout(() => {
+      if (!cancelled) setLoading(false);
+    }, 2000);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, []);
 
   useEffect(() => {

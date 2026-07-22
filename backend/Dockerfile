@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
-    gcc \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -22,4 +22,4 @@ RUN SECRET_KEY=build-time-placeholder DEBUG=False python manage.py collectstatic
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["gunicorn", "rentflow.wsgi:application", "--config", "gunicorn.conf.py"]
+CMD ["gunicorn", "propizy.wsgi:application", "--config", "gunicorn.conf.py"]

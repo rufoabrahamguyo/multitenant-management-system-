@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.activity import log_activity
-from users.governance import PERMISSION_MATRIX, log_sensitive_access
+from users.governance import NAV_PERMISSIONS, PERMISSION_MATRIX, get_user_permissions, log_sensitive_access
 from users.permissions import IsManager, IsOrgOwner, IsOrgOwnerOnly
-from users.utils import get_organization, get_pm_id, is_org_owner
+from users.utils import get_org_role, get_organization, get_pm_id, is_org_owner
 
 from propizy.storage_utils import media_url
 from users.models import OrganizationMpesaConfig, OwnerAlert, MpesaIntegrationRequest
@@ -25,11 +25,12 @@ class PermissionMatrixView(APIView):
     permission_classes = [IsManager]
 
     def get(self, request):
-        role = 'OWNER' if is_org_owner(request.user) else 'STAFF'
+        role = get_org_role(request.user) or 'STAFF'
         return Response({
             'role': role,
             'matrix': PERMISSION_MATRIX,
-            'your_permissions': PERMISSION_MATRIX.get(role, PERMISSION_MATRIX['STAFF']),
+            'your_permissions': get_user_permissions(request.user),
+            'nav_permissions': NAV_PERMISSIONS,
         })
 
 

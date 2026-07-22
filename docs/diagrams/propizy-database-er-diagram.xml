@@ -123,7 +123,7 @@
         <mxCell id="r43lbl" value="manages (FK1)" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=8;fontStyle=2;" vertex="1" parent="1">
           <mxGeometry x="5" y="340" width="80" height="16" as="geometry"/>
         </mxCell>
-        <mxCell id="legend" value="&lt;b&gt;Crow&amp;#39;s Foot notation&lt;/b&gt;&lt;br&gt;PK = primary key; FK1/FK2 = foreign keys on child table&lt;br&gt;Dashed lines: parent (referenced) to child (holds FK)&lt;br&gt;Source: Django models — users, properties, payments, maintenance apps" style="text;html=1;strokeColor=#666666;fillColor=#F9F9F9;align=left;verticalAlign=top;spacingLeft=8;fontSize=9;" vertex="1" parent="1">
+        <mxCell id="legend" value="&lt;b&gt;Crow&amp;#39;s Foot notation&lt;/b&gt;&lt;br&gt;PK = primary key; FK1/FK2 = foreign keys on child table&lt;br&gt;Dashed lines: parent (referenced) to child (holds FK)&lt;br&gt;Source: Django models, users, properties, payments, maintenance apps" style="text;html=1;strokeColor=#666666;fillColor=#F9F9F9;align=left;verticalAlign=top;spacingLeft=8;fontSize=9;" vertex="1" parent="1">
           <mxGeometry x="40" y="900" width="1280" height="55" as="geometry"/>
         </mxCell>
       </root>

@@ -1,16 +1,65 @@
-# React + Vite
+# Propizy Web Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React dashboard for property owners and staff. Manage properties, tenants, payments, team access, and governance workflows against the Propizy REST API.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite 8
+- React Router 7
+- Tailwind CSS 4
+- Axios (JWT with refresh)
+- Recharts
+- Vitest
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20+ recommended
+- Backend API running (Docker Compose exposes **http://localhost:8002**)
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cp .env.example .env
+npm install
+npm run dev
+```
+
+App: http://localhost:5173
+
+### Environment
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `VITE_API_URL` | `http://localhost:8002/api` (via `.env.example`) | REST API base URL |
+
+If `VITE_API_URL` is unset, the client falls back to `http://localhost:8000/api` — set `.env` when using Compose port **8002**.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server with HMR |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview production build |
+| `npm run lint` | ESLint |
+| `npm test` | Vitest (single run) |
+| `npm run test:watch` | Vitest watch mode |
+
+## Project structure
+
+```
+src/
+├── api/           Axios client and token refresh
+├── components/    Layout, auth guards, shared UI
+├── context/       Auth and feedback (toasts / confirm)
+├── hooks/
+├── pages/         Route-level screens
+└── utils/
+```
+
+Owner-only routes are gated in the UI; the API enforces RBAC on every write.
+
+## Related docs
+
+- [Root README](../README.md) — full stack setup and demo accounts
+- [Architecture](../docs/ARCHITECTURE.md) — frontend layout and security notes

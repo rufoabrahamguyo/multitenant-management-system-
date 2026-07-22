@@ -5,7 +5,7 @@
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <mxCell id="title" value="Propizy — Entity-Relationship Diagram (Chen Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="Propizy, Entity-Relationship Diagram (Chen Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="15" width="550" height="35" as="geometry"/>
         </mxCell>
 
@@ -44,7 +44,7 @@
           <mxGeometry x="540" y="560" width="130" height="42" as="geometry"/>
         </mxCell>
 
-        <!-- KEY ATTRIBUTES (sample per entity — PK underlined via fontStyle) -->
+        <!-- KEY ATTRIBUTES (sample per entity, PK underlined via fontStyle) -->
         <mxCell id="att_o1" value="&lt;u&gt;org_id&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=9;" vertex="1" parent="1">
           <mxGeometry x="20" y="40" width="65" height="35" as="geometry"/>
         </mxCell>
@@ -225,7 +225,7 @@
         <mxCell id="legend" value="&lt;b&gt;Chen notation&lt;/b&gt;: blue rectangle = entity | green oval = attribute (&lt;u&gt;underlined&lt;/u&gt; = PK) | black diamond = relationship | crow's foot = cardinality&lt;br&gt;Django mapping: Organization, User, TenantProfile, Property, UnitCategory, Unit, Lease, Payment, UnitTransferRequest, CashCollection, MaintenanceRequest" style="text;html=1;strokeColor=#666666;fillColor=#F5F5F5;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
           <mxGeometry x="40" y="680" width="900" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="subtitle" value="Figure 4.3 — Conceptual ER Diagram (Propizy multi-tenant property management system)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+        <mxCell id="subtitle" value="Figure 4.3, Conceptual ER Diagram (Propizy multi-tenant property management system)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
           <mxGeometry x="40" y="740" width="600" height="20" as="geometry"/>
         </mxCell>
       </root>
@@ -238,7 +238,7 @@
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <mxCell id="title2" value="Propizy — Logical Entity-Relationship Diagram (Crow's Foot Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title2" value="Propizy, Logical Entity-Relationship Diagram (Crow's Foot Notation)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="40" y="15" width="650" height="35" as="geometry"/>
         </mxCell>
 
@@ -325,7 +325,7 @@
         <mxCell id="legend2" value="&lt;b&gt;Crow's Foot notation&lt;/b&gt;: table box = entity/relation; &lt;u&gt;underlined&lt;/u&gt; = primary key; (FK) = foreign key; line endings = cardinality (one, many, optional)&lt;br&gt;Derived from Django models: users, properties, payments, maintenance apps. Multi-tenancy scoped via property_manager_id on Organization and User." style="text;html=1;strokeColor=#666666;fillColor=#F5F5F5;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="1">
           <mxGeometry x="40" y="820" width="1100" height="45" as="geometry"/>
         </mxCell>
-        <mxCell id="subtitle2" value="Figure 4.3b — Logical ER Diagram showing relational schema for Propizy (PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
+        <mxCell id="subtitle2" value="Figure 4.3b, Logical ER Diagram showing relational schema for Propizy (PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" parent="1">
           <mxGeometry x="40" y="870" width="550" height="20" as="geometry"/>
         </mxCell>
       </root>

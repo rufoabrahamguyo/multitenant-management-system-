@@ -1,29 +1,22 @@
 # Propizy Reports
 
-## Submission-ready document
+Course and design artefacts for the Propizy platform. Diagrams referenced by these reports live in [`../diagrams/`](../diagrams/).
 
-**[SYSTEM_ANALYSIS_AND_DESIGN_REPORT.md](./SYSTEM_ANALYSIS_AND_DESIGN_REPORT.md)** — complete assignment report covering:
+## Documents
 
-- UML (use case, sequence, class, state diagrams)
-- UI / Figma specifications (design system + 14 screens)
-- Dataset design (production data lifecycle, no seed data)
-- Database design (24 tables, normalization, ER references)
-
-### How to submit
-
-1. Open `SYSTEM_ANALYSIS_AND_DESIGN_REPORT.md` in VS Code or copy into Microsoft Word / Google Docs.
-2. Export diagrams from `docs/diagrams/` as PNG (see report Appendix A).
-3. Build Figma frames from §4 specifications (or screenshot the running app).
-4. Render Mermaid diagrams at [mermaid.live](https://mermaid.live) for §3 and §6 figures.
-5. Export final document as PDF.
-
-## Supporting documents
-
-| File | Purpose |
-|------|---------|
-| [FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md](./FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md) | FR/NFR specification |
-| [CHAPTER_FOUR_IMPLEMENTATION.md](./CHAPTER_FOUR_IMPLEMENTATION.md) | DFD and ER narrative |
+| File | Description |
+|------|-------------|
+| [SYSTEM_ANALYSIS_AND_DESIGN_REPORT.md](SYSTEM_ANALYSIS_AND_DESIGN_REPORT.md) | Main analysis & design report (UML, UI, dataset, database) |
+| [CHAPTER_FOUR_IMPLEMENTATION.md](CHAPTER_FOUR_IMPLEMENTATION.md) | Implementation chapter narrative (DFD / ER context) |
+| [FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md](FUNCTIONAL_AND_NONFUNCTIONAL_REQUIREMENTS.md) | Functional and non-functional requirements |
+| [../SWE3090_System_Integration_Report.md](../SWE3090_System_Integration_Report.md) | System integration report |
+| [../ARCHITECTURE.md](../ARCHITECTURE.md) | Living architecture notes aligned with the codebase |
 
 ## Diagrams
 
-See [../diagrams/README.md](../diagrams/README.md) for draw.io source files.
+Open draw.io / diagrams.net files from [`../diagrams/`](../diagrams/). That folder includes a file index and export notes for Word/PDF.
+
+## Related
+
+- [Root README](../../README.md) — how to run the system
+- [Diagrams README](../diagrams/README.md)

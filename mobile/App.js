@@ -1,29 +1,41 @@
-import { useEffect } from 'react';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import 'react-native-get-random-values';
 import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import AppNavigator from './src/navigation/AppNavigator';
-
-SplashScreen.preventAutoHideAsync();
+import { colors } from './src/theme';
 
 function AppRoot() {
   const { loading } = useAuth();
 
-  useEffect(() => {
-    if (!loading) {
-      SplashScreen.hideAsync();
-    }
-  }, [loading]);
+  if (loading) {
+    return (
+      <View style={styles.boot}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
 
   return <AppNavigator />;
 }
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppRoot />
-      <StatusBar style="light" />
-    </AuthProvider>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <AppRoot />
+        <StatusBar style="dark" />
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  boot: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

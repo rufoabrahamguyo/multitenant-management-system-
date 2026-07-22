@@ -2,31 +2,80 @@ import { Link } from 'react-router-dom';
 import PropizyLogo from './PropizyLogo';
 import SkipLink from './SkipLink';
 
+const AUTH_HERO = '/images/hero-building-1.png';
+
+function HomeGlyph({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1v-9.5z"
+      />
+    </svg>
+  );
+}
+
 export default function AuthLayout({ title, subtitle, children, footer }) {
   return (
     <>
       <SkipLink targetId="auth-main" />
-      <div className="relative min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 sm:p-6">
-        <Link
-          to="/"
-          className="absolute top-4 left-4 sm:top-6 sm:left-6 text-sm text-slate-300 hover:text-white transition-colors focus-visible:rounded-lg"
+      <div className="auth-shell min-h-screen bg-white lg:grid lg:grid-cols-2">
+        <aside
+          className="auth-hero relative hidden min-h-screen overflow-hidden lg:block"
+          aria-hidden="true"
         >
-          ← Back to home
-        </Link>
+          <img
+            src={AUTH_HERO}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/50" />
+          <div className="relative z-10 flex h-full flex-col items-center justify-center px-10 text-center text-white">
+            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full border-2 border-white/90 bg-white/10 backdrop-blur-sm">
+              <HomeGlyph className="h-8 w-8" />
+            </div>
+            <p className="max-w-xs text-[11px] font-semibold uppercase tracking-[0.22em] text-white/95 leading-relaxed">
+              The community where you can feel like
+            </p>
+            <p className="auth-hero-script mt-2 text-6xl text-white">Home</p>
+          </div>
+        </aside>
 
-        <div className="mb-6 sm:mb-8 text-center px-4">
-          <Link to="/" className="inline-block transition-opacity hover:opacity-90 rounded-xl" aria-label="Propizy home">
-            <PropizyLogo variant="dark" size="lg" showWordmark className="justify-center" />
+        <div className="relative flex min-h-screen flex-col">
+          <Link
+            to="/"
+            className="absolute left-4 top-4 z-10 text-sm text-slate-400 transition-colors hover:text-slate-700 focus-visible:rounded-lg sm:left-8 sm:top-6"
+          >
+            ← Back to home
           </Link>
-          <p className="text-slate-300 mt-3 text-sm">Property Management Made Easy</p>
-        </div>
 
-        <main id="auth-main" className="card-auth w-full" tabIndex={-1}>
-          {title && <h1 className="page-title text-center mb-2">{title}</h1>}
-          {subtitle && <p className="text-center text-sm text-slate-500 mb-6">{subtitle}</p>}
-          {children}
-          {footer}
-        </main>
+          <main
+            id="auth-main"
+            className="auth-panel flex flex-1 flex-col px-6 py-16 sm:px-8"
+            tabIndex={-1}
+          >
+            <div className="mx-auto my-auto w-full max-w-md">
+              <div className="mb-8 flex flex-col items-center text-center">
+                <Link to="/" className="inline-block rounded-xl transition-opacity hover:opacity-90" aria-label="Propizy home">
+                  <PropizyLogo variant="light" size="lg" showWordmark className="justify-center" />
+                </Link>
+                {title && <h1 className="auth-title mt-8">{title}</h1>}
+                {subtitle && <p className="mt-2 text-sm text-slate-400">{subtitle}</p>}
+              </div>
+
+              {children}
+              {footer}
+            </div>
+          </main>
+        </div>
       </div>
     </>
   );

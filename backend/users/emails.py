@@ -74,7 +74,7 @@ def send_tenant_invite_email(invite):
         f'Accept your invite and create your account:\n{web_url}\n\n'
         f'Or open directly in the Propizy mobile app:\n{app_url}\n\n'
         f'This invite expires on {expires}.\n\n'
-        f'— Propizy Property Management'
+        f'- Propizy Property Management'
     )
     html = (
         f'<p>Hello,</p>'
@@ -86,7 +86,7 @@ def send_tenant_invite_email(invite):
         f'<p style="font-size:14px;color:#64748b;">'
         f'Or open in the Propizy app: <a href="{app_url}">{app_url}</a></p>'
         f'<p style="font-size:13px;color:#94a3b8;">This invite expires on {expires}.</p>'
-        f'<p>— Propizy Property Management</p>'
+        f'<p>- Propizy Property Management</p>'
     )
     return _send_email(invite.email, subject, text, html)
 
@@ -102,7 +102,7 @@ def send_staff_invite_email(invite):
         f'You have been invited to join {org_name} as a staff member on Propizy.\n\n'
         f'Create your account here:\n{web_url}\n\n'
         f'This invite expires on {expires}.\n\n'
-        f'— Propizy Property Management'
+        f'- Propizy Property Management'
     )
     html = (
         f'<p>Hello,</p>'
@@ -111,7 +111,7 @@ def send_staff_invite_email(invite):
         f'background:#2563eb;color:#fff;text-decoration:none;border-radius:8px;'
         f'font-weight:600;">Join as Staff</a></p>'
         f'<p style="font-size:13px;color:#94a3b8;">This invite expires on {expires}.</p>'
-        f'<p>— Propizy Property Management</p>'
+        f'<p>- Propizy Property Management</p>'
     )
     return _send_email(invite.email, subject, text, html)
 
@@ -131,7 +131,7 @@ def send_mpesa_integration_ops_email(request):
         return {'success': True, 'simulated': True}
 
     org_name = request.organization.name
-    subject = f'[Propizy] New M-PESA integration request — {org_name}'
+    subject = f'[Propizy] New M-PESA integration request: {org_name}'
     text = (
         f'A new M-PESA integration request was submitted.\n\n'
         f'Organization: {org_name}\n'
@@ -140,9 +140,9 @@ def send_mpesa_integration_ops_email(request):
         f'Business name: {request.business_name}\n'
         f'M-PESA username: {request.mpesa_username}\n'
         f'Contact phone: {request.contact_phone}\n'
-        f'Contact email: {request.contact_email or "—"}\n'
-        f'Account number: {request.account_number or "—"}\n'
-        f'Notes: {request.notes or "—"}\n\n'
+        f'Contact email: {request.contact_email or "-"}\n'
+        f'Account number: {request.account_number or "-"}\n'
+        f'Notes: {request.notes or "-"}\n\n'
         f'Review in Django admin and complete the Daraja setup.\n'
     )
     html = (
@@ -161,11 +161,11 @@ def send_mpesa_integration_ops_email(request):
         f'<tr><td style="padding:4px 12px 4px 0;color:#64748b;">Contact phone</td>'
         f'<td>{request.contact_phone}</td></tr>'
         f'<tr><td style="padding:4px 12px 4px 0;color:#64748b;">Contact email</td>'
-        f'<td>{request.contact_email or "—"}</td></tr>'
+        f'<td>{request.contact_email or "-"}</td></tr>'
         f'<tr><td style="padding:4px 12px 4px 0;color:#64748b;">Account number</td>'
-        f'<td>{request.account_number or "—"}</td></tr>'
+        f'<td>{request.account_number or "-"}</td></tr>'
         f'<tr><td style="padding:4px 12px 4px 0;color:#64748b;">Notes</td>'
-        f'<td>{request.notes or "—"}</td></tr>'
+        f'<td>{request.notes or "-"}</td></tr>'
         f'</table>'
         f'<p style="margin-top:16px;">Review in Django admin and complete the Daraja setup.</p>'
     )
@@ -181,14 +181,14 @@ def send_mpesa_integration_complete_email(request, owner_email):
         f'Payment type: {request.get_channel_display()}\n'
         f'Number: {request.shortcode}\n\n'
         f'Tenants can now pay rent via M-PESA STK Push in the Propizy app.\n\n'
-        f'— Propizy Property Management'
+        f'- Propizy Property Management'
     )
     html = (
         f'<p>Hello,</p>'
         f'<p>Your M-PESA integration for <strong>{org_name}</strong> is now active.</p>'
         f'<p><strong>{request.get_channel_display()}</strong> · {request.shortcode}</p>'
         f'<p>Tenants can now pay rent via M-PESA STK Push in the Propizy app.</p>'
-        f'<p>— Propizy Property Management</p>'
+        f'<p>- Propizy Property Management</p>'
     )
     return _send_email(owner_email, subject, text, html)
 
@@ -208,7 +208,7 @@ def send_password_reset_email(reset_token):
         f'Reset your password here:\n{web_url}\n\n'
         f'This link expires on {expires}.\n\n'
         f'If you did not request this, you can ignore this email.\n\n'
-        f'— Propizy Property Management'
+        f'- Propizy Property Management'
     )
     html = (
         f'<p>Hello <strong>{user.username}</strong>,</p>'
@@ -218,6 +218,6 @@ def send_password_reset_email(reset_token):
         f'font-weight:600;">Reset password</a></p>'
         f'<p style="font-size:13px;color:#94a3b8;">This link expires on {expires}.</p>'
         f'<p style="font-size:13px;color:#94a3b8;">If you did not request this, you can ignore this email.</p>'
-        f'<p>— Propizy Property Management</p>'
+        f'<p>- Propizy Property Management</p>'
     )
     return _send_email(user.email, subject, text, html)

@@ -85,7 +85,7 @@ export default function ResetPassword() {
         <button
           type="submit"
           disabled={loading || !password || !confirm || !passwordsMatch}
-          className="btn-primary btn-md btn-block"
+          className="btn-auth"
           aria-busy={loading}
         >
           {loading ? 'Saving…' : 'Reset password'}

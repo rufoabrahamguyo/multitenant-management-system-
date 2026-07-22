@@ -6,7 +6,7 @@
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <mxCell id="title" value="Propizy — Activity Diagram: Tenant Invitation &amp;amp; Registration" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+        <mxCell id="title" value="Propizy, Activity Diagram: Tenant Invitation &amp;amp; Registration" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
           <mxGeometry x="180" y="12" width="800" height="32" as="geometry"/>
         </mxCell>
 
@@ -22,7 +22,7 @@
         </mxCell>
 
         <!-- ========== PHASE 1 LABEL ========== -->
-        <mxCell id="lbl_p1" value="— Phase 1: Create Invite —" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
+        <mxCell id="lbl_p1" value="- Phase 1: Create Invite -" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
           <mxGeometry x="40" y="96" width="1080" height="22" as="geometry"/>
         </mxCell>
 
@@ -64,7 +64,7 @@
         </mxCell>
 
         <!-- ========== PHASE 2 LABEL ========== -->
-        <mxCell id="lbl_p2" value="— Phase 2: Tenant Registration —" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
+        <mxCell id="lbl_p2" value="- Phase 2: Tenant Registration -" style="text;html=1;strokeColor=none;fillColor=#F2F2F2;fontSize=11;fontStyle=2;fontColor=#555555;align=center;" vertex="1" parent="1">
           <mxGeometry x="40" y="560" width="1080" height="22" as="geometry"/>
         </mxCell>
 

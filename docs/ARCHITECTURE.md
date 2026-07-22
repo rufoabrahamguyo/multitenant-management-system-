@@ -19,7 +19,7 @@ Propizy is a **modular monolith**: one deployable backend and separate client ap
                                               └──────────────────────┘
 ```
 
-## Backend — layered architecture
+## Backend: layered architecture
 
 Each Django app follows a **Model → Serializer → View/ViewSet → URL** flow (Django REST Framework variant of MVC):
 
@@ -59,7 +59,7 @@ Future growth: Redis cache, read replicas, Celery for SMS/PDF jobs, extract paym
 | CORS | Explicit allowlist only (`CORS_ALLOW_ALL_ORIGINS=False`) |
 | IDOR tests | `users/security_tests.py` |
 
-## Frontend — component architecture
+## Frontend: component architecture
 
 ```
 src/
@@ -90,7 +90,7 @@ src/
 - **Python**: PEP 8, serializers for all write paths, permissions on every view
 - **JavaScript**: ES modules, shared CSS design tokens in `index.css`
 - **Commits**: focused changes per domain (auth, payments, UI)
-- **Tests**: `python manage.py test` — include `users/security_tests.py` in CI
+- **Tests**: `python manage.py test`, include `users/security_tests.py` in CI
 
 ## Key endpoints
 
@@ -102,4 +102,4 @@ src/
 | `POST /api/payments/initiate/` | M-PESA STK Push |
 | `POST /api/payments/mpesa-callback/` | Payment webhook (Safaricom) |
 
-See [README.md](../README.md) for the full API list and setup instructions.
+See [README.md](../README.md) for setup, demo data, and core endpoints. App-level notes: [backend/README.md](../backend/README.md), [frontend/README.md](../frontend/README.md), [mobile/README.md](../mobile/README.md).

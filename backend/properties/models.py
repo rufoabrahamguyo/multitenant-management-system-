@@ -23,7 +23,7 @@ class Property(models.Model):
 
 
 class UnitCategory(models.Model):
-    """Room type per property: Studio, 1 Bedroom, Premium, etc."""
+    """ Studio, 1 Bedroom, Premium, etc."""
 
     property_ref = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='unit_categories')
     name = models.CharField(max_length=100)
@@ -78,6 +78,17 @@ class TenantProfile(models.Model):
         related_name='current_tenants',
     )
     phone_number = models.CharField(max_length=15, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    nationality = models.CharField(max_length=100, blank=True)
+    interests = models.TextField(blank=True)
+    next_of_kin_name = models.CharField(max_length=255, blank=True)
+    next_of_kin_phone = models.CharField(max_length=15, blank=True)
+    next_of_kin_email = models.EmailField(blank=True)
+    refund_account_type = models.CharField(max_length=50, blank=True)
+    refund_account_name = models.CharField(max_length=255, blank=True)
+    refund_bank_name = models.CharField(max_length=255, blank=True)
+    refund_swift_code = models.CharField(max_length=50, blank=True)
+    refund_account_number = models.CharField(max_length=100, blank=True)
     id_card_front = models.ImageField(upload_to='tenant_ids/', blank=True, null=True)
     id_card_back = models.ImageField(upload_to='tenant_ids/', blank=True, null=True)
 

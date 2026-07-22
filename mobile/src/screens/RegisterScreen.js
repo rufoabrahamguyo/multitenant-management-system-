@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import PropizyLogo from '../components/PropizyLogo';
 
 export default function RegisterScreen({ route, navigation }) {
   const inviteToken = route?.params?.token;
@@ -46,8 +47,10 @@ export default function RegisterScreen({ route, navigation }) {
 
   if (!inviteToken) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.logo}>Propizy</Text>
+      <View style={[styles.container, styles.scroll]}>
+        <View style={styles.logoWrap}>
+          <PropizyLogo size="lg" />
+        </View>
         <Text style={styles.subtitle}>Tenant registration is invite-only.</Text>
         <Text style={styles.hint}>Ask your property manager for an invite link.</Text>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
@@ -60,7 +63,10 @@ export default function RegisterScreen({ route, navigation }) {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.logo}>Join Propizy</Text>
+        <View style={styles.logoWrap}>
+          <PropizyLogo size="lg" />
+        </View>
+        <Text style={styles.joinTitle}>Create your account</Text>
         {preview && (
           <View style={styles.preview}>
             <Text style={styles.previewOrg}>{preview.organization}</Text>
@@ -80,16 +86,17 @@ export default function RegisterScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#F8F9FA' },
   scroll: { flexGrow: 1, justifyContent: 'center', padding: 24 },
-  logo: { fontSize: 28, fontWeight: 'bold', color: '#2563eb', textAlign: 'center', marginBottom: 16 },
-  subtitle: { color: '#94a3b8', textAlign: 'center', fontSize: 16 },
-  hint: { color: '#64748b', textAlign: 'center', marginTop: 8, marginBottom: 24 },
-  preview: { backgroundColor: '#1e293b', borderRadius: 12, padding: 16, marginBottom: 20 },
-  previewOrg: { color: '#fff', fontSize: 18, fontWeight: '600' },
-  previewUnit: { color: '#93c5fd', marginTop: 4 },
-  previewEmail: { color: '#94a3b8', marginTop: 8, fontSize: 13 },
-  input: { backgroundColor: '#fff', borderRadius: 10, padding: 14, marginBottom: 12, fontSize: 16 },
-  button: { backgroundColor: '#2563eb', borderRadius: 10, padding: 16, alignItems: 'center', marginTop: 8 },
+  logoWrap: { alignItems: 'center', marginBottom: 16 },
+  joinTitle: { fontSize: 18, fontWeight: '600', color: '#1a1a1a', textAlign: 'center', marginBottom: 16 },
+  subtitle: { color: '#64748b', textAlign: 'center', fontSize: 16 },
+  hint: { color: '#9E9E9E', textAlign: 'center', marginTop: 8, marginBottom: 24 },
+  preview: { backgroundColor: '#fff', borderRadius: 12, padding: 16, marginBottom: 20, borderWidth: 1, borderColor: '#E5E7EB' },
+  previewOrg: { color: '#1a1a1a', fontSize: 18, fontWeight: '600' },
+  previewUnit: { color: '#2563eb', marginTop: 4 },
+  previewEmail: { color: '#64748b', marginTop: 8, fontSize: 13 },
+  input: { backgroundColor: '#fff', borderRadius: 10, padding: 14, marginBottom: 12, fontSize: 16, borderWidth: 1, borderColor: '#E5E7EB' },
+  button: { backgroundColor: '#0f172a', borderRadius: 10, padding: 16, alignItems: 'center', marginTop: 8 },
   buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });

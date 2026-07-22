@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { canAccessPath, permissionsForRole } from '../constants/orgRoles';
 import LoadingScreen from './LoadingScreen';
 
 export function ProtectedRoute({ children }) {
@@ -36,6 +37,27 @@ export function OwnerRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (!user || user.org_role !== 'OWNER') return <Navigate to="/dashboard" replace />;
+  return children;
+}
+
+/** Restrict a route by org-role permission resource (e.g. governance, reports). */
+export function PermissionRoute({ resource, children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <LoadingScreen />;
+  const permissions = permissionsForRole(user?.org_role);
+  if (!permissions?.[resource]?.read) {
+    return <Navigate to="/dashboard" replace />;
+  }
+  return children;
+}
+
+export function PathPermissionRoute({ path, children }) {
+  const { user, loading } = useAuth();
+  if (loading) return <LoadingScreen />;
+  const permissions = permissionsForRole(user?.org_role);
+  if (!canAccessPath(permissions, path)) {
+    return <Navigate to="/dashboard" replace />;
+  }
   return children;
 }
 

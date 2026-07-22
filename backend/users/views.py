@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from django.utils import timezone
 from rest_framework import generics, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,6 +22,7 @@ from .models import ActivityLog, OrganizationMember, PasswordResetToken, StaffIn
 from .permissions import IsManager, IsOrgOwner, IsOrgOwnerOnly
 from .serializers import (
     ManagerRegisterSerializer,
+    OrganizationMemberRoleUpdateSerializer,
     OrganizationMemberSerializer,
     StaffInviteCreateSerializer,
     StaffInviteSerializer,
@@ -213,7 +215,8 @@ class ResetPasswordView(APIView):
             return Response({'detail': exc.messages[0]}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(password)
-        user.save(update_fields=['password'])
+        user.must_change_password = False
+        user.save(update_fields=['password', 'must_change_password'])
         reset_token.used_at = timezone.now()
         reset_token.save(update_fields=['used_at'])
 
@@ -258,6 +261,8 @@ class StaffInvitePreviewView(APIView):
         return Response({
             'email': invite.email,
             'organization': invite.organization.name,
+            'role': invite.role,
+            'role_label': dict(OrganizationMember.Role.choices).get(invite.role, invite.role),
             'is_valid': invite.is_valid,
         })
 
@@ -321,6 +326,7 @@ class StaffInviteViewSet(viewsets.ModelViewSet):
         org = get_organization(request.user)
         invite = StaffInvite.objects.create(
             email=serializer.validated_data['email'],
+            role=serializer.validated_data.get('role', OrganizationMember.Role.STAFF),
             organization=org,
             invited_by=request.user,
             expires_at=timezone.now() + timedelta(days=7),
@@ -336,10 +342,10 @@ class StaffInviteViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationMemberSerializer
     permission_classes = [IsManager]
-    http_method_names = ['get', 'delete', 'head', 'options']
+    http_method_names = ['get', 'patch', 'delete', 'head', 'options']
 
     def get_permissions(self):
-        if self.action == 'destroy':
+        if self.action in ('destroy', 'partial_update', 'suspend', 'reactivate'):
             return [IsOrgOwner()]
         return [IsManager()]
 
@@ -348,6 +354,68 @@ class TeamViewSet(viewsets.ModelViewSet):
         if not org:
             return OrganizationMember.objects.none()
         return OrganizationMember.objects.filter(organization=org).select_related('user')
+
+    def partial_update(self, request, *args, **kwargs):
+        member = self.get_object()
+        if member.role == OrganizationMember.Role.OWNER:
+            return Response(
+                {'detail': 'Cannot change the organization owner role.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        serializer = OrganizationMemberRoleUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        old_role = member.role
+        member.role = serializer.validated_data['role']
+        member.save(update_fields=['role'])
+        log_activity(
+            request.user,
+            'staff_role_changed',
+            f'{member.user.username}: {old_role} → {member.role}',
+            f'member:{member.id}',
+        )
+        return Response(OrganizationMemberSerializer(member).data)
+
+    @action(detail=True, methods=['post'])
+    def suspend(self, request, pk=None):
+        member = self.get_object()
+        if member.role == OrganizationMember.Role.OWNER:
+            return Response(
+                {'detail': 'Cannot suspend the organization owner.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        staff_user = member.user
+        if not staff_user.is_active:
+            return Response({'detail': 'Account is already suspended.'}, status=status.HTTP_400_BAD_REQUEST)
+        staff_user.is_active = False
+        staff_user.save(update_fields=['is_active'])
+        log_activity(
+            request.user,
+            'staff_suspended',
+            staff_user.username,
+            f'member:{member.id}',
+        )
+        return Response(OrganizationMemberSerializer(member).data)
+
+    @action(detail=True, methods=['post'])
+    def reactivate(self, request, pk=None):
+        member = self.get_object()
+        if member.role == OrganizationMember.Role.OWNER:
+            return Response(
+                {'detail': 'Owner account cannot be reactivated this way.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        staff_user = member.user
+        if staff_user.is_active:
+            return Response({'detail': 'Account is already active.'}, status=status.HTTP_400_BAD_REQUEST)
+        staff_user.is_active = True
+        staff_user.save(update_fields=['is_active'])
+        log_activity(
+            request.user,
+            'staff_reactivated',
+            staff_user.username,
+            f'member:{member.id}',
+        )
+        return Response(OrganizationMemberSerializer(member).data)
 
     def destroy(self, request, *args, **kwargs):
         member = self.get_object()

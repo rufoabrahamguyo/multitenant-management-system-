@@ -31,7 +31,7 @@ export default function ForgotPassword() {
       <AuthLayout title="Check your email" subtitle="Password reset">
         <p className="text-slate-600 text-sm text-center">
           If <strong>{email}</strong> is registered, a password reset link has been sent.
-          Check your inbox — the link expires in 1 hour.
+          Check your inbox. The link expires in 1 hour.
         </p>
         <p className="text-center text-sm text-slate-500 mt-6">
           <Link to="/login" className="link-accent hover:underline">Back to sign in</Link>
@@ -60,7 +60,7 @@ export default function ForgotPassword() {
           )}
         </FormField>
 
-        <button type="submit" disabled={loading || !email} className="btn-primary btn-md btn-block" aria-busy={loading}>
+        <button type="submit" disabled={loading || !email} className="btn-auth" aria-busy={loading}>
           {loading ? 'Sending…' : 'Send reset link'}
         </button>
       </form>

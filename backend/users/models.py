@@ -14,6 +14,7 @@ class User(AbstractUser):
     property_manager_id = models.UUIDField(null=True, blank=True, db_index=True)
     phone_number = models.CharField(max_length=15, blank=True)
     phone_verified = models.BooleanField(default=False)
+    must_change_password = models.BooleanField(default=False)
     manager = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
@@ -62,11 +63,13 @@ class Organization(models.Model):
 class OrganizationMember(models.Model):
     class Role(models.TextChoices):
         OWNER = 'OWNER', 'Owner'
+        FRONT_DESK = 'FRONT_DESK', 'Front Desk'
+        MAINTENANCE = 'MAINTENANCE', 'Maintenance'
         STAFF = 'STAFF', 'Staff'
 
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='members')
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='org_membership')
-    role = models.CharField(max_length=10, choices=Role.choices, default=Role.STAFF)
+    role = models.CharField(max_length=20, choices=Role.choices, default=Role.STAFF)
     joined_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -107,6 +110,15 @@ class TenantInvite(models.Model):
 class StaffInvite(models.Model):
     token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     email = models.EmailField()
+    role = models.CharField(
+        max_length=20,
+        choices=[
+            (OrganizationMember.Role.FRONT_DESK, OrganizationMember.Role.FRONT_DESK.label),
+            (OrganizationMember.Role.MAINTENANCE, OrganizationMember.Role.MAINTENANCE.label),
+            (OrganizationMember.Role.STAFF, OrganizationMember.Role.STAFF.label),
+        ],
+        default=OrganizationMember.Role.STAFF,
+    )
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='staff_invites')
     invited_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     expires_at = models.DateTimeField()

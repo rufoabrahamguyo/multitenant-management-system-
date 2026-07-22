@@ -99,7 +99,7 @@ export default function TenantInviteLanding() {
         and create your account.
       </p>
 
-      <button type="button" onClick={openInApp} className="btn-primary btn-md btn-block mb-3">
+      <button type="button" onClick={openInApp} className="btn-auth mb-3">
         Open in Propizy App
       </button>
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useIsOwner } from '../hooks/useIsOwner';
+import { useIsOwner, usePermissions } from '../hooks/useOrgRole';
+import { canAccessPath } from '../constants/orgRoles';
 import useFocusTrap from '../hooks/useFocusTrap';
 import PropizyLogo from './PropizyLogo';
 import AppHeader from './AppHeader';
@@ -86,6 +87,13 @@ const navIcons = {
   ),
 };
 
+const maintenanceChildren = [
+  { to: '/maintenance?status=pending', label: 'Pending', status: 'pending' },
+  { to: '/maintenance?status=in-progress', label: 'In progress', status: 'in-progress' },
+  { to: '/maintenance?status=resolved', label: 'Resolved', status: 'resolved' },
+  { to: '/maintenance?status=all', label: 'All', status: 'all' },
+];
+
 const baseNavItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
   { to: '/properties', label: 'Properties', icon: 'properties' },
@@ -97,11 +105,24 @@ const baseNavItems = [
   { to: '/reports', label: 'Reports', icon: 'reports' },
   { to: '/arrears', label: 'Arrears', icon: 'arrears' },
   { to: '/governance', label: 'Governance', icon: 'governance' },
-  { to: '/maintenance', label: 'Maintenance', icon: 'maintenance' },
+  {
+    to: '/maintenance',
+    label: 'Maintenance',
+    icon: 'maintenance',
+    children: maintenanceChildren,
+  },
   { to: '/team', label: 'Team', icon: 'team' },
 ];
 
-function SidebarContent({ navItems, navLinkClass, onNavigate }) {
+function SidebarContent({ navItems, navLinkClass, onNavigate, showSettings, pathname, search }) {
+  const onMaintenance = pathname.startsWith('/maintenance');
+  const [maintenanceOpen, setMaintenanceOpen] = useState(onMaintenance);
+  const currentStatus = new URLSearchParams(search).get('status') || 'pending';
+
+  useEffect(() => {
+    if (onMaintenance) setMaintenanceOpen(true);
+  }, [onMaintenance]);
+
   return (
     <>
       <div className="p-5 border-b border-slate-200">
@@ -109,25 +130,83 @@ function SidebarContent({ navItems, navLinkClass, onNavigate }) {
       </div>
 
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto" aria-label="Dashboard">
-        {navItems.map((item) => (
-          <NavLink key={item.to} to={item.to} className={navLinkClass} onClick={onNavigate}>
-            {({ isActive }) => (
-              <>
-                <span className={isActive ? 'text-emerald-400' : 'text-slate-400'} aria-hidden="true">
-                  {navIcons[item.icon]}
-                </span>
-                {item.label}
-              </>
-            )}
-          </NavLink>
-        ))}
+        {navItems.map((item) => {
+          if (item.children?.length) {
+            const sectionActive = pathname.startsWith(item.to);
+            return (
+              <div key={item.to} className="space-y-0.5">
+                <button
+                  type="button"
+                  onClick={() => setMaintenanceOpen((open) => !open)}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
+                    sectionActive
+                      ? 'bg-slate-900 text-white'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  }`}
+                  aria-expanded={maintenanceOpen}
+                >
+                  <span className={sectionActive ? 'text-emerald-400' : 'text-slate-400'} aria-hidden="true">
+                    {navIcons[item.icon]}
+                  </span>
+                  <span className="flex-1 text-left">{item.label}</span>
+                  <svg
+                    className={`w-4 h-4 shrink-0 transition-transform ${maintenanceOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {maintenanceOpen && (
+                  <div className="ml-4 pl-3 border-l border-slate-200 space-y-0.5">
+                    {item.children.map((child) => {
+                      const childActive = onMaintenance && currentStatus === child.status;
+                      return (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          onClick={onNavigate}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm min-h-[40px] ${
+                            childActive
+                              ? 'bg-emerald-50 text-emerald-800 font-semibold'
+                              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                          }`}
+                        >
+                          {child.label}
+                        </NavLink>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          return (
+            <NavLink key={item.to} to={item.to} className={navLinkClass} onClick={onNavigate}>
+              {({ isActive }) => (
+                <>
+                  <span className={isActive ? 'text-emerald-400' : 'text-slate-400'} aria-hidden="true">
+                    {navIcons[item.icon]}
+                  </span>
+                  {item.label}
+                </>
+              )}
+            </NavLink>
+          );
+        })}
       </nav>
 
       <div className="p-3 border-t border-slate-200 space-y-1">
-        <NavLink to="/governance" className={navLinkClass} onClick={onNavigate}>
-          <span className="text-slate-400" aria-hidden="true">{navIcons.settings}</span>
-          Settings
-        </NavLink>
+        {showSettings && (
+          <NavLink to="/governance" className={navLinkClass} onClick={onNavigate}>
+            <span className="text-slate-400" aria-hidden="true">{navIcons.settings}</span>
+            Settings
+          </NavLink>
+        )}
         <a
           href="mailto:support@propizy.app"
           className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100 min-h-[44px]"
@@ -141,17 +220,19 @@ function SidebarContent({ navItems, navLinkClass, onNavigate }) {
 }
 
 export default function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const sidebarRef = useRef(null);
   const isOwner = useIsOwner();
-  const navItems = isOwner
-    ? [
-        ...baseNavItems,
-        { to: '/activity', label: 'Activity Log', icon: 'activity' },
-      ]
+  const permissions = usePermissions();
+
+  const allNavItems = isOwner
+    ? [...baseNavItems, { to: '/activity', label: 'Activity Log', icon: 'activity' }]
     : baseNavItems;
+
+  const navItems = allNavItems.filter((item) => canAccessPath(permissions, item.to));
+  const showSettings = canAccessPath(permissions, '/governance');
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -232,7 +313,14 @@ export default function Layout() {
             Close
           </button>
         </div>
-        <SidebarContent navItems={navItems} navLinkClass={navLinkClass} onNavigate={closeSidebar} />
+        <SidebarContent
+          navItems={navItems}
+          navLinkClass={navLinkClass}
+          onNavigate={closeSidebar}
+          showSettings={showSettings}
+          pathname={pathname}
+          search={search}
+        />
       </aside>
 
       <main id="main-content" className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 pt-20 lg:pt-6 relative" tabIndex={-1}>

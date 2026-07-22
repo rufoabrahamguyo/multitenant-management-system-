@@ -1,12 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useFeedback } from '../context/FeedbackContext';
+import { DASHBOARD_META, ROLE_LABELS } from '../constants/orgRoles';
 
 const pageMeta = {
-  '/dashboard': {
-    title: 'Portfolio Overview',
-    subtitle: 'Manage your assets and institutional growth',
-  },
+  '/dashboard': null, // filled from role
   '/properties': { title: 'Properties', subtitle: 'Manage buildings and portfolios' },
   '/units': { title: 'Units', subtitle: 'Room categories and unit inventory' },
   '/transfers': { title: 'Transfers', subtitle: 'Tenant room change requests' },
@@ -31,7 +29,10 @@ export default function AppHeader() {
   const { user, logout } = useAuth();
   const { toast } = useFeedback();
   const navigate = useNavigate();
-  const meta = pageMeta[pathname] || { title: 'Propizy', subtitle: 'Property management dashboard' };
+  const roleMeta = DASHBOARD_META[user?.org_role];
+  const meta = pathname === '/dashboard' && roleMeta
+    ? roleMeta
+    : (pageMeta[pathname] || { title: 'Propizy', subtitle: 'Property management dashboard' });
 
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 mb-8">
@@ -70,10 +71,13 @@ export default function AppHeader() {
               {user?.first_name || user?.username}
             </p>
             <p className="text-[11px] font-semibold text-emerald-600 tracking-wide">
-              {user?.org_role || 'MANAGER'}
+              {ROLE_LABELS[user?.org_role] || user?.org_role || 'Manager'}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center text-sm font-semibold text-slate-600">
+          <div
+            className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm font-semibold tracking-wide shadow-sm"
+            aria-hidden="true"
+          >
             {initials(user)}
           </div>
           <button

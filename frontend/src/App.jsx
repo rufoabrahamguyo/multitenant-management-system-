@@ -6,6 +6,7 @@ import {
   GuestRoute,
   HomeOrRedirect,
   OwnerRoute,
+  PathPermissionRoute,
   ProtectedRoute,
   VerifyPhoneRoute,
 } from './components/ProtectedRoute';
@@ -42,6 +43,14 @@ function LazyPage({ children }) {
   return <Suspense fallback={<LoadingScreen />}>{children}</Suspense>;
 }
 
+function Guarded({ path, children }) {
+  return (
+    <PathPermissionRoute path={path}>
+      <LazyPage>{children}</LazyPage>
+    </PathPermissionRoute>
+  );
+}
+
 function AppRoutes() {
   return (
     <Routes>
@@ -54,21 +63,21 @@ function AppRoutes() {
       <Route path="/invite/:token" element={<GuestRoute><TenantInviteLanding /></GuestRoute>} />
       <Route path="/verify-phone" element={<VerifyPhoneRoute><VerifyPhone /></VerifyPhoneRoute>} />
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route path="/dashboard" element={<LazyPage><Dashboard /></LazyPage>} />
-        <Route path="/properties" element={<LazyPage><Properties /></LazyPage>} />
-        <Route path="/properties/:id" element={<LazyPage><PropertyDetail /></LazyPage>} />
-        <Route path="/units" element={<LazyPage><Units /></LazyPage>} />
-        <Route path="/tenants" element={<LazyPage><Tenants /></LazyPage>} />
-        <Route path="/tenants/:id" element={<LazyPage><TenantDetail /></LazyPage>} />
-        <Route path="/leases" element={<LazyPage><Leases /></LazyPage>} />
-        <Route path="/payments" element={<LazyPage><Payments /></LazyPage>} />
-        <Route path="/reports" element={<LazyPage><Reports /></LazyPage>} />
-        <Route path="/arrears" element={<LazyPage><Arrears /></LazyPage>} />
+        <Route path="/dashboard" element={<Guarded path="/dashboard"><Dashboard /></Guarded>} />
+        <Route path="/properties" element={<Guarded path="/properties"><Properties /></Guarded>} />
+        <Route path="/properties/:id" element={<Guarded path="/properties"><PropertyDetail /></Guarded>} />
+        <Route path="/units" element={<Guarded path="/units"><Units /></Guarded>} />
+        <Route path="/tenants" element={<Guarded path="/tenants"><Tenants /></Guarded>} />
+        <Route path="/tenants/:id" element={<Guarded path="/tenants"><TenantDetail /></Guarded>} />
+        <Route path="/leases" element={<Guarded path="/leases"><Leases /></Guarded>} />
+        <Route path="/payments" element={<Guarded path="/payments"><Payments /></Guarded>} />
+        <Route path="/reports" element={<Guarded path="/reports"><Reports /></Guarded>} />
+        <Route path="/arrears" element={<Guarded path="/arrears"><Arrears /></Guarded>} />
         <Route path="/activity" element={<LazyPage><OwnerRoute><Activity /></OwnerRoute></LazyPage>} />
-        <Route path="/transfers" element={<LazyPage><Transfers /></LazyPage>} />
-        <Route path="/governance" element={<LazyPage><Governance /></LazyPage>} />
-        <Route path="/maintenance" element={<LazyPage><Maintenance /></LazyPage>} />
-        <Route path="/team" element={<LazyPage><Team /></LazyPage>} />
+        <Route path="/transfers" element={<Guarded path="/transfers"><Transfers /></Guarded>} />
+        <Route path="/governance" element={<Guarded path="/governance"><Governance /></Guarded>} />
+        <Route path="/maintenance" element={<Guarded path="/maintenance"><Maintenance /></Guarded>} />
+        <Route path="/team" element={<Guarded path="/team"><Team /></Guarded>} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

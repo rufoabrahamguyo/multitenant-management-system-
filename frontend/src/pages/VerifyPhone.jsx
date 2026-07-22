@@ -125,7 +125,7 @@ export default function VerifyPhone() {
         <button
           type="submit"
           disabled={loading || code.length < 6}
-          className="btn-primary btn-md btn-block"
+          className="btn-auth"
           aria-busy={loading}
         >
           {loading ? 'Verifying…' : 'Verify phone number'}

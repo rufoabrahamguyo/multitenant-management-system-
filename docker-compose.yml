@@ -33,9 +33,11 @@ services:
       - ./backend/.env
     environment:
       DB_HOST: db
+      DB_PORT: "5432"
       CELERY_BROKER_URL: redis://redis:6379/0
     volumes:
-      - ./backend/media:/app/media
+      # Live-mount source so settings/code changes apply without image rebuild.
+      - ./backend:/app
     depends_on:
       db:
         condition: service_healthy
@@ -49,9 +51,10 @@ services:
       - ./backend/.env
     environment:
       DB_HOST: db
+      DB_PORT: "5432"
       CELERY_BROKER_URL: redis://redis:6379/0
     volumes:
-      - ./backend/media:/app/media
+      - ./backend:/app
     depends_on:
       db:
         condition: service_healthy
