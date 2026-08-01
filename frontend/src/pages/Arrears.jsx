@@ -1,20 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useFeedback } from '../context/FeedbackContext';
 import api from '../api/client';
+import EmptyState from '../components/EmptyState';
+import PageLoader from '../components/PageLoader';
 import { getApiErrorMessage } from '../utils/apiError';
 
 export default function Arrears() {
   const { toast } = useFeedback();
   const [arrears, setArrears] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [reminding, setReminding] = useState(null);
 
   const fetchArrears = () => {
     setLoading(true);
-    api.get('/payments/arrears/').then(({ data }) => {
-      setArrears(data);
-      setLoading(false);
-    });
+    setLoadError(false);
+    api.get('/payments/arrears/')
+      .then(({ data }) => {
+        setArrears(data);
+      })
+      .catch(() => {
+        setArrears([]);
+        setLoadError(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => { fetchArrears(); }, []);
@@ -35,29 +44,41 @@ export default function Arrears() {
     }
   };
 
-  if (loading) return <p className="text-slate-500">Loading arrears...</p>;
+  if (loading) return <PageLoader message="Loading arrears…" />;
+
+  if (loadError) {
+    return (
+      <EmptyState
+        title="Could not load arrears"
+        description="Check your connection and try again."
+        action={
+          <button type="button" onClick={fetchArrears} className="btn-secondary btn-sm">
+            Retry
+          </button>
+        }
+      />
+    );
+  }
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Arrears Management</h2>
-      <p className="text-sm text-slate-500 mb-6">Identify late payments and send automated SMS reminders</p>
-
       {arrears.length === 0 ? (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-          <p className="text-green-700 font-medium">All tenants are up to date!</p>
-          <p className="text-sm text-green-600 mt-1">No outstanding arrears found.</p>
-        </div>
+        <EmptyState
+          title="All tenants are up to date"
+          description="No outstanding arrears found."
+        />
       ) : (
-        <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="bg-white rounded-xl border overflow-hidden overflow-x-auto">
           <table className="w-full text-sm">
+            <caption className="sr-only">Tenants with outstanding rent arrears</caption>
             <thead className="bg-slate-50 text-slate-600">
               <tr>
-                <th className="text-left p-4">Tenant</th>
-                <th className="text-left p-4">Property</th>
-                <th className="text-left p-4">Months Overdue</th>
-                <th className="text-left p-4">Total Owed</th>
-                <th className="text-left p-4">Last Reminder</th>
-                <th className="text-left p-4">Action</th>
+                <th scope="col" className="text-left p-4">Tenant</th>
+                <th scope="col" className="text-left p-4">Property</th>
+                <th scope="col" className="text-left p-4">Months Overdue</th>
+                <th scope="col" className="text-left p-4">Total Owed</th>
+                <th scope="col" className="text-left p-4">Last Reminder</th>
+                <th scope="col" className="text-left p-4">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -82,6 +103,7 @@ export default function Arrears() {
                   </td>
                   <td className="p-4">
                     <button
+                      type="button"
                       onClick={() => sendReminder(a.lease_id, a.tenant_name)}
                       disabled={reminding === a.lease_id}
                       className="px-3 py-1.5 bg-amber-500 text-white rounded-lg text-xs hover:bg-amber-600 disabled:opacity-50"

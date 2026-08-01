@@ -32,7 +32,7 @@ App: http://localhost:5173
 |----------|---------|-------------|
 | `VITE_API_URL` | `http://localhost:8002/api` (via `.env.example`) | REST API base URL |
 
-If `VITE_API_URL` is unset, the client falls back to `http://localhost:8000/api` — set `.env` when using Compose port **8002**.
+If `VITE_API_URL` is unset, the client falls back to `http://localhost:8000/api` - set `.env` when using Compose port **8002**.
 
 ## Scripts
 
@@ -61,5 +61,5 @@ Owner-only routes are gated in the UI; the API enforces RBAC on every write.
 
 ## Related docs
 
-- [Root README](../README.md) — full stack setup and demo accounts
-- [Architecture](../docs/ARCHITECTURE.md) — frontend layout and security notes
+- [Root README](../README.md) - full stack setup and demo accounts
+- [Architecture](../docs/ARCHITECTURE.md) - frontend layout and security notes

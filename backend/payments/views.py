@@ -1,10 +1,3 @@
-import logging
-import uuid
-from datetime import date
-from decimal import Decimal
-
-import requests as http_requests
-
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
@@ -16,25 +9,19 @@ from rest_framework.views import APIView
 
 from properties.models import Lease
 from users.activity import log_activity
-from users.mpesa_config import get_mpesa_config_for_lease
-from users.models import OrganizationMpesaConfig
 from users.permissions import IsManager, IsOrgOwnerOnly, IsTenant
 from users.tenancy import organization_filter
 from users.throttling import PaymentInitiateThrottle
 from users.utils import get_pm_id
 
+from .initiation import PaymentInitiationError, initiate_stk_payment
 from .integrity import get_org_integrity_alerts
 from .models import Payment
 from .mpesa import MpesaService
 from .receipt import generate_invoice_pdf
 from .serializers import InitiatePaymentSerializer, InvoiceSerializer, PaymentSerializer
-from .services import get_org_arrears, month_start, resolve_month_paid, send_payment_reminder
-from .wallet import (
-    get_or_create_wallet,
-    get_wallet_summary,
-    preview_payment_allocation,
-    process_completed_payment,
-)
+from .services import get_org_arrears, send_payment_reminder
+from .wallet import get_wallet_summary
 
 
 class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
@@ -182,130 +169,20 @@ class InitiatePaymentView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user = request.user
-        try:
-            tenant = user.tenant_profile
-        except Exception:
+        if not hasattr(user, 'tenant_profile'):
             return Response({'detail': 'Tenant profile not found.'}, status=status.HTTP_400_BAD_REQUEST)
-        lease_id = serializer.validated_data['lease_id']
-        amount = serializer.validated_data['amount']
-        phone_number = serializer.validated_data['phone_number']
 
         try:
-            lease = Lease.objects.get(id=lease_id, tenant=tenant, is_active=True)
-        except Lease.DoesNotExist:
-            return Response({'detail': 'Lease not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        amount = Decimal(str(amount))
-        if amount <= 0:
-            return Response({'detail': 'Amount must be greater than zero.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        today = date.today()
-        current_month = month_start(today)
-        oldest_unpaid = resolve_month_paid(lease, preferred=current_month)
-        if oldest_unpaid is None or oldest_unpaid > current_month:
-            wallet_only = True
-            month_paid = current_month
-        else:
-            wallet_only = False
-            month_paid = oldest_unpaid
-
-        allocation = preview_payment_allocation(lease, month_paid, amount)
-        wallet = get_or_create_wallet(tenant)
-
-        mpesa_config = get_mpesa_config_for_lease(lease)
-        if mpesa_config and mpesa_config.channel != OrganizationMpesaConfig.Channel.STK:
-            return Response(
-                {
-                    'detail': (
-                        'This landlord accepts manual Paybill/Till payments. '
-                        'Use the payment details provided by your property manager.'
-                    ),
-                },
-                status=status.HTTP_400_BAD_REQUEST,
+            payload = initiate_stk_payment(
+                tenant=user.tenant_profile,
+                lease_id=serializer.validated_data['lease_id'],
+                amount=serializer.validated_data['amount'],
+                phone_number=serializer.validated_data['phone_number'],
             )
+        except PaymentInitiationError as exc:
+            return Response({'detail': exc.detail}, status=exc.status_code)
 
-        prefix = (mpesa_config.account_number.strip() if mpesa_config else '') or ''
-        account_reference = f'{prefix}RENT-{lease.id}' if prefix else f'RENT-{lease.id}'
-
-        payment = Payment.objects.create(
-            tenant=tenant,
-            lease=lease,
-            amount=amount,
-            month_paid=month_paid,
-            status=Payment.Status.PENDING,
-            transaction_id=str(uuid.uuid4()),
-            pay_phone_number=phone_number,
-        )
-
-        mpesa = MpesaService.from_org_config(mpesa_config)
-        try:
-            result = mpesa.stk_push(
-                phone_number=phone_number,
-                amount=amount,
-                account_reference=account_reference,
-                transaction_desc=f'Rent payment for {lease.unit.unit_number}',
-            )
-        except http_requests.RequestException as exc:
-            payment.status = Payment.Status.FAILED
-            payment.save(update_fields=['status'])
-            logging.getLogger(__name__).exception('STK push network error: %s', exc)
-            return Response(
-                {'detail': 'Payment gateway unavailable. Please try again.'},
-                status=status.HTTP_502_BAD_GATEWAY,
-            )
-
-        if not result.get('success') and not result.get('simulated'):
-            payment.status = Payment.Status.FAILED
-            payment.save()
-            return Response(
-                {'detail': result.get('response_description', 'STK push failed.')},
-                status=status.HTTP_502_BAD_GATEWAY,
-            )
-
-        payment.checkout_request_id = result.get('checkout_request_id', '')
-        if result.get('transaction_id'):
-            payment.transaction_id = result['transaction_id']
-        payment.save()
-
-        if result.get('simulated'):
-            payment.status = Payment.Status.COMPLETED
-            payment.mpesa_receipt_number = f'SIM{payment.id:06d}'
-            payment.payment_date = timezone.now()
-            payment.save()
-            process_completed_payment(payment)
-            from .tasks import generate_receipt_pdf_task
-            generate_receipt_pdf_task.delay(payment.id)
-            org_user = lease.unit.property.manager
-            log_activity(
-                org_user, 'payment_completed',
-                f'KES {payment.amount} from {tenant.user.username}',
-                f'payment:{payment.id}',
-            )
-
-        wallet.refresh_from_db()
-        message = 'Check your phone for STK prompt.'
-        if result.get('simulated'):
-            message = 'Payment simulated successfully.'
-        elif wallet_only:
-            message = 'Check your phone for STK prompt. This payment will be added to your wallet.'
-        elif allocation['wallet_credit'] > 0:
-            message = (
-                f'Check your phone for STK prompt. KES {allocation["rent_applied"]} will cover '
-                f'{month_paid.strftime("%B %Y")} and KES {allocation["wallet_credit"]} will go to your wallet.'
-            )
-
-        return Response({
-            'payment_id': payment.id,
-            'checkout_request_id': payment.checkout_request_id,
-            'month_paid': month_paid.isoformat(),
-            'wallet_only': wallet_only,
-            'rent_applied': str(allocation['rent_applied']),
-            'wallet_credit': str(allocation['wallet_credit']),
-            'wallet_balance': str(wallet.balance),
-            'message': message,
-            'simulated': result.get('simulated', False),
-            'status': payment.status,
-        }, status=status.HTTP_201_CREATED)
+        return Response(payload, status=status.HTTP_201_CREATED)
 
 
 class PaymentStatusView(APIView):

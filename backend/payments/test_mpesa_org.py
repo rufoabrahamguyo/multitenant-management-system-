@@ -111,7 +111,7 @@ class InitiatePaymentOrgMpesaTests(TestCase):
             rent_amount=Decimal('15000'), is_active=True,
         )
 
-    @patch('payments.views.MpesaService.from_org_config')
+    @patch('payments.initiation.MpesaService.from_org_config')
     def test_initiate_payment_uses_org_mpesa_service(self, mock_from_org):
         config, _ = OrganizationMpesaConfig.objects.get_or_create(organization=self.org)
         config.channel = OrganizationMpesaConfig.Channel.STK
@@ -155,7 +155,7 @@ class InitiatePaymentOrgMpesaTests(TestCase):
         })
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
 
-    @patch('payments.views.MpesaService.from_org_config')
+    @patch('payments.initiation.MpesaService.from_org_config')
     def test_initiate_payment_simulates_when_org_not_configured(self, mock_from_org):
         mock_service = mock_from_org.return_value
         mock_service.stk_push.return_value = {

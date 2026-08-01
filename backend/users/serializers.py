@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
     org_role = serializers.SerializerMethodField()
     organization_name = serializers.SerializerMethodField()
     phone_masked = serializers.SerializerMethodField()
+    permissions = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -26,8 +27,12 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'username', 'email', 'first_name', 'last_name', 'role',
             'property_manager_id', 'org_role', 'organization_name',
             'phone_number', 'phone_verified', 'phone_masked', 'must_change_password',
+            'permissions',
         ]
-        read_only_fields = ['property_manager_id', 'phone_verified', 'phone_masked', 'must_change_password']
+        read_only_fields = [
+            'property_manager_id', 'phone_verified', 'phone_masked',
+            'must_change_password', 'permissions',
+        ]
 
     def get_phone_masked(self, obj):
         if not obj.phone_number:
@@ -47,6 +52,10 @@ class UserSerializer(serializers.ModelSerializer):
         if hasattr(obj, 'org_membership'):
             return obj.org_membership.organization.name
         return None
+
+    def get_permissions(self, obj):
+        from .governance import get_user_permissions
+        return get_user_permissions(obj)
 
 
 class ManagerRegisterSerializer(serializers.ModelSerializer):

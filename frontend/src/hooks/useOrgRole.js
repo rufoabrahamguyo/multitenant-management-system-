@@ -11,10 +11,16 @@ export function useIsOwner() {
   return useOrgRole() === 'OWNER';
 }
 
-/** Permission map for the logged-in manager (defaults by role). */
+/**
+ * Permission map for the logged-in manager.
+ * Prefers API-provided `user.permissions` (backend matrix); falls back by role.
+ */
 export function usePermissions() {
-  const orgRole = useOrgRole();
-  return permissionsForRole(orgRole);
+  const { user } = useAuth();
+  if (user?.permissions && typeof user.permissions === 'object') {
+    return user.permissions;
+  }
+  return permissionsForRole(user?.org_role);
 }
 
 export function useCan(resource, action = 'read') {

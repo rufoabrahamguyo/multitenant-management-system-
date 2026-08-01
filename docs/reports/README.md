@@ -18,5 +18,5 @@ Open draw.io / diagrams.net files from [`../diagrams/`](../diagrams/). That fold
 
 ## Related
 
-- [Root README](../../README.md) — how to run the system
+- [Root README](../../README.md) - how to run the system
 - [Diagrams README](../diagrams/README.md)

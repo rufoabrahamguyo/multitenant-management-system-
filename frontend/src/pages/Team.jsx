@@ -118,7 +118,6 @@ export default function Team() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Team</h2>
       <p className="text-sm text-slate-500 mb-6">
         {isOwner
           ? 'Invite Front Desk, Maintenance, or general staff with login access. Assign roles and suspend accounts when needed.'

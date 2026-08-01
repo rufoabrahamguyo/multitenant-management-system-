@@ -1,5 +1,5 @@
 /**
- * Solid circular status signals — white glyph on purposeful color.
+ * Solid circular status signals - white glyph on purposeful color.
  * Use for operational UI (stats, alerts, occupancy), not decorative chrome.
  */
 

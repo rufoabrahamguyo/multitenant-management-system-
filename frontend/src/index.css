@@ -110,7 +110,7 @@ body {
   }
 
   .auth-panel .label-field {
-    @apply text-[13px] font-normal text-slate-400 mb-1.5;
+    @apply text-[13px] font-normal text-slate-700 mb-1.5;
   }
 
   .auth-panel .input-field {
@@ -227,7 +227,7 @@ body {
   }
 
   .desk-modal .label-field {
-    @apply text-[13px] font-normal text-slate-400 mb-1.5;
+    @apply text-[13px] font-normal text-slate-700 mb-1.5;
   }
 
   .desk-modal .input-field {

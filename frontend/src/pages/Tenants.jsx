@@ -171,11 +171,7 @@ export default function Tenants() {
 
   return (
     <div className="desk-page">
-      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Tenants</h2>
-          <p className="text-sm text-slate-500">Invite remotely or set up accounts at the desk</p>
-        </div>
+      <div className="flex flex-wrap justify-end items-center gap-4 mb-6">
         {canInvite && (
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => { setError(''); setFieldErrors({}); setMode('invite'); }} className="btn-secondary btn-sm">
@@ -424,7 +420,7 @@ export default function Tenants() {
           </FormField>
           <div>
             <p className="label-field">National ID photos</p>
-            <p className="text-xs text-slate-400 mb-3">Optional — staff can upload front and back now or later from the profile.</p>
+            <p className="text-xs text-slate-400 mb-3">Optional - staff can upload front and back now or later from the profile.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <IdUploadZone
                 label="ID Front"

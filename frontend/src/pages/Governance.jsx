@@ -208,15 +208,20 @@ export default function Governance() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Governance & Trust</h2>
-      <p className="text-sm text-slate-500 mb-6">
-        Accountability features: RBAC, cash approval, reconciliation, evidence chains, and compliance exports.
-      </p>
-
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div
+        role="tablist"
+        aria-label="Governance sections"
+        className="flex flex-wrap gap-2 mb-6"
+      >
         {tabs.map((t) => (
           <button
             key={t.id}
+            type="button"
+            role="tab"
+            id={`gov-tab-${t.id}`}
+            aria-selected={tab === t.id}
+            aria-controls={`gov-panel-${t.id}`}
+            tabIndex={tab === t.id ? 0 : -1}
             onClick={() => setTab(t.id)}
             className={`px-3 py-1.5 rounded-xl text-sm font-medium ${tab === t.id ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600'}`}
           >
@@ -226,25 +231,31 @@ export default function Governance() {
       </div>
 
       {tab === 'matrix' && matrix && (
-        <div className="bg-white rounded-xl border p-6">
+        <div
+          role="tabpanel"
+          id="gov-panel-matrix"
+          aria-labelledby="gov-tab-matrix"
+          className="bg-white rounded-xl border p-6"
+        >
           <p className="text-sm mb-4">Your role: <strong>{matrix.role}</strong></p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
+              <caption className="sr-only">Your role permission matrix</caption>
               <thead>
                 <tr className="bg-slate-100">
-                  <th className="text-left p-2">Resource</th>
-                  <th className="p-2">Read</th>
-                  <th className="p-2">Write</th>
-                  <th className="p-2">Approve/Export</th>
+                  <th scope="col" className="text-left p-2">Resource</th>
+                  <th scope="col" className="p-2">Read</th>
+                  <th scope="col" className="p-2">Write</th>
+                  <th scope="col" className="p-2">Approve/Export</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(matrix.your_permissions || {}).map(([resource, perms]) => (
                   <tr key={resource} className="border-t">
                     <td className="p-2 font-medium">{resource}</td>
-                    <td className="p-2 text-center">{perms.read ? '?' : '-'}</td>
-                    <td className="p-2 text-center">{perms.write ? '?' : '-'}</td>
-                    <td className="p-2 text-center">{perms.approve || perms.export ? '?' : '-'}</td>
+                    <td className="p-2 text-center">{perms.read ? 'Yes' : '-'}</td>
+                    <td className="p-2 text-center">{perms.write ? 'Yes' : '-'}</td>
+                    <td className="p-2 text-center">{perms.approve || perms.export ? 'Yes' : '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -254,7 +265,7 @@ export default function Governance() {
       )}
 
       {tab === 'cash' && (
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div role="tabpanel" id="gov-panel-cash" aria-labelledby="gov-tab-cash" className="grid lg:grid-cols-2 gap-6">
           <form onSubmit={recordCash} className="bg-white rounded-xl border p-6 space-y-3">
             <h3 className="font-semibold">Record Cash Collection (Staff)</h3>
             <FormField id="cash-lease" label="Lease">

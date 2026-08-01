@@ -78,11 +78,6 @@ export default function Transfers() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Room Transfer Requests</h2>
-      <p className="text-sm text-slate-500 mb-6">
-        Review tenant requests to change room category. Approve with a specific vacant unit for full transparency.
-      </p>
-
       <div className="grid lg:grid-cols-3 gap-6 mb-8">
         {availability.map((cat) => (
           <div key={cat.category_id} className="bg-white rounded-xl border p-5">

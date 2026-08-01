@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useIsOwner } from '../hooks/useIsOwner';
 import api from '../api/client';
+import EmptyState from '../components/EmptyState';
+import PageLoader from '../components/PageLoader';
 
 export default function Reports() {
   const [report, setReport] = useState(null);
+  const [loadError, setLoadError] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [statementUrl, setStatementUrl] = useState(null);
   const isOwner = useIsOwner();
 
-  useEffect(() => {
-    api.get('/auth/reports/').then(({ data }) => setReport(data));
-  }, []);
+  const fetchReport = () => {
+    setLoadError(false);
+    setReport(null);
+    api.get('/auth/reports/')
+      .then(({ data }) => setReport(data))
+      .catch(() => setLoadError(true));
+  };
+
+  useEffect(() => { fetchReport(); }, []);
 
   const downloadOwnerStatement = async () => {
     setGenerating(true);
@@ -24,17 +33,29 @@ export default function Reports() {
     }
   };
 
-  if (!report) return <p className="text-slate-500">Loading reports...</p>;
+  if (loadError) {
+    return (
+      <EmptyState
+        title="Could not load reports"
+        description="Check your connection and try again."
+        action={
+          <button type="button" onClick={fetchReport} className="btn-secondary btn-sm">
+            Retry
+          </button>
+        }
+      />
+    );
+  }
+
+  if (!report) return <PageLoader message="Loading reports…" />;
 
   return (
     <div>
       <div className="flex justify-between items-start mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Real-Time Reports</h2>
-          <p className="text-sm text-slate-500">Live rental performance for {report.month}</p>
-        </div>
+        <p className="text-sm text-slate-500">Live rental performance for {report.month}</p>
         {isOwner && (
           <button
+            type="button"
             onClick={downloadOwnerStatement}
             disabled={generating}
             className="btn-primary btn-sm disabled:opacity-50"

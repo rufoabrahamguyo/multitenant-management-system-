@@ -6,6 +6,7 @@ import { useOrgRole } from '../hooks/useOrgRole';
 import { formatKes, unwrapList } from '../utils/apiHelpers';
 import api from '../api/client';
 import SignalIcon, { StatusSignal } from '../components/SignalIcon';
+import PageLoader from '../components/PageLoader';
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -17,11 +18,7 @@ function timeAgo(dateStr) {
 }
 
 function Loading() {
-  return (
-    <div className="flex items-center justify-center py-24">
-      <div className="w-8 h-8 border-2 border-slate-300 border-t-slate-900 rounded-full animate-spin" />
-    </div>
-  );
+  return <PageLoader message="Loading dashboard…" />;
 }
 
 function StatCard({ label, value, footer, footerTone = 'neutral', signal }) {

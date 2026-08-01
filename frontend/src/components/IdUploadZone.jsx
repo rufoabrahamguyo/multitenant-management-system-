@@ -16,7 +16,7 @@ function PhotoGlyph({ className = 'w-8 h-8' }) {
 }
 
 /**
- * Staff ID photo upload zone — matches Qcare / Raise-a-Ticket dashed teal style.
+ * Staff ID photo upload zone - matches Qcare / Raise-a-Ticket dashed teal style.
  */
 export default function IdUploadZone({
   label,

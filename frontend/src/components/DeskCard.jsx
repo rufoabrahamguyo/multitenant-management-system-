@@ -17,7 +17,7 @@ export function DeskCard({ icon, title, onEdit, children, className = '' }) {
   );
 }
 
-export function DeskField({ label, value, empty = '—' }) {
+export function DeskField({ label, value, empty = '-' }) {
   const display = value === null || value === undefined || value === '' ? empty : value;
   return (
     <div className="min-w-0">

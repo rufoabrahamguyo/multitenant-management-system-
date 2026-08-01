@@ -5,6 +5,7 @@ import { useIsOwner } from '../hooks/useIsOwner';
 import api from '../api/client';
 import { getApiErrorMessage } from '../utils/apiError';
 import { unwrapList } from '../utils/apiHelpers';
+import PageLoader from '../components/PageLoader';
 
 function monthKey(value) {
   if (!value) return '';
@@ -98,11 +99,7 @@ export default function Payments() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <div className="w-8 h-8 border-2 border-slate-300 border-t-slate-900 rounded-full animate-spin" />
-      </div>
-    );
+    return <PageLoader message="Loading payments…" />;
   }
 
   return (
@@ -242,15 +239,16 @@ export default function Payments() {
           </p>
         </div>
         <table className="w-full text-sm">
+          <caption className="sr-only">Rent payment records</caption>
           <thead className="bg-slate-50 text-slate-600">
             <tr>
-              <th className="text-left p-4">Tenant</th>
-              <th className="text-left p-4">Property</th>
-              <th className="text-left p-4">Amount</th>
-              <th className="text-left p-4">Month</th>
-              <th className="text-left p-4">Receipt</th>
-              <th className="text-left p-4">Flags</th>
-              <th className="text-left p-4">Status</th>
+              <th scope="col" className="text-left p-4">Tenant</th>
+              <th scope="col" className="text-left p-4">Property</th>
+              <th scope="col" className="text-left p-4">Amount</th>
+              <th scope="col" className="text-left p-4">Month</th>
+              <th scope="col" className="text-left p-4">Receipt</th>
+              <th scope="col" className="text-left p-4">Flags</th>
+              <th scope="col" className="text-left p-4">Status</th>
             </tr>
           </thead>
           <tbody>

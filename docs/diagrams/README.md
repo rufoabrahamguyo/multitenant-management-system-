@@ -6,16 +6,16 @@ Open these files in **[diagrams.net](https://app.diagrams.net)** (draw.io). Pref
 
 | File | Report section |
 |------|----------------|
-| `propizy-use-case-diagram.xml` | UML use case — actors, use cases, include relationships |
-| `propizy-class-diagram.xml` | UML class — entities and services (attributes / operations) |
-| `propizy-activity-tenant-registration.xml` | UML activity — tenant invite & registration |
-| `propizy-activity-diagram.xml` | UML activity — registration/lease, M-PESA, cash approval (tabs) |
+| `propizy-use-case-diagram.xml` | UML use case - actors, use cases, include relationships |
+| `propizy-class-diagram.xml` | UML class - entities and services (attributes / operations) |
+| `propizy-activity-tenant-registration.xml` | UML activity - tenant invite & registration |
+| `propizy-activity-diagram.xml` | UML activity - registration/lease, M-PESA, cash approval (tabs) |
 | `propizy-4.2-context-diagram.drawio` | §4.2 context diagram (Level 0) |
-| `propizy-4.3-dfd-level1.xml` | §4.3 DFD Level 1 (processes 1–8) |
+| `propizy-4.3-dfd-level1.xml` | §4.3 DFD Level 1 (processes 1-8) |
 | `propizy-4.3-dfd-level2.xml` | §4.3 DFD Level 2 (selected process decompositions) |
 | `propizy-4.3-dfd-level1.drawio` | DFD Level 1 (legacy draw.io copy) |
-| `propizy-database-er-diagram.xml` | Database ER — PostgreSQL tables, Crow’s Foot |
-| `propizy-4.4-er-diagram.drawio` | §4.4 ER — Chen (conceptual) and Crow’s Foot (logical) |
+| `propizy-database-er-diagram.xml` | Database ER - PostgreSQL tables, Crow's Foot |
+| `propizy-4.4-er-diagram.drawio` | §4.4 ER - Chen (conceptual) and Crow's Foot (logical) |
 
 Additional focused ER files (`propizy-er-*.drawio`) cover org/auth and payments/wallet slices.
 
@@ -36,13 +36,13 @@ Additional focused ER files (`propizy-er-*.drawio`) cover org/auth and payments/
 | Split rectangle (`D1 \| Name`) | Data store |
 | Labelled arrow | Data flow |
 
-Context = Process **0**. Level 1 decomposes into processes **1–8**. Level 2 decomposes selected Level 1 processes (e.g. 4.1, 4.2).
+Context = Process **0**. Level 1 decomposes into processes **1-8**. Level 2 decomposes selected Level 1 processes (e.g. 4.1, 4.2).
 
 ### ER
 
 - **Page 4.4a (Chen):** rectangle = entity; oval = attribute; diamond = relationship  
 - **Database ER (`propizy-database-er-diagram.xml`):** full schema, Crow’s Foot, `tbl` naming, numbered FKs  
-- **Page 4.4b (Crow’s Foot):** simplified subset — use the database diagram for the complete schema  
+- **Page 4.4b (Crow's Foot):** simplified subset - use the database diagram for the complete schema  
 
 ### UML
 

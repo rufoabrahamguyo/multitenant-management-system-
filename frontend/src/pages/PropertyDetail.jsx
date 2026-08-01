@@ -4,6 +4,7 @@ import { useFeedback } from '../context/FeedbackContext';
 import { useIsOwner } from '../hooks/useIsOwner';
 import api from '../api/client';
 import FormField from '../components/FormField';
+import PageLoader from '../components/PageLoader';
 import { getApiErrorMessage } from '../utils/apiError';
 import { unwrapList } from '../utils/apiHelpers';
 
@@ -73,7 +74,7 @@ export default function PropertyDetail() {
     }
   };
 
-  if (!property) return <p className="text-slate-500">Loading...</p>;
+  if (!property) return <PageLoader message="Loading property…" />;
 
   return (
     <div>

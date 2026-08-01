@@ -8,6 +8,7 @@ import { DeskCard, DeskField, DeskStatusBadge } from '../components/DeskCard';
 import IdUploadZone from '../components/IdUploadZone';
 import FormAlert from '../components/FormAlert';
 import FormField from '../components/FormField';
+import PageLoader from '../components/PageLoader';
 import { getApiErrorMessage, getApiFieldErrors } from '../utils/apiError';
 import { formatKes } from '../utils/apiHelpers';
 
@@ -251,7 +252,7 @@ export default function TenantDetail() {
     }
   };
 
-  if (!tenant) return <p className="text-slate-500">Loading tenant...</p>;
+  if (!tenant) return <PageLoader message="Loading tenant…" />;
 
   const displayName = [tenant.first_name, tenant.last_name].filter(Boolean).join(' ') || tenant.username;
   const modalTitles = {

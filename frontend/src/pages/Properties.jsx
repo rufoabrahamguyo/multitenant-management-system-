@@ -136,7 +136,7 @@ export default function Properties() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="page-title">Properties</h2>
+        <div />
         {isOwner && !editingId && (
           <button
             type="button"

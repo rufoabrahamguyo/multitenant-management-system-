@@ -12,11 +12,6 @@ export default function Activity() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">Activity Log</h2>
-      <p className="text-sm text-slate-500 mb-6">
-        Owner-only audit trail. Monitor caretaker and staff actions independently
-      </p>
-
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <div className="divide-y divide-slate-100">
           {logs.map((log) => (

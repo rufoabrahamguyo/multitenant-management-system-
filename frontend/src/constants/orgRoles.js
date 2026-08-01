@@ -1,4 +1,10 @@
-/** Organization staff roles and nav visibility for the manager web app. */
+/**
+ * Organization staff roles and nav visibility for the manager web app.
+ *
+ * Backend `users.governance.PERMISSION_MATRIX` is the source of truth.
+ * `DEFAULT_ROLE_PERMISSIONS` is only a bootstrap fallback before `/auth/me/`
+ * (or login) returns `user.permissions`.
+ */
 
 export const ORG_ROLES = {
   OWNER: 'OWNER',

@@ -3,6 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import { canAccessPath, permissionsForRole } from '../constants/orgRoles';
 import LoadingScreen from './LoadingScreen';
 
+function resolvePermissions(user) {
+  if (user?.permissions && typeof user.permissions === 'object') {
+    return user.permissions;
+  }
+  return permissionsForRole(user?.org_role);
+}
+
 export function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
@@ -44,7 +51,7 @@ export function OwnerRoute({ children }) {
 export function PermissionRoute({ resource, children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
-  const permissions = permissionsForRole(user?.org_role);
+  const permissions = resolvePermissions(user);
   if (!permissions?.[resource]?.read) {
     return <Navigate to="/dashboard" replace />;
   }
@@ -54,7 +61,7 @@ export function PermissionRoute({ resource, children }) {
 export function PathPermissionRoute({ path, children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
-  const permissions = permissionsForRole(user?.org_role);
+  const permissions = resolvePermissions(user);
   if (!canAccessPath(permissions, path)) {
     return <Navigate to="/dashboard" replace />;
   }

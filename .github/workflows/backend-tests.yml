@@ -55,14 +55,15 @@ jobs:
         working-directory: backend
         run: python manage.py migrate --noinput
 
-      - name: Run tests
+      - name: Run tests with coverage
         working-directory: backend
         run: |
-          python manage.py test \
+          coverage run --source=users,properties,payments,maintenance manage.py test \
             users.tests \
             users.security_tests \
             users.test_emails \
             users.test_mpesa_integration \
+            users.test_phone \
             properties.tests \
             properties.tests_property_units \
             properties.tests_transfer \
@@ -71,3 +72,4 @@ jobs:
             payments.test_wallet \
             maintenance.tests \
             --verbosity=1
+          coverage report --fail-under=25

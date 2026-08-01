@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useFeedback } from '../context/FeedbackContext';
 import api from '../api/client';
+import EmptyState from '../components/EmptyState';
+import PageLoader from '../components/PageLoader';
 import { getApiErrorMessage } from '../utils/apiError';
 import { unwrapList } from '../utils/apiHelpers';
 
@@ -19,13 +21,23 @@ export default function Maintenance() {
   const { toast } = useFeedback();
   const [searchParams] = useSearchParams();
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [updating, setUpdating] = useState(null);
 
   const rawStatus = searchParams.get('status') || 'pending';
   const status = validStatuses.has(rawStatus) ? rawStatus : 'pending';
 
   const fetchRequests = () => {
-    api.get('/maintenance/').then(({ data }) => setRequests(unwrapList(data)));
+    setLoading(true);
+    setLoadError(false);
+    api.get('/maintenance/')
+      .then(({ data }) => setRequests(unwrapList(data)))
+      .catch(() => {
+        setRequests([]);
+        setLoadError(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => { fetchRequests(); }, []);
@@ -57,9 +69,25 @@ export default function Maintenance() {
     ? 'No maintenance requests.'
     : `No ${statusLabels[status].toLowerCase()} requests.`;
 
+  if (loading) return <PageLoader message="Loading maintenance…" />;
+
+  if (loadError) {
+    return (
+      <EmptyState
+        title="Could not load maintenance requests"
+        description="Check your connection and try again."
+        action={
+          <button type="button" onClick={fetchRequests} className="btn-secondary btn-sm">
+            Retry
+          </button>
+        }
+      />
+    );
+  }
+
   return (
     <div>
-      <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-6">
+      <h2 className="text-lg font-semibold text-slate-800 mb-6">
         {statusLabels[status]} requests
       </h2>
 
@@ -96,7 +124,7 @@ export default function Maintenance() {
           </div>
         ))}
         {filtered.length === 0 && (
-          <p className="text-slate-500 text-center py-12">{emptyLabel}</p>
+          <EmptyState title={emptyLabel} />
         )}
       </div>
     </div>

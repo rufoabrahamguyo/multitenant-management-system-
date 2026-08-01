@@ -13,3 +13,4 @@ cryptography>=42.0,<46
 whitenoise>=6.7,<7
 gunicorn>=21.2,<25
 celery[redis]>=5.3,<6
+coverage>=7.0,<8

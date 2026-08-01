@@ -105,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME', 'propizy'),
         'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
@@ -211,7 +211,7 @@ if _extra_origins:
 
 # Platform M-PESA callback URL (shared across all organizations)
 MPESA_CALLBACK_SECRET = os.getenv('MPESA_CALLBACK_SECRET', '').strip()
-MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL', 'https://your-domain.com/api/payments/mpesa-callback/')
+MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL', '')
 MPESA_ENV = os.getenv('MPESA_ENV', 'sandbox')
 
 # Dedicated encryption key for per-org Daraja credentials (recommended over reusing SECRET_KEY)

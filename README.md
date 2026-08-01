@@ -15,12 +15,12 @@ Architecture: a **modular monolith** (`users`, `properties`, `payments`, `mainte
 
 ## Features
 
-- **Rent collection** — M-PESA STK Push, cash approval workflow, PDF invoices and receipts
-- **Multi-tenancy** — organizations with owner/staff roles, plan limits, and invite-only tenants
-- **Governance** — permission matrix, activity audit log, payment integrity checks, evidence packs
-- **Reconciliation** — CSV statement import, orphan detection, per-org Paybill/Till config
-- **Reporting** — live collection rates, owner statements, weekly digests, eTIMS/tax CSV export
-- **Tenant services** — leases, balances, arrears reminders (SMS/WhatsApp), unit transfers, maintenance
+- **Rent collection** - M-PESA STK Push, cash approval workflow, PDF invoices and receipts
+- **Multi-tenancy** - organizations with owner/staff roles, plan limits, and invite-only tenants
+- **Governance** - permission matrix, activity audit log, payment integrity checks, evidence packs
+- **Reconciliation** - CSV statement import, orphan detection, per-org Paybill/Till config
+- **Reporting** - live collection rates, owner statements, weekly digests, eTIMS/tax CSV export
+- **Tenant services** - leases, balances, arrears reminders (SMS/WhatsApp), unit transfers, maintenance
 
 ## Repository layout
 
@@ -107,7 +107,7 @@ Re-run with `--flush` or `--force` to replace existing demo data. Demo emails us
 
 ## Tenant invite flow
 
-1. Manager invites a tenant (email, phone, unit) — invite email is sent automatically when SMTP is configured.
+1. Manager invites a tenant (email, phone, unit) - invite email is sent automatically when SMTP is configured.
 2. Tenant opens the link → mobile app deep link (`propizy://` / invite URL).
 3. Tenant registers → lease is created automatically.
 4. Tenant pays rent via M-PESA (or simulation mode in development).
