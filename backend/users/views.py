@@ -61,10 +61,6 @@ class ManagerRegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        try:
-            send_verification_code(user)
-        except ValueError:
-            pass
         return Response(_auth_response(user), status=status.HTTP_201_CREATED)
 
 

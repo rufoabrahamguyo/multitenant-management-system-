@@ -80,7 +80,7 @@ class ManagerRegisterSerializer(serializers.ModelSerializer):
         org_name = validated_data.pop('organization_name')
         password = validated_data.pop('password')
 
-        user = User(role=User.Role.MANAGER, phone_verified=False, **validated_data)
+        user = User(role=User.Role.MANAGER, phone_verified=True, **validated_data)
         user.set_password(password)
         user.save()
 

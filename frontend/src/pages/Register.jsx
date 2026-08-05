@@ -83,8 +83,8 @@ export default function Register() {
     setLoading(true);
     try {
       await register(form);
-      toast('Organization created! Verify your phone to continue.', 'success');
-      navigate('/verify-phone');
+      toast('Organization created! Welcome to Propizy.', 'success');
+      navigate('/dashboard');
     } catch (err) {
       const fields = getApiFieldErrors(err);
       if (Object.keys(fields).length) {
