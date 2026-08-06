@@ -39,7 +39,6 @@ npm install
 npm run dev
 ```
 
-Dashboard: http://localhost:5173
 
 ### 3. Mobile app (tenants)
 
@@ -61,12 +60,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## First-time setup
-
-1. Register a property owner on the web dashboard 
-2. Add properties and units.
-3. Invite tenants by email; they register on the mobile app via the invite link.
-4. Invite staff from the Team page when you need caretakers with limited access.
 
 
 
